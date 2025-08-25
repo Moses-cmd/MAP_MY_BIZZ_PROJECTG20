@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>South Africa Only Map (Real Provinces)</title>
+
+  <!-- Leaflet / Turf / TopoJSON -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://unpkg.com/@turf/turf@6.5.0/turf.min.js"></script>
+  <script src="https://unpkg.com/topojson-client@3.1.0/dist/topojson-client.min.js"></script>
+
+  <style>
+    html, body { height: 100%; margin: 0; padding: 0; }
+    #map { width: 100%; height: 100vh; background: #e9eef5; }
+
+    .province-label {
+      background: rgba(255,255,255,0.9);
+      padding: 3px 8px;
+      border-radius: 12px;
+      font: 600 13px system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans";
+      color: #222;
+      text-align: center;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+      pointer-events: none;
+      white-space: nowrap;
+    }
+
+    .map-controls {
+      position: absolute; top: 12px; left: 12px; z-index: 1000; display: flex; gap: 6px;
+    }
+    .btn {
+      background: #fff; border: 1px solid #ccc; border-radius: 10px;
+      padding: 8px 12px; font-size: 14px; cursor: pointer;
+      box-shadow: 0 1px 6px rgba(0,0,0,0.1); user-select: none;
+      transition: background 0.15s ease, transform 0.05s ease;
+    }
+    .btn:hover { background: #f6f6f6; }
+    .btn:active { transform: translateY(1px); }
+
+    .leaflet-container a { color: #1d4ed8; }
+
+    /* Subtle province colors */
+    .province-fill { fill-opacity: 0.45; stroke: #333; stroke-width: 1.2; }
+  </style>
+</head>
+<body>
+  <div id="map" role="region" aria-label="Map showing only South Africa"></div>
+
+  <div class="map-controls" aria-label="Map controls">
+    <button class="btn" id="zoom-in" title="Zoom in">+</button>
+    <button class="btn" id="zoom-out" title="Zoom out">−</button>
+    <button class="btn" id="fit-sa" title="Fit to South Africa">Fit SA</button>
+    <button class="btn" id="clear-pins" title="Clear all pins">Clear Pins</button>
+  </div>
+
+  <script>
+    (async function () {
+      // --- Map init (no zoomControl; we have custom buttons)
+      const map = L.map('map', { minZoom: 5, maxZoom: 18, zoomControl: false })
+        .setView([-30.5595, 28.2], 5);
+
+      // Base layer
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; OpenStreetMap contributors'
+      }).addTo(map);
+
+      // Layers
+      const pinsLayer = L.layerGroup().addTo(map);
+      let provincesLayer = null;
+      let maskLayer = null;
+
+      // Click-to-add pins (use circle markers so no external icon files needed)
+      map.on('click', (e) => {
+        const lat = e.latlng.lat.toFixed(5);
+        const lng = e.latlng.lng.toFixed(5);
+        L.circleMarker([e.latlng.lat, e.latlng.lng], {
+          radius: 6,
+          weight: 2,
+          color: '#0ea5e9',
+          fillColor: '#38bdf8',
+          fillOpacity: 0.9
+        })
+          .addTo(pinsLayer)
+          .bindPopup(`📍 Pin<br>Lat: ${lat}<br>Lng: ${lng}`)
+          .openPopup();
+      });
+
+      // Province colors
+      const provinceColors = {
+        'Eastern Cape': '#7fc97f',
+        'Free State': '#beaed4',
+        'Gauteng': '#fdc086',
+        'KwaZulu-Natal': '#ffff99',
+        'Limpopo': '#386cb0',
+        'Mpumalanga': '#f0027f',
+        'North West': '#bf5b17',
+        'Northern Cape': '#1b9e77',
+        'Western Cape': '#d95f02'
+      };
+
+      // --- Fetch helpers (TopoJSON first, then GeoJSON fallback)
+      const TOPO_URL = 'https://raw.githubusercontent.com/deldersveld/topojson/master/countries/south-africa/south-africa-provinces.json';
+      const GEOJSON_FALLBACK = 'https://raw.githubusercontent.com/dmzuckerman/south-africa-geojson/master/provinces.geojson';
+
+      async function fetchJSON(url, timeoutMs = 15000) {
+        const ctrl = new AbortController();
+        const t = setTimeout(() => ctrl.abort(), timeoutMs);
+        try {
+          const res = await fetch(url, { signal: ctrl.signal });
+          if (!res.ok) throw new Error(`HTTP ${res.status}`);
+          return await res.json();
+        } finally {
+          clearTimeout(t);
+        }
+      }
+
+      async function loadSAProvinces() {
+        // Try TopoJSON
+        try {
+          const topo = await fetchJSON(TOPO_URL);
+          // Convert TopoJSON -> GeoJSON FeatureCollection
+          // The object key often equals something like "collection" or similar;
+          // find the first "objects" key that is a FeatureCollection.
+          const objectName = Object.keys(topo.objects)[0];
+          const geo = topojson.feature(topo, topo.objects[objectName]);
+          if (!geo || !geo.features || !geo.features.length) throw new Error('Empty geodata from topojson');
+          return geo; // GeoJSON FC
+        } catch (e) {
+          console.warn('TopoJSON load failed, trying GeoJSON fallback...', e);
+        }
+
+        // Fallback to raw GeoJSON
+        const geo = await fetchJSON(GEOJSON_FALLBACK);
+        if (!geo || !geo.features || !geo.features.length) {
+          throw new Error('Failed to load SA provinces (both attempts).');
+        }
+        return geo;
+      }
+
+      // --- Render
+      try {
+        const provincesFC = await loadSAProvinces();
+
+        // Build union of all provinces for the SA outline
+        const saUnion = provincesFC.features.reduce((acc, feat, idx) => {
+          if (idx === 0) return feat;
+          try { return turf.union(acc, feat); }
+          catch { return acc; }
+        }, null);
+        if (!saUnion) throw new Error('Could not compute South Africa union.');
+
+        // Create a world rectangle and subtract SA shape -> mask outside SA
+        const worldRect = turf.polygon([[[-180, -90], [-180, 90], [180, 90], [180, -90], [-180, -90]]]);
+        const saPoly = (saUnion.geometry.type === 'Polygon')
+          ? turf.polygon(saUnion.geometry.coordinates)
+          : turf.multiPolygon(saUnion.geometry.coordinates);
+        const maskGeoJSON = turf.difference(worldRect, saPoly);
+
+        // Draw the dark mask (outside SA)
+        maskLayer = L.geoJSON(maskGeoJSON, {
+          style: { color: '#000', weight: 0, fillOpacity: 0.6, fillColor: '#000' }
+        }).addTo(map);
+
+        // Draw provinces
+        provincesLayer = L.geoJSON(provincesFC, {
+          style: (feature) => ({
+            color: '#333',
+            weight: 1.2,
+            fillColor: provinceColors[feature.properties.name] || '#66c2a5',
+            fillOpacity: 0.45,
+            className: 'province-fill'
+          }),
+          onEachFeature: (feature, layer) => {
+            const name = feature.properties.name || feature.properties.province || 'Province';
+            layer.bindPopup(`<b>${name}</b>`);
+
+            // Province label
+            try {
+              const center = turf.centroid(feature);
+              const [lng, lat] = center.geometry.coordinates;
+              L.marker([lat, lng], {
+                icon: L.divIcon({ className: 'province-label', html: name })
+              }).addTo(map);
+            } catch {}
+          }
+        }).addTo(map);
+
+        // Fit to South Africa
+        map.fitBounds(provincesLayer.getBounds(), { padding: [20, 20] });
+
+      } catch (err) {
+        console.error(err);
+        alert('Could not load South Africa province boundaries. Check your internet connection on first run.');
+      }
+
+      // --- Buttons
+      document.getElementById('zoom-in').addEventListener('click', () => map.zoomIn());
+      document.getElementById('zoom-out').addEventListener('click', () => map.zoomOut());
+      document.getElementById('fit-sa').addEventListener('click', () => {
+        if (provincesLayer) map.fitBounds(provincesLayer.getBounds(), { padding: [30, 30] });
+      });
+      document.getElementById('clear-pins').addEventListener('click', () => pinsLayer.clearLayers());
+    })();
+  </script>
+</body>
+</html>
