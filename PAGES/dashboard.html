@@ -4,26 +4,26 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Map My Biz - Dashboard</title>
-  <link rel="stylesheet" href="/MAP_MY_BIZZ_PROJECTG20/FRONT_END/CSS/styles.css" />
-  <script src="/MAP_MY_BIZZ_PROJECTG20/FRONT_END/JS/script.js" defer></script>
+   <link rel="stylesheet" href="../CSS/style.css">
+   <script src="../JS/script.js"></script>
 </head>
 <body>
 
   <!-- Navigation Bar -->
   <nav class="navbar">
     <div class="logo-container">
-      <img src="/MAP_MY_BIZZ_PROJECTG20/FRONT_END/Assets/MMB.png" alt="Map My Biz Logo" />
+      <img src="../Assets/MMB.png" alt="Map My Biz Logo" />
     </div>
     <div class="nav-links">
-      <a href="/MAP_MY_BIZZ_PROJECTG20/FRONT_END/PAGES/dashboard.html" class="active">Home</a>
-      <a href="/MAP_MY_BIZZ_PROJECTG20/FRONT_END/PAGES/course.html">Courses</a>
-      <a href="#">
+      <a href="./dashboard.html" class="active">Home</a>
+      <a href="./course.html">Courses</a>  <!-- same as above -->
+      <a href="./map.html">
         <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#4a90e2" stroke-width="2">
           <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
           <circle cx="12" cy="10" r="3"></circle>
         </svg>Smart Map</a>
       <a href="#">VR Training</a>
-      <a href="/MAP_MY_BIZZ_PROJECTG20/FRONT_END/PAGES/business.html">List Business</a>
+      <a href="./business.html">Business</a>
     </div>
     <div class="language-selector">
       <select>
@@ -33,18 +33,18 @@
     </div>
     <div class="user-profile" id="userProfile">
       <div class="user-icon">👤</div>
-      <span>Welcome, John!</span>
+      <span>Welcome, <span id="dashboardUsername">User</span>!</span>
       <ul class="dropdown" id="dropdownMenu">
-        <li><a href="/MAP_MY_BIZZ_PROJECTG20/FRONT_END/PAGES/updateinfo.html">Edit Personal Info</a></li>
-        <li><a href="/MAP_MY_BIZZ_PROJECTG20/FRONT_END/PAGES/index.html">Logout</a></li>
+        <li><a href="./updateinfo.html">Edit Personal Info</a></li>
+        <li><a href="../index.html" id="logoutBtn">Logout</a></li>
       </ul>
-    </div>
+    </div>    
+    
   </nav>
 
   <!-- Welcome Back Section -->
   <section class="welcome-back">
-    <h2>Welcome back, Learner! 👋</h2>
-    <p>Continue your business education journey</p>
+    <h2>Welcome 👋 Continue your business education journey</h2>
   </section>
 
   <!-- Progress Metrics -->
@@ -52,14 +52,14 @@
     <div class="metric-card">
       <h2>Continue Learning</h2>
       <p>2/15</p>
-      <a href="/MAP_MY_BIZZ_PROJECTG20/FRONT_END/PAGES/module3.html">
+      <a href="./module3.html">
       <svg xmlns="http://www.w3.org/2000/svg" width="70" height="70" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
         <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
       </svg>
       </a>
       <section class="continue-learning">
-        <button class="btn-primary">View All Modules</button>
+        <button class="btn-primary" id="num">View All Modules</button>
       </section>
     </div>
     <div class="metric-card">
@@ -109,18 +109,12 @@
         <h3>Your Progress</h3>
         <p>Overall Progress</p>
         <div class="progress-container">
-          <div class="progress" style="width: 13.33%;"></div>
+          <div id="progressBar" class="progress" style="width: 0%;"></div>
         </div>
-        <span>13.33%<br />2 of 15 modules completed</span>
-      </div>
-    </div>
+        <span id="progressText">0.0%<br>0 of 15 modules completed</span>
+      </div> <!-- ✅ Close .BHP -->
+    </div> <!-- ✅ Close .center-wrapper -->
     
   </section>
-
-  
-  
-
-
-
 </body>
 </html>
