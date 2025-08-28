@@ -18,15 +18,16 @@ CREATE TABLE Admin(
 ); 
 
 CREATE TABLE Module (
-    module_name VARCHAR(10) PRIMARY KEY,
+    module_id VARCHAR(10) PRIMARY KEY,
     title VARCHAR(100) NOT NULL,
     description TEXT
+    difficulty_level VARCHAR(50) NOT NULL
 );
 
 
 CREATE TABLE Progress(
     user_id INT,
-    module_name VARCHAR(10),
+    module_id VARCHAR(10),
     PRIMARY KEY (user_id, module_name),
     score INT NOT NULL,
     completed BOOLEAN NOT NULL,
@@ -47,11 +48,14 @@ CREATE TABLE Rewards (
 );
 
 CREATE TABLE Business (
-    user_id INT,
+    user_id,
     business_id INT PRIMARY KEY,
     business_name VARCHAR(100) NOT NULL,
+    category VARCHAR(50) NOT NULL CHECK (category IN ('accommodation', 'food', 'tour-guide', 'crafts', 'transport', 'retail', 'services')),
+    businessLocation VARCHAR(255) NOT NULL,
+    phone_number VARCHAR(20) NOT NULL UNIQUE,
+    business_email VARCHAR(100) NOT NULL UNIQUE,
     business_description TEXT,
-    business_number VARCHAR(20) NOT NULL UNIQUE,
     business_certificate BYTEA,
     FOREIGN KEY (user_id) REFERENCES Users(user_id) ON DELETE SET NULL
 );
@@ -68,7 +72,14 @@ CREATE TABLE Resources (
     FOREIGN KEY (module_name) REFERENCES Module(module_name) ON DELETE CASCADE
 );
 
-
+CREATE TABLE subscriptions (
+  subscription_id SERIAL PRIMARY KEY,
+  sub_name VARCHAR(50)  UNIQUE,
+  price_r   INT,
+  max_photos   INT,
+  analytics    BOOLEAN,
+  featured     BOOLEAN
+);
 
 
 

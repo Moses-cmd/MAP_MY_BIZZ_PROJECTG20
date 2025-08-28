@@ -1,3 +1,5 @@
+import supabase from '../Database/SuperbaseMapMyBiz.js';
+
 document.addEventListener("DOMContentLoaded", () => {
   // ===== 1. LOGIN & SIGNUP FORMS =====
   const loginForm = document.querySelector("#loginForm");
