@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>My Businesses - Map My Biz</title>
   <link rel="stylesheet" href="../CSS/style.css">
+  <script src="../JS/script.js"></script>
 </head>
 <body>
 
@@ -14,16 +15,24 @@
       <img src="../Assets/MMB.png" alt="Map My Biz Logo" />
     </div>
     <div class="nav-links">
-      <a href="./dashboard.html">Home</a>
-      <a href="./course.html">Courses</a>
-      <a href="./map.html">Smart Map</a>
+      <a href="../dashboard.html">Home</a>
+      <a href="../course.html">Courses</a>
+      <a href="../PAGES/internalMap.html">
+        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#4a90e2" stroke-width="2">
+          <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+          <circle cx="12" cy="10" r="3"></circle>
+        </svg>Add business on the Map</a>
       <a href="#">VR Training</a>
-      <a href="./addBusiness.html">Business</a>
+      <a href="../addBusiness.html">Business</a>
     </div>
     <div class="user-profile" id="userProfile">
       <div class="user-icon">👤</div>
-      <span>Welcome, John!</span>
-    </div>
+      <span>Welcome, <span id="dashboardUsername">User</span>!</span>
+      <ul class="dropdown" id="dropdownMenu">
+        <li><a href="./updateinfo.html">Edit Personal Info</a></li>
+        <li><a href="../index.html" id="logoutBtn">Logout</a></li>
+      </ul>
+    </div>    
   </nav>
 
   <div class="container">
@@ -33,11 +42,9 @@
       <p>You haven't added any businesses yet.</p>
     </div>
     <div class="add-more">
-      <a href="./addBusiness.html">➕ Add a New Business</a>
+      <a href="../addBusiness.html">➕ Add a New Business</a>
     </div>
   </div>
-
-  <script src="../JS/script.js"></script>
   <script>
     // Load businesses when page is ready
     document.addEventListener("DOMContentLoaded", loadBusinesses);

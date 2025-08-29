@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
       localStorage.setItem("userName", emailOrPhone);
   
       localStorage.setItem("isLoggedIn", "true");
-      window.location.href = "./PAGES/dashboard.html";
+      window.location.href = "../PAGES/dashboard.html";
     });
   }
   
@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const emailOrPhone = this.querySelector('input[placeholder="Phone Number or Email Address"]').value;
       localStorage.setItem("userEmail", emailOrPhone);
       localStorage.setItem("isLoggedIn", "true");
-      window.location.href = "./PAGES/signup.html"; // ✅ assuming signup goes to dashboard
+      window.location.href = "../PAGES/signup.html"; // ✅ assuming signup goes to dashboard
     });
   }
   

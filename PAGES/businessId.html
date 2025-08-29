@@ -5,8 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Map My Biz - Empowering Rural Business & Tourism</title>
   <link rel="stylesheet" href="../CSS/style.css">
+  <script src="./JS/script.js"></script>
 </head>
 <body>
+  <nav class="navbar">
+    <div class="logo-container">
+      <img src="../Assets/nv.png" alt="Map My Biz Logo" />
+    </div>
+    <div class="nav-links">
+      <a href="../index.html">Home</a>
+    </div>
+  </nav>
   <div class="container">
     <!-- Header -->
     <header class="header">
@@ -49,7 +58,7 @@
 
   <!-- Switch to learner -->
   <div class="auth-section signup-section">
-    <h4><a href="../index.html">Sign in as Learner</a></h4>
+    <h4><a href="../PAGES/Login.html">Sign in as Learner</a></h4>
   </div>
 </div>
            <!-- Language Selector -->
@@ -72,7 +81,6 @@
       
     </div>
   </div>
-  <script src="./JS/script.js"></script>
   <script>
     // ===== Handle Login =====
     const loginFormBu = document.querySelector("#loginFormBu");
@@ -88,25 +96,10 @@
         localStorage.setItem("isLoggedIn", "true");
   
         // Redirect
-        window.location.href = "../PAGES/mybusiness.html";
+        window.location.href = "../PAGES/partner.html";
       });
     }
-  
-    // ===== Toggle Password Visibility =====
-    document.querySelectorAll(".toggle-password").forEach(toggle => {
-      toggle.addEventListener("click", function () {
-        const targetId = this.getAttribute("data-target");
-        const passwordField = document.getElementById(targetId);
-  
-        if (passwordField.type === "password") {
-          passwordField.type = "text";
-          this.textContent = "🙈"; // change icon
-        } else {
-          passwordField.type = "password";
-          this.textContent = "👁️"; // change back
-        }
-      });
-    });
+
   </script>
 </body>
 </html>

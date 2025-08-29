@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>South Africa Business Map</title>
+
+  <!-- Leaflet -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+  <style>
+    html, body { height: 100%; margin: 0; }
+    #map { width: 100%; height: 100vh; background:#e9eef5; }
+
+    :root{
+      --bg: rgba(255,255,255,0.96);
+      --shadow: 0 2px 10px rgba(0,0,0,0.15);
+      --radius: 14px;
+      --blue:#2563eb; --blue-700:#1d4ed8;
+      --red:#e11d48; --green:#16a34a; --orange:#ea580c;
+      --gray:#64748b;
+    }
+
+    /* Top-left control panel */
+    .panel {
+      position: absolute; top: 12px; left: 12px; z-index: 1000;
+      background: var(--bg); backdrop-filter: blur(6px);
+      box-shadow: var(--shadow); border-radius: var(--radius);
+      padding: 10px; width: 320px; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;
+    }
+    .row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+    .row + .row { margin-top: 8px; }
+
+    .btn {
+      border: 1px solid #e5e7eb; background:#fff; padding:8px 10px; border-radius: 10px;
+      cursor: pointer; box-shadow: 0 1px 4px rgba(0,0,0,0.08); font-size: 14px;
+      transition: background 0.15s ease, transform 0.05s ease, border-color .15s;
+      user-select: none;
+    }
+    .btn:hover { background:#f8fafc; }
+    .btn:active { transform: translateY(1px); }
+    .btn.primary { background: var(--blue); color:#fff; border-color: transparent; }
+    .btn.primary:hover { background: var(--blue-700); }
+
+    .btn-chip { padding:6px 10px; font-size: 13px; border-radius: 999px; }
+    .btn-chip.active { border-color: currentColor; box-shadow: inset 0 0 0 1px currentColor; }
+
+    /* Color chips */
+    .chip-food { color: var(--red); }
+    .chip-shops { color: var(--blue); }
+    .chip-crafts { color: var(--green); }
+    .chip-nature { color: var(--orange); }
+
+    input[type="text"], select {
+      flex: 1; padding: 8px 10px; border-radius: 10px; border: 1px solid #e5e7eb;
+      outline: none; font-size: 14px;
+    }
+    input[type="text"]:focus, select:focus { border-color: var(--blue); }
+
+    .muted { font-size: 12px; color: var(--gray); margin: 4px 0 0 2px; }
+
+    /* Back floating button (top-right) */
+    .back-wrap {
+      position: absolute; top: 12px; right: 12px; z-index: 1000;
+    }
+    .back-btn {
+      background:#fff; border:1px solid #e5e7eb; border-radius: 999px; padding: 10px 14px;
+      font-size:14px; box-shadow: var(--shadow); cursor: pointer;
+    }
+    .back-btn:hover { background:#f8fafc; }
+
+    /* Small helper tooltip bubble */
+    .bubble {
+      background:#111827; color:#fff; font-size:12px; padding:6px 8px; border-radius: 8px;
+      position:absolute; top: 66px; right: 12px; z-index: 999; opacity:.9;
+    }
+
+    /* Legend */
+    .legend { display:flex; gap:8px; align-items:center; flex-wrap: wrap; font-size:12px; }
+    .dot { width:10px; height:10px; border-radius:999px; display:inline-block; }
+  </style>
+</head>
+<body>
+  <div id="map" role="region" aria-label="Map of South Africa showing businesses"></div>
+
+  <!-- Back -->
+  <div class="back-wrap">
+    <button class="back-btn" id="back-btn" title="Back">← Back</button>
+  </div>
+
+  <!-- Quick tip -->
+  <div class="bubble">Tip: Fill the form, click “Place Business”, then click the map.</div>
+
+  <!-- Controls / Form -->
+  <div class="panel" aria-label="Controls and business form">
+    <!-- Search -->
+    <div class="row">
+      <input id="search" type="text" placeholder="Search businesses (name/description)"/>
+    </div>
+
+    <!-- Filters -->
+    <div class="row" id="filters" role="group" aria-label="Filter by category">
+      <button class="btn btn-chip active" data-cat="All">All</button>
+      <button class="btn btn-chip chip-food" data-cat="Food">Food</button>
+      <button class="btn btn-chip chip-shops" data-cat="Shops">Shops</button>
+      <button class="btn btn-chip chip-crafts" data-cat="Crafts">Crafts</button>
+      <button class="btn btn-chip chip-nature" data-cat="Nature">Nature</button>
+    </div>
+
+    <!-- Legend -->
+    <div class="row legend" aria-hidden="true" style="margin-top:6px;">
+      <span class="dot" style="background:#e11d48"></span> Food
+      <span class="dot" style="background:#2563eb"></span> Shops
+      <span class="dot" style="background:#16a34a"></span> Crafts
+      <span class="dot" style="background:#ea580c"></span> Nature
+    </div>
+
+    <!-- Add Business -->
+    <div class="row" style="margin-top:10px;">
+      <input type="text" id="biz-name" placeholder="Business Name" required/>
+    </div>
+    <div class="row">
+      <input type="text" id="biz-desc" placeholder="Short Description" required/>
+    </div>
+    <div class="row">
+      <select id="biz-cat" title="Category">
+        <option value="Food">Food</option>
+        <option value="Shops">Shops</option>
+        <option value="Crafts">Crafts</option>
+        <option value="Nature">Nature</option>
+      </select>
+      <button class="btn primary" id="place-btn">Place Business</button>
+    </div>
+    <p class="muted">After clicking “Place Business”, click on the map to set the location.</p>
+  </div>
+
+  <script>
+    // --- South Africa bounds (approx): SW & NE corners
+    const SA_BOUNDS = L.latLngBounds(
+      L.latLng(-34.834, 16.460),  // SW
+      L.latLng(-22.125, 32.894)   // NE
+    );
+  
+    const COLORS = {
+      Food:   '#e11d48',
+      Shops:  '#2563eb',
+      Crafts: '#16a34a',
+      Nature: '#ea580c'
+    };
+  
+    // --- Init map
+    const map = L.map('map', { minZoom: 5, maxZoom: 18 })
+      .setView([-30.5595, 24.9375], 6);
+    map.fitBounds(SA_BOUNDS);
+    map.setMaxBounds(SA_BOUNDS.pad(0.08)); // lock panning near SA
+  
+    // Base layer
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+  
+    // Business layer
+    const bizLayer = L.layerGroup().addTo(map);
+  
+    // --- State
+    let businesses = [];
+    const markers = new Map();
+    let pendingBiz = null;
+    let activeCategory = 'All';
+    let searchQuery = '';
+  
+    // --- Storage helpers
+    const KEY = 'sa_biz_map_v1';
+    function save() {
+      try { localStorage.setItem(KEY, JSON.stringify(businesses)); } catch {}
+    }
+    function load() {
+      try {
+        const raw = localStorage.getItem(KEY);
+        if (raw) businesses = JSON.parse(raw);
+      } catch {}
+    }
+  
+    // --- UI elements
+    const backBtn = document.getElementById('back-btn');
+    const placeBtn = document.getElementById('place-btn');
+    const nameInput = document.getElementById('biz-name');
+    const descInput = document.getElementById('biz-desc');
+    const catSelect = document.getElementById('biz-cat');
+    const filters = document.getElementById('filters');
+    const searchInput = document.getElementById('search');
+  
+    // --- Get URL parameter
+    function getUrlParam(name) {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get(name);
+    }
+  
+    // On page load: check URL for category
+    window.addEventListener('load', () => {
+      const categoryFromUrl = getUrlParam('category');
+      if (categoryFromUrl && ['Food', 'Shops', 'Crafts', 'Nature'].includes(categoryFromUrl)) {
+        activeCategory = categoryFromUrl;
+        // Update active button
+        document.querySelectorAll('[data-cat]').forEach(btn => {
+          btn.classList.remove('active');
+        });
+        const targetBtn = document.querySelector(`[data-cat="${categoryFromUrl}"]`);
+        if (targetBtn) {
+          targetBtn.classList.add('active');
+          // Optional: Scroll to filter
+          targetBtn.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }
+      // Apply filter after load
+      applyFilters();
+    });
+  
+    backBtn.addEventListener('click', () => {
+      if (history.length > 1) history.back();
+      else window.location.href = '../index.html';
+    });
+  
+    placeBtn.addEventListener('click', () => {
+      const name = nameInput.value.trim();
+      const desc = descInput.value.trim();
+      const category = catSelect.value;
+      if (!name || !desc) { alert('Please fill name and description.'); return; }
+      pendingBiz = { name, desc, category };
+      placeBtn.textContent = 'Click map to place…';
+      placeBtn.disabled = true;
+      setTimeout(() => { placeBtn.textContent = 'Placing… (click map)'; }, 50);
+    });
+  
+    // Filter buttons
+    filters.addEventListener('click', (e) => {
+      const btn = e.target.closest('[data-cat]');
+      if (!btn) return;
+      activeCategory = btn.dataset.cat;
+      [...filters.querySelectorAll('.btn-chip')].forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      applyFilters();
+    });
+  
+    // Search
+    searchInput.addEventListener('input', () => {
+      searchQuery = searchInput.value.trim().toLowerCase();
+      applyFilters();
+    });
+  
+    // Place on map click
+    map.on('click', (e) => {
+      if (!pendingBiz) return;
+      const id = crypto.randomUUID ? crypto.randomUUID() : String(Date.now() + Math.random());
+      const { name, desc, category } = pendingBiz;
+      const biz = {
+        id, name, desc, category,
+        lat: e.latlng.lat, lng: e.latlng.lng,
+        createdAt: Date.now()
+      };
+      businesses.push(biz);
+      save();
+      ensureMarker(biz);
+      applyFilters(true);
+  
+      pendingBiz = null;
+      placeBtn.textContent = 'Place Business';
+      placeBtn.disabled = false;
+      nameInput.value = ''; descInput.value = '';
+    });
+  
+    function ensureMarker(biz) {
+      if (markers.has(biz.id)) return markers.get(biz.id);
+      const marker = L.circleMarker([biz.lat, biz.lng], {
+        radius: 8, color: COLORS[biz.category] || '#444',
+        fillColor: COLORS[biz.category] || '#444',
+        fillOpacity: 0.95, weight: 2
+      });
+      marker.bindPopup(renderPopup(biz));
+      markers.set(biz.id, marker);
+      return marker;
+    }
+  
+    function renderPopup(biz) {
+      const d = new Date(biz.createdAt || Date.now());
+      const when = d.toLocaleString();
+      return `
+        <div style="min-width:180px">
+          <div style="font-weight:700">${escapeHTML(biz.name)}</div>
+          <div style="margin:4px 0">${escapeHTML(biz.desc)}</div>
+          <div style="font-size:12px; color:#64748b">${escapeHTML(biz.category)} • ${when}</div>
+          <div style="font-size:11px; color:#64748b">📍 ${biz.lat.toFixed(4)}, ${biz.lng.toFixed(4)}</div>
+          <div style="margin-top:6px; display:flex; gap:6px;">
+            <button class="leaflet-popup-close-button" type="button" title="Delete" onclick="window.__delBiz('${biz.id}')">Delete</button>
+          </div>
+        </div>
+      `;
+    }
+  
+    function escapeHTML(s){ return String(s).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'<','>':'>','"':'&quot;',"'":'&#39;'}[m])); }
+  
+    window.__delBiz = function(id){
+      const idx = businesses.findIndex(b => b.id === id);
+      if (idx === -1) return;
+      const m = markers.get(id);
+      if (m) { m.remove(); markers.delete(id); }
+      businesses.splice(idx,1);
+      save();
+      applyFilters(true);
+    }
+  
+    function matchesFilters(biz){
+      const catOK = (activeCategory === 'All') || (biz.category === activeCategory);
+      if (!catOK) return false;
+      if (!searchQuery) return true;
+      return (biz.name.toLowerCase().includes(searchQuery) ||
+              biz.desc.toLowerCase().includes(searchQuery));
+    }
+  
+    function applyFilters(keepOpenPopups = false){
+      bizLayer.clearLayers();
+      businesses.forEach(b => {
+        const m = ensureMarker(b);
+        if (matchesFilters(b)) {
+          m.addTo(bizLayer);
+          if (keepOpenPopups && m.isPopupOpen()) m.openPopup();
+        }
+      });
+    }
+  
+    // Initial load
+    load();
+    businesses.forEach(b => ensureMarker(b));
+    applyFilters();
+  
+    // Hide the tip bubble after 5s
+    setTimeout(() => {
+      const tip = document.querySelector('.bubble');
+      if (tip) tip.remove();
+    }, 5000);
+  </script>
+</body>
+</html>

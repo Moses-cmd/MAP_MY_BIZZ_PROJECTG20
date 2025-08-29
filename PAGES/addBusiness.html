@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Add Your Business - Map My Biz</title>
   <link rel="stylesheet" href="../CSS/style.css">
+  <script src="../JS/script.js"></script>
 </head>
 <body>
 
@@ -16,14 +17,21 @@
     <div class="nav-links">
       <a href="./dashboard.html">Home</a>
       <a href="./course.html">Courses</a>
-      <a href="./map.html">Smart Map</a>
+      <a href="../PAGES/internalMap.html">
+        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#4a90e2" stroke-width="2">
+          <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+          <circle cx="12" cy="10" r="3"></circle>
+        </svg>Add business on the Map</a>
       <a href="#">VR Training</a>
       <a href="./business.html">Business</a>
-    </div>
-    <div class="user-profile" id="userProfile">
-      <div class="user-icon">👤</div>
-      <span>Welcome, John!</span>
-    </div>
+      <div class="user-profile" id="userProfile">
+        <div class="user-icon">👤</div>
+        <span>Welcome, <span id="dashboardUsername">User</span>!</span>
+        <ul class="dropdown" id="dropdownMenu">
+          <li><a href="../updateinfo.html">Edit Personal Info</a></li>
+          <li><a href="../index.html" id="logoutBtn">Logout</a></li>
+        </ul>
+      </div>    
   </nav>
 
   <div class="container">
@@ -46,7 +54,7 @@
           <option value="Other">Other</option>
         </select>
       </div>
-
+    
       <div class="form-group">
         <label for="location">Location (Address)</label>
         <textarea id="location" name="location" rows="3" required></textarea>
@@ -67,13 +75,12 @@
         <textarea id="description" name="description" rows="4"></textarea>
       </div>
 
-      <button type="submit" class="btn-add">Add Business</button>
+      <button type="submit" class="btn-primary
+      ">Add Business</button>
     </form>
 
     <div id="message" class="message"></div>
   </div>
-
-  <script src="../JS/script.js"></script>
   <script>
     // Initialize form handler after script loads
     document.addEventListener("DOMContentLoaded", handleBusinessForm);

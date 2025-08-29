@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Map My Biz - Module 3: Hospitality Operations</title>
   <link rel="stylesheet" href="../CSS/style.css" />
- 
+  <script src="../JS/script.js"></script>
 </head>
 <body>
 
@@ -22,12 +22,12 @@
     </div>
     <div class="user-profile" id="userProfile">
       <div class="user-icon">👤</div>
-      <span>Welcome, John!</span>
+      <span>Welcome, <span id="dashboardUsername">User</span>!</span>
       <ul class="dropdown" id="dropdownMenu">
         <li><a href="./updateinfo.html">Edit Personal Info</a></li>
-        <li><a href="../index.html">Logout</a></li>
+        <li><a href="../index.html" id="logoutBtn">Logout</a></li>
       </ul>
-    </div>
+    </div>    
   </nav>
 
   <!-- Dashboard Content -->
@@ -110,8 +110,8 @@
 
       <!-- Footer Navigation -->
       <footer class="module-footer">
-        <a href="./module2.html" class="prev-btn">&larr; PREVIOUS LESSON</a>
-        <a href="./quiz3.html" class="quiz-btn">TAKE QUIZ ON THIS LESSON &rarr;</a>
+        <a href="../module2.html" class="prev-btn">&larr; PREVIOUS LESSON</a>
+        <a href="../quiz3.html" class="quiz-btn">TAKE QUIZ ON THIS LESSON &rarr;</a>
       </footer>
 
       <!-- Quiz Scores -->
@@ -132,7 +132,5 @@
       markModuleAsCompleted("Module 3");
     });
   </script>
-  <!-- External JS -->
-  <script src="../JS/script.js"></script>
 </body>
 </html>
