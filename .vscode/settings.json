@@ -1,0 +1,14 @@
+{
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 5432,
+            "driver": "PostgreSQL",
+            "name": "Map_myBiz",
+            "database": "MAPMYBIZZ",
+            "username": "postgres",
+            "password": "mybiz"
+        }
+    ]
+}
