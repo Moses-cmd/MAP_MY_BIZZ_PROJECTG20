@@ -1,14 +1,58 @@
-import supabase from '../Database/SuperbaseMapMyBiz.js';
+import supabase from "../supabaseClient.js";
 
+
+
+async function sendEmail() {
+  const url = "https://api.brevo.com/v3/emailCampaigns";
+
+  const payload = {
+    // Define the campaign settings
+    name: "Campaign sent via the API",
+    subject: "My subject",
+    sender: { name: "From name", email: "myfromemail@mycompany.com" },
+    type: "classic",
+    // Content that will be sent
+    htmlContent: "Congratulations! You successfully sent this example campaign via the Brevo API.",
+    // Select the recipients
+    recipients: { listIds: [2, 7] },
+    // Schedule the sending
+    scheduledAt: "2018-01-01 00:00:01"
+  };
+
+  try {
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "api-key": "YOUR_API_V3_KEY", // 🔑 replace with your actual Brevo API key
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(payload)
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to send email: " + response.status);
+    }
+
+    const data = await response.json();
+    console.log("Campaign created successfully:", data);
+    return data;
+  } catch (error) {
+    console.error("Error:", error);
+    return null;
+  }
+}
+
+
+console.log("Supabase client loaded:", supabase);
 document.addEventListener("DOMContentLoaded", () => {
   // ===== 1. LOGIN & SIGNUP FORMS =====
   const loginForm = document.querySelector("#loginForm");
   if (loginForm) {
     loginForm.addEventListener("submit", function (e) {
       e.preventDefault();
-  
+      
       const emailOrPhone = this.querySelector('input[placeholder="Phone Number or Email Address"]').value;
-  
+      
       // Always update userName on login
       localStorage.setItem("userName", emailOrPhone);
   
@@ -17,17 +61,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
   
-
-  const signupForm = document.querySelector("#signupForm");
-  if (signupForm) {
-    signupForm.addEventListener("submit", function (e) {
-      e.preventDefault();
-      const emailOrPhone = this.querySelector('input[placeholder="Phone Number or Email Address"]').value;
-      localStorage.setItem("userEmail", emailOrPhone);
-      localStorage.setItem("isLoggedIn", "true");
-      window.location.href = "../PAGES/signup.html"; // ✅ assuming signup goes to dashboard
-    });
-  }
+  
   
   // ===== 2. LOGOUT FUNCTION =====
   document.getElementById("logoutBtn")?.addEventListener("click", function (e) {

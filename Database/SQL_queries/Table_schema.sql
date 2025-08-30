@@ -17,7 +17,7 @@ CREATE TABLE Admin(
     gender char(1) NOT NULL
 ); 
 
-CREATE TABLE Module (
+CREATE TABLE Modules(
     module_id VARCHAR(10) PRIMARY KEY,
     title VARCHAR(100) NOT NULL,
     description TEXT
