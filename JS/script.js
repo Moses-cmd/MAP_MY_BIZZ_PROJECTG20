@@ -1,47 +1,49 @@
 import supabase from "../supabaseClient.js";
 
 
+const logo = "https://mapbiz.netlify.app/Assets/Lg.png"; // Logo URL
 
-async function sendEmail() {
-  const url = "https://api.brevo.com/v3/emailCampaigns";
+    const emailTemplate = (message, fullName) => `
+      <!DOCTYPE html>
+      <html>
+      <body>
+        <div style="font-family:Arial,sans-serif;padding:20px;">
+          <img src="${logo}" alt="GKSS-Logo" style="width:120px;"/>
+          <p>Dear ${fullName},</p>
+          <p>${message}</p>
+          <p>If you need help or have a suggestion, let us know in the group chat.</p>
+          <p>This message was sent from the MapMyBiz website.</p>
+          <footer style="font-size:12px;color:#777;">
+            &copy; ${new Date().getFullYear()} MapMyBiz. All rights reserved.
+          </footer>
+        </div>
+      </body>
+      </html>
+    `;
 
-  const payload = {
-    // Define the campaign settings
-    name: "Campaign sent via the API",
-    subject: "My subject",
-    sender: { name: "From name", email: "myfromemail@mycompany.com" },
-    type: "classic",
-    // Content that will be sent
-    htmlContent: "Congratulations! You successfully sent this example campaign via the Brevo API.",
-    // Select the recipients
-    recipients: { listIds: [2, 7] },
-    // Schedule the sending
-    scheduledAt: "2018-01-01 00:00:01"
-  };
+    async function sendEmail(email, fullName, subject, message) {
+      try {
+        const response = await fetch("https://api.brevo.com/v3/smtp/email", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "api-key": "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" // ⚠️ exposed if used in frontend
+          },
+          body: JSON.stringify({
+            sender: { email: "tevez11moses@gmail.com", name: "MapMyBiz" },
+            to: [{ email }],
+            subject,
+            htmlContent: emailTemplate(message, fullName),
+          }),
+        });
 
-  try {
-    const response = await fetch(url, {
-      method: "POST",
-      headers: {
-        "api-key": "YOUR_API_V3_KEY", // 🔑 replace with your actual Brevo API key
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(payload)
-    });
-
-    if (!response.ok) {
-      throw new Error("Failed to send email: " + response.status);
+        const result = await response.json();
+        console.log(result);
+        alert("Email sent!");
+      } catch (err) {
+        console.error("Error sending email:", err);
+      }
     }
-
-    const data = await response.json();
-    console.log("Campaign created successfully:", data);
-    return data;
-  } catch (error) {
-    console.error("Error:", error);
-    return null;
-  }
-}
-
 
 console.log("Supabase client loaded:", supabase);
 document.addEventListener("DOMContentLoaded", () => {
@@ -57,7 +59,7 @@ document.addEventListener("DOMContentLoaded", () => {
       localStorage.setItem("userName", emailOrPhone);
   
       localStorage.setItem("isLoggedIn", "true");
-      window.location.href = "../PAGES/dashboard.html";
+      //window.location.href = "../PAGES/dashboard.html";
     });
   }
   

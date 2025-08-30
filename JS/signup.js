@@ -20,12 +20,5 @@ const signupForm = document.querySelector("#signupForm");
         password: password,
         name: fullName
       });
-
-      console.log("Signup data:", data);
-      console.log("Signup error:", error);
-      /*const emailOrPhone = this.querySelector('input[placeholder="Phone Number or Email Address"]').value;
-      localStorage.setItem("userEmail", emailOrPhone);
-      localStorage.setItem("isLoggedIn", "true");
-      window.location.href = "../PAGES/signup.html"; // ✅ assuming signup goes to dashboard*/
     });
   }
