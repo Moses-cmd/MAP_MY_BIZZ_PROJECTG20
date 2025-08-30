@@ -1,49 +1,6 @@
 import supabase from "../supabaseClient.js";
 
 
-const logo = "https://mapbiz.netlify.app/Assets/Lg.png"; // Logo URL
-
-    const emailTemplate = (message, fullName) => `
-      <!DOCTYPE html>
-      <html>
-      <body>
-        <div style="font-family:Arial,sans-serif;padding:20px;">
-          <img src="${logo}" alt="GKSS-Logo" style="width:120px;"/>
-          <p>Dear ${fullName},</p>
-          <p>${message}</p>
-          <p>If you need help or have a suggestion, let us know in the group chat.</p>
-          <p>This message was sent from the MapMyBiz website.</p>
-          <footer style="font-size:12px;color:#777;">
-            &copy; ${new Date().getFullYear()} MapMyBiz. All rights reserved.
-          </footer>
-        </div>
-      </body>
-      </html>
-    `;
-
-    async function sendEmail(email, fullName, subject, message) {
-      try {
-        const response = await fetch("https://api.brevo.com/v3/smtp/email", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "api-key": "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" // ⚠️ exposed if used in frontend
-          },
-          body: JSON.stringify({
-            sender: { email: "tevez11moses@gmail.com", name: "MapMyBiz" },
-            to: [{ email }],
-            subject,
-            htmlContent: emailTemplate(message, fullName),
-          }),
-        });
-
-        const result = await response.json();
-        console.log(result);
-        alert("Email sent!");
-      } catch (err) {
-        console.error("Error sending email:", err);
-      }
-    }
 
 console.log("Supabase client loaded:", supabase);
 document.addEventListener("DOMContentLoaded", () => {
