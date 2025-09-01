@@ -10,32 +10,53 @@ if (signupForm) {
     const emailOrPhone = document.getElementById("email").value.trim();
     const password = document.getElementById("signupPassword").value.trim();
 
+    // Validate inputs
+    if (!fullName || !emailOrPhone || !password) {
+      alert("Please fill in all fields.");
+      return;
+    }
+
+    if (password.length < 6) {
+      alert("Password must be at least 6 characters.");
+      return;
+    }
+
     let email = null;
     let phone = null;
+
+    // Detect email or phone
     if (emailOrPhone.includes("@gmail.com")) {
       email = emailOrPhone;
-    } else if (emailOrPhone.startsWith("+27")) {
+    } else if (emailOrPhone.startsWith("+27") && /^\+27\d{9}$/.test(emailOrPhone)) {
       phone = emailOrPhone;
+    } else {
+      alert("Please enter a valid Gmail address or +27 phone number.");
+      return;
     }
 
     try {
-      // Create Supabase auth user
-      const { data: authData, error: authError } = await supabase.auth.signUp({
+      // ✅ Include full_name in user metadata so trigger can access it
+      const {  authData, error: authError } = await supabase.auth.signUp({
         email,
         phone,
         password,
+        options: {
+          data: {
+            full_name: fullName  // ← This goes into raw_user_meta_data
+          }
+        }
       });
 
       if (authError) throw authError;
 
-      console.log("Auth user created:", authData.user);
+      console.log("✅ Auth user created:", authData.user);
 
-      // Redirect to activation page (no localStorage needed)
-      window.location.href = "../Pages/activation.html";
+      // Redirect to activation or welcome page
+      window.location.href = "../PAGES/activation.html";
 
     } catch (err) {
-      console.error("Signup error:", err.message);
-      alert("Error: " + err.message);
+      console.error("🚫 Signup error:", err);
+      alert("Error: " + (err.message || "Something went wrong."));
     }
   });
 }
