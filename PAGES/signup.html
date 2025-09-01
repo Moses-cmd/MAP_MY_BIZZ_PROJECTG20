@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Account Activation</title>
+  <link rel="stylesheet" href="../CSS/style.css">
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="logo-container">
+      <img src="../Assets/nv.png" alt="Map My Biz Logo" />
+    </div>
+  </nav>
+
+  <!-- Activation Message -->
+  <div class="container form-container">
+    <h2>Account Activation</h2>
+    <p id="activation-message">We have sent an activation link to your registered email address. Please check your inbox to activate your account.</p>
+    
+    <button id="resend-btn">Resend Activation Email</button>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      // Option 1: Get email from localStorage
+      const userEmail = localStorage.getItem("userEmail");
+
+      // Option 2: Or from URL query string (?email=...)
+      const params = new URLSearchParams(window.location.search);
+      const emailFromUrl = params.get("email");
+
+      const emailToShow = emailFromUrl || userEmail || "your email";
+
+      // Update the message to include the email
+      document.getElementById("activation-message").textContent =
+        `We have sent an activation link to ${emailToShow}. Please check your inbox to activate your account.`;
+
+      // Resend button handler
+      document.getElementById("resend-btn").addEventListener("click", () => {
+        alert(`A new activation link has been sent to ${emailToShow}.`);
+      });
+    });
+  </script>
+<script type="module" src="../JS/script.js"></script>
+</body>
+</html>

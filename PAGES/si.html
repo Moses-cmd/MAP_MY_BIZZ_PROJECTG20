@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Map My Biz – Sign Up</title>
+  <link rel="stylesheet" href="../CSS/style.css">
+</head>
+<body>
+     <!-- Navbar -->
+  <nav class="navbar">
+    <div class="logo-container">
+      <img src="../Assets/nv.png" alt="Map My Biz Logo" />
+    </div>
+  </nav>
+
+  <div class="container">
+    <!-- Header -->
+    <header class="header">
+      <div class="logo-container">
+        <img src="../Assets/Lg.png" alt="Map My Biz Logo">
+      </div>
+      <div class="auth-section signup-section">
+      </div>
+    </header>
+    <!-- Sign-Up Section -->
+    <div class="login-signup-container">
+      <div class="auth-section signup-section">
+        <h2>Create An Account</h2>
+        <form id="signupForm">
+          <input type="text" id="fullName" placeholder="Full Name" required />
+          <input type="text" id="email" placeholder="Phone Number or Email Address" required />
+
+          <!-- Password fields with toggle -->
+          <div class="password-wrapper">
+            <input type="password" id="signupPassword" placeholder="Password" required />
+            <input type="password" id="confirmPassword" placeholder="Confirm Password" required />
+            <span class="toggle-password" data-target="signupPassword">&#128065;</span>
+          </div>
+
+          <button type="submit" class="btn-secondary">SIGN UP</button>
+        </form>
+      </div>
+    </div>
+    <!-- Language Selector -->
+    <div class="language-selector text-center">
+      <label>Select Language:</label>
+      <select>
+        <option value="en">English</option>
+        <option value="af">Afrikaans</option>
+      </select>
+    </div>
+
+    <!-- Help Link -->
+    <div class="help-link text-center">
+      <a href="#">Need Help?</a>
+      <span class="help-icon">&#9432;</span>
+    </div>
+  </div>
+  <script type="module" src="../JS/signup.js"></script>
+</body>
+</html>

@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Map My Biz – Business Directory</title>
+  <link rel="stylesheet" href="../CSS/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Merriweather:wght@400;700&display=swap" rel="stylesheet"/>
+  <style>
+    /* Override for directory */
+    body {
+      font-family: 'Lato', sans-serif;
+      background-color: #f9f9fc;
+    }
+
+    .hero {
+        background: linear-gradient(135deg, #0A8791 0%, #2ec4b6 100%);
+      color: white;
+      text-align: center;
+      padding: 100px 20px 60px;
+    }
+
+    .hero h1 {
+      font-family: 'Merriweather', serif;
+      font-size: 2.5rem;
+      margin-bottom: 15px;
+    }
+
+    .hero p {
+      font-size: 1.1rem;
+      max-width: 700px;
+      margin: 0 auto 30px;
+    }
+
+    /* Search & Filter Bar */
+    .search-filter {
+      max-width: 800px;
+      margin: 30px auto;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      padding: 0 20px;
+    }
+
+    .search-filter input {
+      flex: 1;
+      padding: 12px 16px;
+      border: 1px solid #00897b;
+      border-radius: 6px;
+      font-size: 1rem;
+    }
+
+    .search-filter select {
+      padding: 12px 16px;
+      border: 1px solid #00897b;
+      border-radius: 6px;
+      font-size: 1rem;
+      background-color: white;
+      color: #333;
+    }
+
+    /* Business Cards */
+    .business-cards {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 25px;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .card-business {
+      background: #e8f5f5;
+      border-radius: 12px;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+      padding: 20px;
+      width: 100%;
+      max-width: 350px;
+      transition: transform 0.3s ease;
+      border: 1px solid #b2dfdb;
+    }
+
+    .card-business:hover {
+      transform: translateY(-8px);
+    }
+
+    .card-business .logo {
+      width: 80px;
+      height: 80px;
+      background: #b2dfdb;
+      border-radius: 50%;
+      margin: 0 auto 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+    }
+
+    .card-business h3 {
+      font-family: 'Merriweather', serif;
+      font-size: 1.4rem;
+      color: #00897b;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    .card-business .category {
+      text-align: center;
+      font-size: 0.9rem;
+      color: #e91e63;
+      font-weight: bold;
+      margin-bottom: 12px;
+    }
+
+    .card-business p {
+      font-size: 0.95rem;
+      color: #555;
+      line-height: 1.6;
+      margin-bottom: 15px;
+    }
+
+    .card-business .contact {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 15px;
+      font-size: 0.9rem;
+    }
+
+    .card-business .contact a {
+      color: #00897b;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .btn-orange {
+      background-color: #ffb300;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: bold;
+      display: block;
+      text-align: center;
+      margin-top: 15px;
+      transition: background 0.3s;
+    }
+
+    .btn-orange:hover {
+      background-color: #ffaa00;
+    }
+
+    /* No Results */
+    .no-results {
+      text-align: center;
+      grid-column: 1 / -1;
+      color: #777;
+      font-style: italic;
+    }
+
+    /* Footer CTA */
+    .cta-footer {
+      text-align: center;
+      padding: 60px 20px;
+      background-color: #2c3e50;
+      color: white;
+    }
+
+    .cta-footer h2 {
+      font-size: 1.8rem;
+      margin-bottom: 15px;
+    }
+
+    .cta-footer p {
+      max-width: 700px;
+      margin: 0 auto 25px;
+      font-size: 1.1rem;
+      opacity: 0.9;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <nav class="navbar">
+      <div class="logo-container">
+        <img src="../Assets/Lg.png" alt="Map My Biz Logo" />
+      </div>
+      <div class="nav-links">
+        <a href="../index.html">Home</a>
+        <a href="./map.html">
+            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#4a90e2" stroke-width="2">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+              <circle cx="12" cy="10" r="3"></circle>
+            </svg>Smart Map</a>
+        <a href="../index.html" class="cta-button">Log In</a>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <h1>Explore Local Businesses</h1>
+    <p>Discover and support entrepreneurs in rural communities — from food to crafts, services to tourism.</p>
+  </section>
+
+  <!-- Search & Filter -->
+  <div class="search-filter">
+    <input type="text" placeholder="Search by name or keyword..." id="searchInput" />
+    <select id="categoryFilter">
+      <option value="">All Categories</option>
+      <option value="food">Food & Catering</option>
+      <option value="crafts">Crafts & Artisans</option>
+      <option value="services">Services (Hair, Repair, etc.)</option>
+      <option value="tourism">Tourism & Experiences</option>
+      <option value="retail">Retail & Clothing</option>
+    </select>
+  </div>
+
+  <!-- Business Cards -->
+  <div class="business-cards" id="businessList">
+
+    <!-- Business 1 -->
+    <div class="card-business" data-category="food" data-name="Thandi's Kitchen">
+      <div class="logo">🍽️</div>
+      <h3>Thandi's Kitchen</h3>
+      <div class="category">Food & Catering</div>
+      <p>Homemade traditional meals, baked goods, and catering for events. Famous for her umngqusho and amagwinya.</p>
+      <div class="contact">
+        <a href="tel:+27123456789">Call</a>
+        <a href="https://wa.me/27123456789">WhatsApp</a>
+      </div>
+      <a href="../PAGES/businessId.html?id=thandi-kitchen" class="btn-orange">View Profile</a>
+    </div>
+
+    <!-- Business 2 -->
+    <div class="card-business" data-category="crafts" data-name="Zanele Beads">
+      <div class="logo">🎨</div>
+      <h3>Zanele Beads</h3>
+      <div class="category">Crafts & Artisans</div>
+      <p>Handmade beadwork, necklaces, and decor. Each piece tells a story of culture and creativity.</p>
+      <div class="contact">
+        <a href="tel:+27123456790">Call</a>
+        <a href="https://wa.me/27123456790">WhatsApp</a>
+      </div>
+      <a href="../PAGES/businessId.html?id=zanele-beads" class="btn-orange">View Profile</a>
+    </div>
+
+    <!-- Business 3 -->
+    <div class="card-business" data-category="services" data-name="Sipho's Repair">
+      <div class="logo">🔧</div>
+      <h3>Sipho's Repair</h3>
+      <div class="category">Services</div>
+      <p>Electronics and appliance repair. Fast, affordable, and reliable service for the whole community.</p>
+      <div class="contact">
+        <a href="tel:+27123456791">Call</a>
+        <a href="https://wa.me/27123456791">WhatsApp</a>
+      </div>
+      <a href="./PAGES/businessId.html?id=sipho-repair" class="btn-orange">View Profile</a>
+    </div>
+
+    <!-- Business 4 -->
+    <div class="card-business" data-category="tourism" data-name="Heritage Trails">
+      <div class="logo">🏞️</div>
+      <h3>Heritage Trails</h3>
+      <div class="category">Tourism & Experiences</div>
+      <p>Guided nature walks, cultural storytelling, and ancestral site visits. Learn from the elders.</p>
+      <div class="contact">
+        <a href="tel:+27123456792">Call</a>
+        <a href="https://wa.me/27123456792">WhatsApp</a>
+      </div>
+      <a href="./PAGES/businessId.html?id=heritage-trails" class="btn-orange">View Profile</a>
+    </div>
+
+    <!-- Business 5 -->
+    <div class="card-business" data-category="retail" data-name="Nkosi Clothing">
+      <div class="logo">👕</div>
+      <h3>Nkosi Clothing</h3>
+      <div class="category">Retail & Clothing</div>
+      <p>Custom-made traditional attire and modern African fashion. Proudly handmade.</p>
+      <div class="contact">
+        <a href="tel:+27123456793">Call</a>
+        <a href="https://wa.me/27123456793">WhatsApp</a>
+      </div>
+      <a href="./PAGES/businessId.html?id=nkosi-clothing" class="btn-orange">View Profile</a>
+    </div>
+
+  </div>
+
+  <!-- Call to Action Footer -->
+  <section class="cta-footer">
+    <h2>Are You a Rural Entrepreneur?</h2>
+    <p>Add your business to the map and reach more customers — local and visiting.</p>
+    <a href="../PAGES/si.html" class="btn-primary">List Your Business</a>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 Map My Biz. All rights reserved.</p>
+    <p>Empowering rural entrepreneurs and connecting communities.</p>
+    <p>Contact: <a href="mailto:info@mapmybiz.org">info@mapmybiz.org</a></p>
+  </footer>
+
+  <!-- Search & Filter Script -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const searchInput = document.getElementById("searchInput");
+      const categoryFilter = document.getElementById("categoryFilter");
+      const businessList = document.getElementById("businessList");
+      const cards = businessList.getElementsByClassName("card-business");
+
+      // Real-time search and filter
+      function filterBusinesses() {
+        const searchValue = searchInput.value.toLowerCase();
+        const categoryValue = categoryFilter.value;
+
+        Array.from(cards).forEach(card => {
+          const name = card.getAttribute("data-name").toLowerCase();
+          const category = card.getAttribute("data-category");
+
+          const matchesSearch = name.includes(searchValue);
+          const matchesCategory = categoryValue === "" || category === categoryValue;
+
+          if (matchesSearch && matchesCategory) {
+            card.style.display = "block";
+          } else {
+            card.style.display = "none";
+          }
+        });
+      }
+
+      searchInput.addEventListener("input", filterBusinesses);
+      categoryFilter.addEventListener("change", filterBusinesses);
+    });
+  </script>
+  
+</body>
+</html>

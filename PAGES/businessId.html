@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Map My Biz - Empowering Rural Business & Tourism</title>
+  <link rel="stylesheet" href="../CSS/style.css">
+  <script src="./JS/script.js"></script>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="logo-container">
+      <img src="../Assets/nv.png" alt="Map My Biz Logo" />
+    </div>
+    <div class="nav-links">
+      <a href="../index.html">Home</a>
+    </div>
+  </nav>
+  <div class="container">
+    <!-- Header -->
+    <header class="header">
+      <div class="logo-container">
+        <img src="../Assets/Lg.png" alt="Map My Biz Logo">
+      </div>
+    </header>
+    <!-- Auth Container -->
+    <div class="b">
+      <!-- Sign-Up Section -->
+    <!-- LOGIN SECTION -->
+<div class="auth-section signup-section">
+  <h2>LOG IN</h2>
+  <form id="loginFormBu">
+    <!-- Email / Phone -->
+    <input 
+      type="text" 
+      id="loginEmail" 
+      placeholder="Phone Number or Email Address" 
+      required 
+    />
+
+    <!-- Password -->
+    <div class="password-wrapper">
+      <input 
+        type="password" 
+        id="loginPassword" 
+        placeholder="Password" 
+        required 
+      />
+      <span 
+        class="toggle-password" 
+        data-target="loginPassword">&#128065;
+      </span>
+    </div>
+
+    <!-- Submit -->
+    <button type="submit" class="btn-businesId">LOG IN</button>
+  </form>
+
+  <!-- Switch to learner -->
+  <div class="auth-section signup-section">
+    <h4><a href="../login/index.html">Sign in as Learner</a></h4>
+  </div>
+</div>
+           <!-- Language Selector -->
+      <div class="language-selector">
+        <br>
+        <label>Select Language:</label>
+        <br>
+        <select>
+          <option>English</option>
+          <option>Afrikaans</option>
+        </select>
+      </div>
+       <!-- Help Link -->
+       <div class="help-link">
+        <a href="#">Need Help?</a>
+        <span class="help-icon">&#9432;</span>
+      </div>
+        </form>
+      </div>
+      
+    </div>
+  </div>
+  <script>
+    // ===== Handle Login =====
+    const loginFormBu = document.querySelector("#loginFormBu");
+    if (loginFormBu) {
+      loginFormBu.addEventListener("submit", function (e) {
+        e.preventDefault();
+  
+        const emailOrPhone = document.querySelector("#loginEmail").value;
+        const password = document.querySelector("#loginPassword").value;
+  
+        // ✅ For now we only save email/phone (no real authentication yet)
+        localStorage.setItem("userEmail", emailOrPhone);
+        localStorage.setItem("isLoggedIn", "true");
+  
+        // Redirect
+        window.location.href = "../PAGES/partner.html";
+      });
+    }
+
+  </script>
+</body>
+</html>

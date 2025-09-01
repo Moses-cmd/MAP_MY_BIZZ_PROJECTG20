@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Module 13: Business Communication & Negotiation | Map My Biz</title>
+
+  <!-- Correct paths to CSS and JS -->
+  <link rel="stylesheet" href="../CSS/style.css">
+  <script src="../JS/script.js" defer></script>
+
+  <style>
+    .module-container {
+      max-width: 900px;
+      margin: 20px auto;
+      padding: 20px;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      line-height: 1.7;
+    }
+    .module-header {
+      text-align: center;
+      margin-bottom: 30px;
+      color: #2c3e50;
+    }
+    .module-header h1 {
+      font-size: 2rem;
+      margin-bottom: 10px;
+    }
+    .module-header p {
+      color: #7f8c8d;
+      font-size: 1.1rem;
+    }
+    .lesson-section {
+      margin-bottom: 30px;
+      padding: 20px;
+      background: #f9f9fb;
+      border-left: 5px solid #4a90e2;
+      border-radius: 8px;
+    }
+    .lesson-section h3 {
+      color: #2980b9;
+      margin-bottom: 10px;
+    }
+    .lesson-section ul, .lesson-section ol {
+      padding-left: 20px;
+    }
+    .action-buttons {
+      text-align: center;
+      margin-top: 30px;
+    }
+    .btn {
+      display: inline-block;
+      padding: 12px 24px;
+      margin: 0 10px;
+      font-size: 1rem;
+      color: white;
+      background-color: #4a90e2;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      text-decoration: none;
+    }
+    .btn-success {
+      background-color: #2ec4b6;
+    }
+    .btn:hover {
+      opacity: 0.9;
+    }
+    .completion-badge {
+      text-align: center;
+      margin-top: 20px;
+      padding: 15px;
+      background-color: #e8f5e9;
+      border-radius: 8px;
+      color: #2e7d32;
+      font-weight: bold;
+      display: none;
+    }
+    .example {
+      background-color: #e8f5f9;
+      padding: 12px;
+      border-radius: 6px;
+      margin: 15px 0;
+      font-size: 0.95rem;
+      font-style: italic;
+    }
+    .tip {
+      background-color: #fff8e1;
+      padding: 12px;
+      border: 1px solid #ffcc80;
+      border-radius: 6px;
+      margin: 15px 0;
+      font-size: 0.95rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <div class="logo-container">
+      <img src="../Assets/MMB.png" alt="Map My Biz Logo" />
+    </div>
+    <div class="nav-links">
+      <a href="../PAGES/dashboard.html">Home</a>
+      <a href="../course.html">Courses</a>
+      <a href="../map.html">
+        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#4a90e2" stroke-width="2">
+          <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+          <circle cx="12" cy="10" r="3"></circle>
+        </svg>Smart Map</a>
+      <a href="#">VR Training</a>
+      <a href="../business.html">Business</a>
+    </div>
+    <div class="language-selector">
+      <select>
+        <option value="en">English</option>
+        <option value="es">Afrikaans</option>
+      </select>
+    </div>
+    <div class="user-profile" id="userProfile">
+      <div class="user-icon">👤</div>
+      <span>Welcome, <span id="dashboardUsername">User</span>!</span>
+      <ul class="dropdown" id="dropdownMenu">
+        <li><a href="../updateinfo.html">Edit Personal Info</a></li>
+        <li><a href="../index.html" id="logoutBtn">Logout</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Main Module Content -->
+  <div class="module-container">
+    <div class="module-header">
+      <h1>📘 Module 13: Business Communication & Negotiation</h1>
+      <p>Learn how to speak confidently, clearly, and professionally in every business situation</p>
+    </div>
+
+    <div class="lesson-section">
+      <h3>🎯 Learning Objectives</h3>
+      <ul>
+        <li>Communicate clearly with customers, suppliers, and partners</li>
+        <li>Write professional messages via WhatsApp, SMS, or email</li>
+        <li>Negotiate better prices, payment terms, or deals</li>
+        <li>Handle difficult conversations with confidence</li>
+        <li>Build trust through honest, respectful communication</li>
+      </ul>
+    </div>
+
+    <div class="lesson-section">
+      <h3>💬 1. Clear Communication Builds Trust</h3>
+      <p>How you speak and write affects how seriously people take your business.</p>
+      <ul>
+        <li><strong>Be Clear:</strong> Say what you mean. Avoid confusion.</li>
+        <li><strong>Be Polite:</strong> “Please” and “Thank you” go a long way.</li>
+        <li><strong>Be Prompt:</strong> Reply to messages within 24 hours if possible.</li>
+      </ul>
+      <p><strong>Example:</strong><br>
+        ❌ “I’ll bring it when I can.”<br>
+        ✅ “I’ll deliver your order tomorrow between 10 AM and 12 PM.”</p>
+    </div>
+
+    <div class="lesson-section">
+      <h3>📱 2. Professional Messaging (WhatsApp, SMS, Email)</h3>
+      <p>You don’t need to sound formal — just clear and respectful.</p>
+      <strong>Tips for Writing Messages:</strong>
+      <ul>
+        <li>Start with a greeting: “Hi Mr. Jacobs, this is Thandi from Thandi’s Bakery.”</li>
+        <li>Be direct: “I’m following up on the flour order we discussed.”</li>
+        <li>End clearly: “Please let me know if this works for you.”</li>
+      </ul>
+      <div class="example">
+        Hi Nomsa,<br>
+        This is Jabu from Soweto Repairs. Just confirming your phone is ready for pickup today between 3–5 PM.<br>
+        Total: R350 cash on collection.<br>
+        Thanks for trusting us with your repair!
+      </div>
+    </div>
+
+    <div class="lesson-section">
+      <h3>🤝 3. How to Negotiate Like a Pro</h3>
+      <p>Negotiation means discussing terms so both sides win.</p>
+      <p>You can negotiate:</p>
+      <ul>
+        <li>Prices with suppliers (“Can I get a discount if I buy more?”)</li>
+        <li>Payment terms (“Can I pay half now, half later?”)</li>
+        <li>Delivery times (“Can you deliver by Thursday?”)</li>
+      </ul>
+      <strong>Negotiation Tips:</strong>
+      <ul>
+        <li><strong>Do Your Research:</strong> Know the fair price before you ask.</li>
+        <li><strong>Be Respectful:</strong> “I really like your product. Is there any flexibility on price?”</li>
+        <li><strong>Offer Value:</strong> “I’ll pay cash today if you can reduce the price by 10%.”</li>
+      </ul>
+    </div>
+
+    <div class="lesson-section">
+      <h3>🛒 Real-Life Example: Negotiating Stock Prices</h3>
+      <p><strong>You:</strong> “Hi, I’m starting a small snack business. I’d like to buy 100 packets of chips. The usual price is R8, but I see others get R7 in bulk. Can I get R7 if I pay cash today?”</p>
+      <p><strong>Supplier:</strong> “Hmm… if you take 120 packets, yes.”</p>
+      <p><strong>You:</strong> “Deal. I’ll come now with cash.”</p>
+      <p>✅ You saved R120. The supplier made a bigger sale. Win-win!</p>
+    </div>
+
+    <div class="lesson-section">
+      <h3>🗣️ 4. Handling Difficult Conversations</h3>
+      <p>Sometimes you need to talk about tough things — late payments, bad quality, or complaints.</p>
+      <strong>Stay Calm & Professional:</strong>
+      <ul>
+        <li><strong>Don’t blame:</strong> Use “I” statements. “I noticed the delivery was late.”</li>
+        <li><strong>Focus on the solution:</strong> “How can we fix this?”</li>
+        <li><strong>Listen first:</strong> Let the other person explain.</li>
+      </ul>
+      <div class="tip">
+        💡 Practice in your head: “I am calm. I am professional. I deserve respect.”
+      </div>
+    </div>
+
+    <div class="lesson-section">
+      <h3>📞 5. Phone & In-Person Communication Tips</h3>
+      <ul>
+        <li><strong>Speak clearly:</strong> Don’t rush. Pause between sentences.</li>
+        <li><strong>Smile while talking:</strong> It changes your tone and makes you sound friendlier.</li>
+        <li><strong>Prepare:</strong> Know what you want to say before calling.</li>
+        <li><strong>Take notes:</strong> Write down agreements (e.g., “Delivery on Friday at 2 PM”)</li>
+      </ul>
+      <p><strong>Pro Tip:</strong> Record important agreements in a WhatsApp message after the call: “Just confirming — we agreed on R900, paid 50% upfront.”</p>
+    </div>
+
+    <div class="lesson-section">
+      <h3>🌟 6. Build Confidence Over Time</h3>
+      <p>You don’t need to be perfect — just consistent.</p>
+      <ul>
+        <li>Start small: Practice one professional message per week</li>
+        <li>Learn from each conversation</li>
+        <li>Ask for feedback: “Was my quote clear? Is there anything else you need?”</li>
+      </ul>
+      <p><strong>Remember:</strong> Every great business owner started where you are — learning as they went.</p>
+    </div>
+
+    <!-- Completion Feedback -->
+    <div id="completionBadge" class="completion-badge">
+      🎉 Congratulations! Module 13 has been marked as completed.
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="action-buttons">
+      <a href="../PAGES/dashboard.html" class="btn">Back to Dashboard</a>
+      <button id="markCompleteBtn" class="btn btn-success">Mark as Complete & Continue</button>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const markBtn = document.getElementById("markCompleteBtn");
+      const completionBadge = document.getElementById("completionBadge");
+  
+      // Define module name (you can set this per module)
+      const moduleName = "Module 1";  // Change this in each module: "Module 2", etc.
+  
+      // Fallback: If markModuleAsCompleted is not loaded from script.js
+      if (typeof markModuleAsCompleted === 'undefined') {
+        window.markModuleAsCompleted = async function (moduleId) {
+          // Fallback to localStorage if Supabase isn't ready
+          let completed = JSON.parse(localStorage.getItem("completedModules") || "[]");
+          if (!completed.includes(moduleId)) {
+            completed.push(moduleId);
+            localStorage.setItem("completedModules", JSON.stringify(completed));
+          }
+          // Simulate progress update
+          if (typeof updateProgressUI === 'function') {
+            await updateProgressUI();
+          }
+        };
+      }
+  
+      // Save last opened module
+      if (typeof saveLastModule === 'function') {
+        saveLastModule(moduleName);
+      } else {
+        localStorage.setItem("lastOpenedModule", moduleName);
+      }
+  
+      // Mark module as completed when button is clicked
+      markBtn.addEventListener("click", async function () {
+        // Mark in Supabase or fallback
+        if (typeof markModuleAsCompleted === 'function') {
+          await markModuleAsCompleted(moduleName);
+        }
+  
+        // Show completion message
+        completionBadge.style.display = "block";
+  
+        // Redirect after delay
+        setTimeout(() => {
+          window.location.href = "../PAGES/dashboard.html";
+        }, 1500);
+      });
+  
+      // Optional: Remove auto-completion on load
+      // ❌ Avoid this line if you don't want instant credit:
+      // markModuleAsCompleted("Module 1");
+    });
+  </script>
+</body>
+</html>

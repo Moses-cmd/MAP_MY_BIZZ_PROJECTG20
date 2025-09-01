@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Module 9: Investment Strategies | Map My Biz</title>
+
+  <!-- Correct paths to CSS and JS -->
+  <link rel="stylesheet" href="../CSS/style.css">
+  <script src="../JS/script.js" defer></script>
+
+  <style>
+    .module-container {
+      max-width: 900px;
+      margin: 20px auto;
+      padding: 20px;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      line-height: 1.7;
+    }
+    .module-header {
+      text-align: center;
+      margin-bottom: 30px;
+      color: #2c3e50;
+    }
+    .module-header h1 {
+      font-size: 2rem;
+      margin-bottom: 10px;
+    }
+    .module-header p {
+      color: #7f8c8d;
+      font-size: 1.1rem;
+    }
+    .lesson-section {
+      margin-bottom: 30px;
+      padding: 20px;
+      background: #f9f9fb;
+      border-left: 5px solid #4a90e2;
+      border-radius: 8px;
+    }
+    .lesson-section h3 {
+      color: #2980b9;
+      margin-bottom: 10px;
+    }
+    .lesson-section ul, .lesson-section ol {
+      padding-left: 20px;
+    }
+    .action-buttons {
+      text-align: center;
+      margin-top: 30px;
+    }
+    .btn {
+      display: inline-block;
+      padding: 12px 24px;
+      margin: 0 10px;
+      font-size: 1rem;
+      color: white;
+      background-color: #4a90e2;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      text-decoration: none;
+    }
+    .btn-success {
+      background-color: #2ec4b6;
+    }
+    .btn:hover {
+      opacity: 0.9;
+    }
+    .completion-badge {
+      text-align: center;
+      margin-top: 20px;
+      padding: 15px;
+      background-color: #e8f5e9;
+      border-radius: 8px;
+      color: #2e7d32;
+      font-weight: bold;
+      display: none;
+    }
+    .tip-box {
+      background-color: #fff8e1;
+      border: 1px solid #ffcc80;
+      padding: 12px;
+      border-radius: 6px;
+      margin: 15px 0;
+      font-size: 0.95rem;
+    }
+    .example {
+      background-color: #e8f5f9;
+      padding: 12px;
+      border-radius: 6px;
+      margin: 15px 0;
+      font-size: 0.95rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <div class="logo-container">
+      <img src="../Assets/MMB.png" alt="Map My Biz Logo" />
+    </div>
+    <div class="nav-links">
+      <a href="../PAGES/dashboard.html">Home</a>
+      <a href="../course.html">Courses</a>
+      <a href="../map.html">
+        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#4a90e2" stroke-width="2">
+          <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+          <circle cx="12" cy="10" r="3"></circle>
+        </svg>Smart Map</a>
+      <a href="#">VR Training</a>
+      <a href="../business.html">Business</a>
+    </div>
+    <div class="language-selector">
+      <select>
+        <option value="en">English</option>
+        <option value="es">Afrikaans</option>
+      </select>
+    </div>
+    <div class="user-profile" id="userProfile">
+      <div class="user-icon">👤</div>
+      <span>Welcome, <span id="dashboardUsername">User</span>!</span>
+      <ul class="dropdown" id="dropdownMenu">
+        <li><a href="../updateinfo.html">Edit Personal Info</a></li>
+        <li><a href="../index.html" id="logoutBtn">Logout</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Main Module Content -->
+  <div class="module-container">
+    <div class="module-header">
+      <h1>📘 Module 9: Investment Strategies</h1>
+      <p>Learn how to grow your money wisely — whether you're investing in your business or your future</p>
+    </div>
+
+    <div class="lesson-section">
+      <h3>🎯 Learning Objectives</h3>
+      <ul>
+        <li>Understand what investment means for small business owners</li>
+        <li>Learn the difference between saving and investing</li>
+        <li>Discover safe ways to grow your money</li>
+        <li>Reinvest profits to grow your business</li>
+        <li>Avoid common investment scams and risky decisions</li>
+      </ul>
+    </div>
+
+    <div class="lesson-section">
+      <h3>💰 1. What Is Investment?</h3>
+      <p><strong>Investing</strong> means using your money to make more money — or to grow your business.</p>
+      <p>It’s not just for the rich. Even R50 or R100 can start growing if used wisely.</p>
+      <ul>
+        <li><strong>Personal Investment:</strong> Saving for the future (e.g., education, home, retirement)</li>
+        <li><strong>Business Investment:</strong> Buying new equipment, stock, or skills to grow sales</li>
+      </ul>
+      <p><strong>Golden Rule:</strong> Never invest money you can’t afford to lose.</p>
+    </div>
+
+    <div class="lesson-section">
+      <h3>储蓄 vs. Investing: What’s the Difference?</h3>
+      <p>Both are important — but they serve different purposes.</p>
+      <table border="1" cellpadding="8" cellspacing="0" style="width: 100%; border-collapse: collapse; margin: 15px 0;">
+        <tr style="background-color: #f0f8ff;">
+          <th>Saving</th>
+          <th>Investing</th>
+        </tr>
+        <tr>
+          <td>Putting money aside for safety</td>
+          <td>Using money to grow more money</td>
+        </tr>
+        <tr>
+          <td>Low risk</td>
+          <td>Some risk, but potential for higher returns</td>
+        </tr>
+        <tr>
+          <td>For emergencies or short-term goals</td>
+          <td>For long-term growth (6 months+)</td>
+        </tr>
+        <tr>
+          <td>Example: A “rainy day” envelope</td>
+          <td>Example: Buying a second sewing machine to take more orders</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="lesson-section">
+      <h3>📈 3. Safe Ways to Grow Your Money</h3>
+      <p>You don’t need to gamble. Try these safer options:</p>
+      <ul>
+        <li><strong>Reinvest in Your Business:</strong>
+          <ul>
+            <li>Buy better tools or equipment</li>
+            <li>Buy more stock to meet demand</li>
+            <li>Take a course to improve your skills</li>
+          </ul>
+        </li>
+        <li><strong>Stokvels & Savings Groups:</strong>
+          <ul>
+            <li>Join a trusted group that pools money monthly</li>
+            <li>Use it to buy big items (fridge, generator) without debt</li>
+          </ul>
+        </li>
+        <li><strong>Fixed Savings Accounts:</strong>
+          <ul>
+            <li>Ask your bank about accounts that earn interest</li>
+            <li>Start small — even R50/month adds up</li>
+          </ul>
+        </li>
+      </ul>
+      <div class="tip-box">
+        <strong>Tip:</strong> Aim to save or invest at least 10% of your profits. Pay yourself first!
+      </div>
+    </div>
+
+    <div class="lesson-section">
+      <h3>🔧 4. Invest in Your Business for Growth</h3>
+      <p>The best investment many entrepreneurs can make is in their own business.</p>
+      <ul>
+        <li><strong>Upgrade Equipment:</strong> A faster sewing machine = more clothes per day.</li>
+        <li><strong>Buy in Bulk:</strong> Save money by buying stock at lower prices.</li>
+        <li><strong>Brand Your Business:</strong> A simple logo, business cards, or uniform builds trust.</li>
+        <li><strong>Learn New Skills:</strong> A R200 online course on baking or digital marketing can double your sales.</li>
+      </ul>
+      <div class="example">
+        <strong>Example:</strong> Thabo earns R200 profit per day repairing phones. He saves R20 daily. After 5 months, he has R3,000 — enough to buy a better toolkit. Now he fixes phones faster and takes on more customers.
+      </div>
+    </div>
+
+    <div class="lesson-section">
+      <h3>⚠️ 5. Avoid Scams & Risky “Get Rich Quick” Schemes</h3>
+      <p>If it sounds too good to be true — it probably is.</p>
+      <ul>
+        <li><strong>Red Flags:</strong>
+          <ul>
+            <li>“Double your money in 2 weeks!”</li>
+            <li>“No risk, 100% returns!”</li>
+            <li>Pressure to bring in friends (pyramid schemes)</li>
+          </ul>
+        </li>
+        <li><strong>Safe Rule:</strong> Only invest in things you understand.</li>
+        <li><strong>Ask:</strong> “Where is the money really coming from?”</li>
+      </ul>
+      <p><strong>Remember:</strong> Real wealth is built slowly, with patience and smart choices.</p>
+    </div>
+
+    <div class="lesson-section">
+      <h3>🌱 6. Build Wealth Step by Step</h3>
+      <p>You don’t need a lot to start — just consistency and discipline.</p>
+      <ul>
+        <li>Start small: Invest R10, R50, or R100 regularly</li>
+        <li>Track your investments: Know where your money is going</li>
+        <li>Review every 3 months: “Is this helping me grow?”</li>
+        <li>Dream big, but build slowly — brick by brick.</li>
+      </ul>
+      <div class="tip-box">
+        <strong>Weekly Challenge:</strong> Set aside just R10 this week as your “investment seed.” Next week, try R20. Keep growing it.
+      </div>
+    </div>
+
+    <!-- Completion Feedback -->
+    <div id="completionBadge" class="completion-badge">
+      🎉 Congratulations! Module 9 has been marked as completed.
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="action-buttons">
+      <a href="../PAGES/dashboard.html" class="btn">Back to Dashboard</a>
+      <button id="markCompleteBtn" class="btn btn-success">Mark as Complete & Continue</button>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const markBtn = document.getElementById("markCompleteBtn");
+      const completionBadge = document.getElementById("completionBadge");
+  
+      // Define module name (you can set this per module)
+      const moduleName = "Module 1";  // Change this in each module: "Module 2", etc.
+  
+      // Fallback: If markModuleAsCompleted is not loaded from script.js
+      if (typeof markModuleAsCompleted === 'undefined') {
+        window.markModuleAsCompleted = async function (moduleId) {
+          // Fallback to localStorage if Supabase isn't ready
+          let completed = JSON.parse(localStorage.getItem("completedModules") || "[]");
+          if (!completed.includes(moduleId)) {
+            completed.push(moduleId);
+            localStorage.setItem("completedModules", JSON.stringify(completed));
+          }
+          // Simulate progress update
+          if (typeof updateProgressUI === 'function') {
+            await updateProgressUI();
+          }
+        };
+      }
+  
+      // Save last opened module
+      if (typeof saveLastModule === 'function') {
+        saveLastModule(moduleName);
+      } else {
+        localStorage.setItem("lastOpenedModule", moduleName);
+      }
+  
+      // Mark module as completed when button is clicked
+      markBtn.addEventListener("click", async function () {
+        // Mark in Supabase or fallback
+        if (typeof markModuleAsCompleted === 'function') {
+          await markModuleAsCompleted(moduleName);
+        }
+  
+        // Show completion message
+        completionBadge.style.display = "block";
+  
+        // Redirect after delay
+        setTimeout(() => {
+          window.location.href = "../PAGES/dashboard.html";
+        }, 1500);
+      });
+  
+      // Optional: Remove auto-completion on load
+      // ❌ Avoid this line if you don't want instant credit:
+      // markModuleAsCompleted("Module 1");
+    });
+  </script>
+
+</body>
+</html>

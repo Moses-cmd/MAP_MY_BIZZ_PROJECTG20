@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Map My Biz - Dashboard</title>
+   <link rel="stylesheet" href="../CSS/style.css">
+   
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <div class="logo-container">
+      <img src="../Assets/MMB.png" alt="Map My Biz Logo" />
+    </div>
+    <div class="nav-links">
+      <a href="#" class="active">Home</a>
+      <a href="../PAGES/course.html">Courses</a>  <!-- same as above -->
+      <a href="#">VR Training</a>
+      <a href="../PAGES/business.html">Business</a>
+      <a href="../PAGES/tourism.html" class="cta-button">Tourism</a>
+    </div>
+    <div class="language-selector">
+      <select>
+        <option value="en">English</option>
+        <option value="es">Afrikaans</option>
+      </select>
+    </div>
+   <!-- User Profile Dropdown -->
+<div class="user-profile" id="userProfile">
+  <div class="user-icon">👤</div>
+  <span id="userNameDisplay">Loading...</span>
+  <ul class="dropdown" id="dropdownMenu">
+    <li><a href="./updateinfo.html">Edit Personal Info</a></li>
+    <li><a href="#" id="logoutBtn">Logout</a></li>
+  </ul>
+</div>
+    
+  </nav>
+
+   <!-- Welcome Back Section -->
+  <section class="welcome-back">
+    <h2>Welcome Let's start your business education journey</h2>
+  </section>
+
+  <!-- Progress Metrics -->
+  <section class="progress-metrics">
+    <div class="metric-card">
+      <h2>Continue Learning</h2>
+      <p>0/15</p>
+      <a href="./module3.html">
+      <svg xmlns="http://www.w3.org/2000/svg" width="70" height="70" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+      </svg>
+      </a>
+      <section class="continue-learning">
+        <button class="btn-primary" id="nu1m">View All Modules</button>
+      </section>
+    </div>
+    <div class="metric-card">
+      <h3>Badges Earned</h3>
+      <p>0/3</p>
+      <svg xmlns="http://www.w3.org/2000/svg" width="70" height="70" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="8" r="7"></circle>
+        <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline>
+      </svg>
+    </div>
+    <div class="metric-card">
+      <h3>Module Progress</h3>
+      <ul>
+        <span class="checkmark">&#10004;</span> Module 1
+        <span class="checkmark">&#10004;</span> Module 2
+        <span class="checkmark">&#9675;</span> Module 3
+        <span class="checkmark">&#9675;</span> Module 4
+        <span class="checkmark">&#9675;</span> Module 5
+        <span class="checkmark">&#9675;</span> Module 6
+        <span class="checkmark">&#9675;</span> Module 7
+        <span class="checkmark">&#9675;</span> Module 8
+        <span class="checkmark">&#9675;</span> Module 9
+        <span class="checkmark">&#9675;</span> Module 10
+        <span class="checkmark">&#9675;</span> Module 11
+        <span class="checkmark">&#9675;</span> Module 12
+        <span class="checkmark">&#9675;</span> Module 13
+        <span class="checkmark">&#9675;</span> Module 14
+        <span class="checkmark">&#9675;</span> Module 15
+      </ul>
+      
+    </div>
+    <div class="metric-card">
+      <div class="module-card vr-training">
+        <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="#2ec4b6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="6"/>
+          <rect x="3" y="10" width="18" height="4" rx="2"/>
+          <line x1="12" y1="6" x2="12" y2="6"/>
+          <line x1="12" y1="18" x2="12" y2="18"/>
+        </svg>
+        <h3>VR Training Available</h3>
+        <p>Practice business scenarios in virtual reality</p>
+        <button class="btn-VR">Start VR Session</button>
+      </div>
+    </div>
+    <div class="center-wrapper">
+      <div class="BHP">
+        <h3>Your Progress</h3>
+        <p>Overall Progress</p>
+        <div class="progress-container">
+          <div id="progressBar" class="progress" style="width: 0%;"></div>
+        </div>
+        <span id="progressText">0.0%<br>0 of 15 modules completed</span>
+      </div> <!-- ✅ Close .BHP -->
+    </div> <!-- ✅ Close .center-wrapper -->
+  </section>
+  <script type="module" src="../JS/script.js"></script>
+</body>
+</html>

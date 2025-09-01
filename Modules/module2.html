@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Module 2: Introduction to Business | Map My Biz</title>
+
+  <!-- Correct paths from /Modules folder -->
+  <link rel="stylesheet" href="../CSS/style.css">
+  <script src="../JS/script.js" defer></script>
+
+  <style>
+    .module-container {
+      max-width: 900px;
+      margin: 20px auto;
+      padding: 20px;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      line-height: 1.7;
+    }
+    .module-header {
+      text-align: center;
+      margin-bottom: 30px;
+      color: #2c3e50;
+    }
+    .module-header h1 {
+      font-size: 2rem;
+      margin-bottom: 10px;
+    }
+    .module-header p {
+      color: #7f8c8d;
+      font-size: 1.1rem;
+    }
+    .lesson-section {
+      margin-bottom: 30px;
+      padding: 20px;
+      background: #f9f9fb;
+      border-left: 5px solid #4a90e2;
+      border-radius: 8px;
+    }
+    .lesson-section h3 {
+      color: #2980b9;
+      margin-bottom: 10px;
+    }
+    .lesson-section ul {
+      padding-left: 20px;
+    }
+    .action-buttons {
+      text-align: center;
+      margin-top: 30px;
+    }
+    .btn {
+      display: inline-block;
+      padding: 12px 24px;
+      margin: 0 10px;
+      font-size: 1rem;
+      color: white;
+      background-color: #4a90e2;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      text-decoration: none;
+    }
+    .btn-success {
+      background-color: #2ec4b6;
+    }
+    .btn:hover {
+      opacity: 0.9;
+    }
+    .completion-badge {
+      text-align: center;
+      margin-top: 20px;
+      padding: 15px;
+      background-color: #e8f5e9;
+      border-radius: 8px;
+      color: #2e7d32;
+      font-weight: bold;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <div class="logo-container">
+      <img src="../Assets/MMB.png" alt="Map My Biz Logo" />
+    </div>
+    <div class="nav-links">
+      <a href="../PAGES/dashboard.html">Home</a>
+      <a href="../course.html">Courses</a>
+      <a href="../map.html">
+        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#4a90e2" stroke-width="2">
+          <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+          <circle cx="12" cy="10" r="3"></circle>
+        </svg>Smart Map</a>
+      <a href="#">VR Training</a>
+      <a href="../business.html">Business</a>
+    </div>
+    <div class="language-selector">
+      <select>
+        <option value="en">English</option>
+        <option value="es">Afrikaans</option>
+      </select>
+    </div>
+    <div class="user-profile" id="userProfile">
+      <div class="user-icon">👤</div>
+      <span>Welcome, <span id="dashboardUsername">User</span>!</span>
+      <ul class="dropdown" id="dropdownMenu">
+        <li><a href="../updateinfo.html">Edit Personal Info</a></li>
+        <li><a href="../index.html" id="logoutBtn">Logout</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Main Module Content -->
+  <div class="module-container">
+    <div class="module-header">
+      <h1>📘 Module 2: Introduction to Business</h1>
+      <p>Learn the fundamentals of starting and running a successful small business</p>
+    </div>
+
+    <div class="lesson-section">
+      <h3>🎯 Learning Objectives</h3>
+      <ul>
+        <li>Understand what a business is and how it creates value</li>
+        <li>Identify different types of business structures</li>
+        <li>Learn the key roles of an entrepreneur</li>
+        <li>Discover common reasons why businesses succeed or fail</li>
+        <li>Explore real-world examples of small businesses</li>
+      </ul>
+    </div>
+
+    <div class="lesson-section">
+      <h3>💼 1. What Is a Business?</h3>
+      <p>A <strong>business</strong> is an organization that provides goods or services to customers in exchange for money.</p>
+      <ul>
+        <li><strong>Examples:</strong> Bakery, mobile phone repair shop, tutoring service, online store</li>
+        <li><strong>Key Elements:</strong>
+          <ul>
+            <li><strong>Customers:</strong> People who buy your product/service</li>
+            <li><strong>Value:</strong> Solving a problem or fulfilling a need</li>
+            <li><strong>Revenue:</strong> Money earned from sales</li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+
+    <div class="lesson-section">
+      <h3>🏢 2. Types of Business Structures</h3>
+      <p>How you set up your business affects taxes, liability, and growth.</p>
+      <ul>
+        <li><strong>Sole Proprietorship:</strong> Owned by one person. Easy to start, full control, but unlimited personal liability.</li>
+        <li><strong>Partnership:</strong> Two or more people share ownership. Good for pooling skills and resources.</li>
+        <li><strong>Pty (Ltd):</strong> A private company. Limited liability, more formal setup, better for growth.</li>
+      </ul>
+    </div>
+
+    <div class="lesson-section">
+      <h3>🚀 3. The Role of the Entrepreneur</h3>
+      <p>An entrepreneur identifies opportunities and takes risks to build a business.</p>
+      <ul>
+        <li><strong>Key Traits:</strong> Creativity, resilience, problem-solving, customer focus</li>
+        <li><strong>Responsibilities:</strong>
+          <ul>
+            <li>Finding customers</li>
+            <li>Managing money</li>
+            <li>Hiring help (if needed)</li>
+            <li>Adapting to change</li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+
+    <div class="lesson-section">
+      <h3>✅ 4. Why Do Businesses Succeed or Fail?</h3>
+      <p>Understanding success factors helps you avoid common pitfalls.</p>
+      <ul>
+        <li><strong>Success Factors:</strong>
+          <ul>
+            <li>Strong customer demand</li>
+            <li>Good financial management</li>
+            <li>Clear value proposition</li>
+            <li>Passion and persistence</li>
+          </ul>
+        </li>
+        <li><strong>Common Reasons for Failure:</strong>
+          <ul>
+            <li>Not enough customers</li>
+            <li>Poor cash flow</li>
+            <li>Lack of planning</li>
+            <li>Ignoring customer feedback</li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+
+    <div class="lesson-section">
+      <h3>🌍 5. Real-World Examples</h3>
+      <p>Get inspired by real small businesses:</p>
+      <ul>
+        <li><strong>Thandi’s Hair Braiding</strong> – Grew from home service to a salon with 3 staff</li>
+        <li><strong>Jabu’s Vegetable Stall</strong> – Supplies fresh produce to local restaurants</li>
+        <li><strong>Nomsa’s Catering</strong> – Started with church events, now does weddings</li>
+      </ul>
+      <p><strong>Tip:</strong> Start small, listen to customers, and grow step by step.</p>
+    </div>
+
+    <!-- Completion Feedback -->
+    <div id="completionBadge" class="completion-badge">
+      🎉 Congratulations! Module 2 has been marked as completed.
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="action-buttons">
+      <a href="../PAGES/dashboard.html" class="btn">Back to Dashboard</a>
+      <button id="markCompleteBtn" class="btn btn-success">Mark as Complete & Continue</button>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const markBtn = document.getElementById("markCompleteBtn");
+      const completionBadge = document.getElementById("completionBadge");
+  
+      // Define module name (you can set this per module)
+      const moduleName = "Module 1";  // Change this in each module: "Module 2", etc.
+  
+      // Fallback: If markModuleAsCompleted is not loaded from script.js
+      if (typeof markModuleAsCompleted === 'undefined') {
+        window.markModuleAsCompleted = async function (moduleId) {
+          // Fallback to localStorage if Supabase isn't ready
+          let completed = JSON.parse(localStorage.getItem("completedModules") || "[]");
+          if (!completed.includes(moduleId)) {
+            completed.push(moduleId);
+            localStorage.setItem("completedModules", JSON.stringify(completed));
+          }
+          // Simulate progress update
+          if (typeof updateProgressUI === 'function') {
+            await updateProgressUI();
+          }
+        };
+      }
+  
+      // Save last opened module
+      if (typeof saveLastModule === 'function') {
+        saveLastModule(moduleName);
+      } else {
+        localStorage.setItem("lastOpenedModule", moduleName);
+      }
+  
+      // Mark module as completed when button is clicked
+      markBtn.addEventListener("click", async function () {
+        // Mark in Supabase or fallback
+        if (typeof markModuleAsCompleted === 'function') {
+          await markModuleAsCompleted(moduleName);
+        }
+  
+        // Show completion message
+        completionBadge.style.display = "block";
+  
+        // Redirect after delay
+        setTimeout(() => {
+          window.location.href = "../PAGES/dashboard.html";
+        }, 1500);
+      });
+  
+      // Optional: Remove auto-completion on load
+      // ❌ Avoid this line if you don't want instant credit:
+      // markModuleAsCompleted("Module 1");
+    });
+  </script>
+
+</body>
+</html>

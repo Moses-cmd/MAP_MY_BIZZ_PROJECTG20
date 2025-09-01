@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Module 5: Fundamentals of Customer Service | Map My Biz</title>
+
+  <!-- Correct paths from /Modules folder -->
+  <link rel="stylesheet" href="../CSS/style.css">
+  <script src="../JS/script.js" defer></script>
+
+  <style>
+    .module-container {
+      max-width: 900px;
+      margin: 20px auto;
+      padding: 20px;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      line-height: 1.7;
+    }
+    .module-header {
+      text-align: center;
+      margin-bottom: 30px;
+      color: #2c3e50;
+    }
+    .module-header h1 {
+      font-size: 2rem;
+      margin-bottom: 10px;
+    }
+    .module-header p {
+      color: #7f8c8d;
+      font-size: 1.1rem;
+    }
+    .lesson-section {
+      margin-bottom: 30px;
+      padding: 20px;
+      background: #f9f9fb;
+      border-left: 5px solid #4a90e2;
+      border-radius: 8px;
+    }
+    .lesson-section h3 {
+      color: #2980b9;
+      margin-bottom: 10px;
+    }
+    .lesson-section ul, .lesson-section ol {
+      padding-left: 20px;
+    }
+    .action-buttons {
+      text-align: center;
+      margin-top: 30px;
+    }
+    .btn {
+      display: inline-block;
+      padding: 12px 24px;
+      margin: 0 10px;
+      font-size: 1rem;
+      color: white;
+      background-color: #4a90e2;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      text-decoration: none;
+    }
+    .btn-success {
+      background-color: #2ec4b6;
+    }
+    .btn:hover {
+      opacity: 0.9;
+    }
+    .completion-badge {
+      text-align: center;
+      margin-top: 20px;
+      padding: 15px;
+      background-color: #e8f5e9;
+      border-radius: 8px;
+      color: #2e7d32;
+      font-weight: bold;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <div class="logo-container">
+      <img src="../Assets/MMB.png" alt="Map My Biz Logo" />
+    </div>
+    <div class="nav-links">
+      <a href="../PAGES/dashboard.html">Home</a>
+      <a href="../course.html">Courses</a>
+      <a href="../map.html">
+        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#4a90e2" stroke-width="2">
+          <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+          <circle cx="12" cy="10" r="3"></circle>
+        </svg>Smart Map</a>
+      <a href="#">VR Training</a>
+      <a href="../business.html">Business</a>
+    </div>
+    <div class="language-selector">
+      <select>
+        <option value="en">English</option>
+        <option value="es">Afrikaans</option>
+      </select>
+    </div>
+    <div class="user-profile" id="userProfile">
+      <div class="user-icon">👤</div>
+      <span>Welcome, <span id="dashboardUsername">User</span>!</span>
+      <ul class="dropdown" id="dropdownMenu">
+        <li><a href="../updateinfo.html">Edit Personal Info</a></li>
+        <li><a href="../index.html" id="logoutBtn">Logout</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Main Module Content -->
+  <div class="module-container">
+    <div class="module-header">
+      <h1>📘 Module 5: Fundamentals of Customer Service</h1>
+      <p>Learn how to deliver excellent service that keeps customers coming back</p>
+    </div>
+
+    <div class="lesson-section">
+      <h3>🎯 Learning Objectives</h3>
+      <ul>
+        <li>Understand what customer service means for small businesses</li>
+        <li>Learn the key principles of great customer service</li>
+        <li>Handle complaints professionally and turn them into opportunities</li>
+        <li>Build customer loyalty and trust</li>
+        <li>Use simple techniques to improve service every day</li>
+      </ul>
+    </div>
+
+    <div class="lesson-section">
+      <h3>😊 1. What Is Customer Service?</h3>
+      <p><strong>Customer service</strong> is the help and support you provide before, during, and after a sale.</p>
+      <p>It’s not just for big companies — it’s your secret weapon as a small business owner.</p>
+      <ul>
+        <li><strong>Before:</strong> Answering questions about your product</li>
+        <li><strong>During:</strong> Being polite, fast, and accurate when selling</li>
+        <li><strong>After:</strong> Following up, accepting returns, or solving problems</li>
+      </ul>
+      <p><strong>Why it matters:</strong> One great experience can turn a customer into a loyal supporter — and they’ll tell others!</p>
+    </div>
+
+    <div class="lesson-section">
+      <h3>🌟 2. The 5 Principles of Great Customer Service</h3>
+      <ol>
+        <li><strong>Be Friendly and Welcoming</strong><br>
+          A smile, eye contact, and saying “Hello” goes a long way.</li>
+        <li><strong>Listen Carefully</strong><br>
+          Don’t interrupt. Let the customer finish speaking. Show you understand.</li>
+        <li><strong>Be Prompt and Reliable</strong><br>
+          Respond quickly. Deliver on time. Keep promises.</li>
+        <li><strong>Solve Problems, Don’t Argue</strong><br>
+          Focus on fixing the issue, not blaming the customer.</li>
+        <li><strong>Go the Extra Mile</strong><br>
+          Small gestures (like a thank-you note or free sample) build big loyalty.</li>
+      </ol>
+    </div>
+
+    <div class="lesson-section">
+      <h3>📞 3. Handling Customer Complaints</h3>
+      <p>All businesses get complaints — how you respond defines your reputation.</p>
+      <p>Use the **LAER Method**:</p>
+      <ul>
+        <li><strong>L — Listen</strong>: Let the customer explain without interruption.</li>
+        <li><strong>A — Apologize</strong>: Say “I’m sorry you had this experience” — even if it wasn’t your fault.</li>
+        <li><strong>E — Empathize</strong>: Show you understand how they feel. “That sounds frustrating.”</li>
+        <li><strong>R — Resolve</strong>: Offer a solution: refund, replacement, discount, or fix.</li>
+      </ul>
+      <p><strong>Example:</strong><br>
+        Customer: “My order arrived late and damaged.”<br>
+        You: “I’m so sorry about that. I understand how disappointing that must be. Let me send a replacement right away — and include a small gift for the trouble.”</p>
+    </div>
+
+    <div class="lesson-section">
+      <h3>❤️ 4. Building Customer Loyalty</h3>
+      <p>Loyal customers buy more, refer others, and forgive small mistakes.</p>
+      <ul>
+        <li><strong>Know Your Customers:</strong> Remember names, preferences, or past purchases.</li>
+        <li><strong>Thank Them:</strong> Say “Thank you” in person, on receipts, or via message.</li>
+        <li><strong>Reward Returning Customers:</strong> Offer a “Buy 5, Get 1 Free” card or small discount.</li>
+        <li><strong>Ask for Feedback:</strong> “How was your experience?” shows you care.</li>
+      </ul>
+      <p><strong>Tip:</strong> A simple WhatsApp message like “Hope you enjoyed your purchase!” can strengthen your relationship.</p>
+    </div>
+
+    <div class="lesson-section">
+      <h3>🚀 5. Everyday Customer Service Tips</h3>
+      <ul>
+        <li>Keep your space clean and organized — it shows respect.</li>
+        <li>Dress neatly — you’re the face of your business.</li>
+        <li>Stay calm under pressure — customers mirror your energy.</li>
+        <li>Train anyone helping you to follow the same standards.</li>
+        <li>Review your service weekly: “What went well? What could be better?”</li>
+      </ul>
+      <p><strong>Remember:</strong> Excellence isn’t about being perfect — it’s about caring more than the average business.</p>
+    </div>
+
+    <!-- Completion Feedback -->
+    <div id="completionBadge" class="completion-badge">
+      🎉 Congratulations! Module 5 has been marked as completed.
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="action-buttons">
+      <a href="../PAGES/dashboard.html" class="btn">Back to Dashboard</a>
+      <button id="markCompleteBtn" class="btn btn-success">Mark as Complete & Continue</button>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const markBtn = document.getElementById("markCompleteBtn");
+      const completionBadge = document.getElementById("completionBadge");
+  
+      // Define module name (you can set this per module)
+      const moduleName = "Module 1";  // Change this in each module: "Module 2", etc.
+  
+      // Fallback: If markModuleAsCompleted is not loaded from script.js
+      if (typeof markModuleAsCompleted === 'undefined') {
+        window.markModuleAsCompleted = async function (moduleId) {
+          // Fallback to localStorage if Supabase isn't ready
+          let completed = JSON.parse(localStorage.getItem("completedModules") || "[]");
+          if (!completed.includes(moduleId)) {
+            completed.push(moduleId);
+            localStorage.setItem("completedModules", JSON.stringify(completed));
+          }
+          // Simulate progress update
+          if (typeof updateProgressUI === 'function') {
+            await updateProgressUI();
+          }
+        };
+      }
+  
+      // Save last opened module
+      if (typeof saveLastModule === 'function') {
+        saveLastModule(moduleName);
+      } else {
+        localStorage.setItem("lastOpenedModule", moduleName);
+      }
+  
+      // Mark module as completed when button is clicked
+      markBtn.addEventListener("click", async function () {
+        // Mark in Supabase or fallback
+        if (typeof markModuleAsCompleted === 'function') {
+          await markModuleAsCompleted(moduleName);
+        }
+  
+        // Show completion message
+        completionBadge.style.display = "block";
+  
+        // Redirect after delay
+        setTimeout(() => {
+          window.location.href = "../PAGES/dashboard.html";
+        }, 1500);
+      });
+  
+      // Optional: Remove auto-completion on load
+      // ❌ Avoid this line if you don't want instant credit:
+      // markModuleAsCompleted("Module 1");
+    });
+  </script>
+
+</body>
+</html>

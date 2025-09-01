@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Map My Biz - Courses</title>
+  <link rel="stylesheet" href="../CSS/style.css">
+</head>
+<body>
+
+ <!-- Navigation Bar -->
+ <nav class="navbar">
+   <div class="logo-container">
+     <img src="../Assets/MMB.png" alt="Map My Biz Logo" />
+   </div>
+   <div class="nav-links">
+     <a href="../PAGES/dashboard.html" class="active">Home</a>
+     <a href="../PAGES/course.html">Courses</a>  <!-- same as above -->
+     <a href="#">VR Training</a>
+     <a href="../PAGES/business.html">List Business</a>
+   </div>
+   <div class="language-selector">
+     <select>
+       <option value="en">English</option>
+       <option value="es">Afrikaans</option>
+     </select>
+   </div>
+   <!-- User Profile Dropdown -->
+<div class="user-profile" id="userProfile">
+  <div class="user-icon">👤</div>
+  <span id="userNameDisplay">Loading...</span>
+  <ul class="dropdown" id="dropdownMenu">
+    <li><a href="./updateinfo.html">Edit Personal Info</a></li>
+    <li><a href="#" id="logoutBtn">Logout</a></li>
+  </ul>
+</div>
+ </nav>
+  <!-- Progress Metrics -->
+  <section class="progress-metrics">
+    <div class="metric-card">
+      <h2>Continue Learning</h2>
+      <p>0/15</p>
+      <a href="./module3.html">
+      <svg xmlns="http://www.w3.org/2000/svg" width="70" height="70" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+      </svg>
+      </a>
+    </div>
+    <div class="metric-card">
+      <h3>Badges Earned</h3>
+      <p>0</p>
+      <svg xmlns="http://www.w3.org/2000/svg" width="70" height="70" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="8" r="7"></circle>
+        <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline>
+      </svg>
+    </div>
+    <div class="metric-card">
+      <h3>VR Enabled</h3>
+      <p>0</p>
+      <svg xmlns="http://www.w3.org/2000/svg" width="70" height="70" viewBox="0 0 24 24" fill="none" stroke="#2ec4b6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="6"/>
+        <rect x="3" y="10" width="18" height="4" rx="2"/>
+        <line x1="12" y1="6" x2="12" y2="6"/>
+        <line x1="12" y1="18" x2="12" y2="18"/>
+      </svg>
+    </div>
+  </section>
+
+ <!-- Search and Filters -->
+<section class="filters">
+  <div class="search-bar">
+    <input type="text" placeholder="Search modules..." />
+  </div>
+  <button class="clear-filters">
+    <svg xmlns="http://www.w3.org/2000/svg" width="70" height="70" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M19 7l-4-4m0 0l-4 4m4-4v12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-12"></path>
+    </svg>
+    Clear Filters
+  </button>
+</section>
+<div class="filter-buttons">
+  <button data-level="all" class="filter-btn active">All</button>
+  <button data-level="beginner" class="filter-btn">Beginner</button>
+  <button data-level="intermediate" class="filter-btn">Intermediate</button>
+  <button data-level="advanced" class="filter-btn">Advanced</button>
+</div>
+
+<!-- Course List -->
+<section class="module-list">
+  <div class="course-card" data-level="advanced">
+    <h3>Advanced Accounting & Taxation</h3>
+    <p>Learn Corporate accounting, taxes, and compliance.</p>
+    <span class="level">Advanced</span>
+    <button class="btn-primary" id="num1">Start Learning</button>
+  </div>
+  <div class="course-card" data-level="beginner">
+    <h3>Introduction to Business</h3>
+    <p>Learn the basics of running and managing a business.</p>
+    <span class="level">Beginner</span>
+    <button class="btn-primary" id="num2">Start Learning</button>
+  </div>
+  <div class="course-card" data-level="advanced">
+    <h3>Leadership & Organizational Behavior</h3>
+    <p>Leading teams and optimizing performance.</p>
+    <span class="level">Advanced</span>
+    <button class="btn-primary" id="num3">Start Learning</button>
+  </div>
+  <div class="course-card" data-level="intermediate">
+    <h3>Small Business Finance</h3>
+    <p>Understanding cash flow, loans, and business expenses.</p>
+    <span class="level">Intermediate</span>
+    <button class="btn-primary" id="num4">Start Learning</button>
+  </div> 
+  <div class="course-card" data-level="beginner">
+    <h3>Fundamentals of Customer Service</h3>
+    <p>Building strong relationships with clients.</p>
+    <span class="level">Beginner</span>
+    <button class="btn-primary" id="num5">Start Learning</button>
+  </div>
+  
+  <div class="course-card" data-level="intermediate">
+    <h3>Accounting Fundamentals</h3>
+    <p>Understand balance sheets and cash flow basics.</p>
+    <span class="level">Intermediate</span>
+    <button class="btn-primary" id="num6">Start Learning</button>
+  </div>
+<div class="course-card" data-level="intermediate">
+  <h3>Digital Marketing for Business</h3>
+  <p>Social media, email campaigns, and online presence.</p>
+  <span class="level">Intermediate</span>
+  <button class="btn-primary" id="num7">Start Learning</button>
+</div>
+<div class="course-card" data-level="beginner">
+  <h3>Entrepreneurial Mindset</h3>
+  <p>How to think like an entrepreneur and spot opportunities.</p>
+  <span class="level">Beginner</span>
+  <button class="btn-primary"id="num8">Start Learning</button>
+</div>
+<div class="course-card" data-level="advanced">
+  <h3>Investment Strategies</h3>
+  <p>Stock markets, mutual funds, and portfolio management.</p>
+  <span class="level">Advanced</span>
+  <button class="btn-primary"id="num9">Start Learning</button>
+</div>
+<div class="course-card" data-level="intermediate">
+<h3>Accounting Fundamentals</h3>
+<p>Understand balance sheets, income statements, and cash flow basics.</p>
+<span class="level">Intermediate</span>
+<button class="btn-primary" id="num10">Start Learning</button>
+</div>
+  <div class="course-card" data-level="advanced">
+    <h3>Business Analytics & Decision Making</h3>
+    <p>Learn to interpret data for smarter decisions.</p>
+    <span class="level">Advanced</span>
+    <button class="btn-primary"id="num11">Start Learning</button>
+  </div>
+  <div class="course-card" data-level="beginner">
+    <h3>Personal Finance & Money Management</h3>
+    <p>Master budgeting, saving, and investing.</p>
+    <span class="level">Beginner</span>
+    <button class="btn-primary"id="num12">Start Learning</button>
+  </div>
+  <div class="course-card" data-level="intermediate">
+    <h3>Business Communication & Negotiation</h3>
+    <p>Professional communication and deal-making.</p>
+    <span class="level">Intermediate</span>
+    <button class="btn-primary"id="num13">Start Learning</button>
+  </div>
+    <div class="course-card" data-level="advanced">
+      <h3>Strategic Management</h3>
+      <p>Planning long-term growth and competitive advantage.</p>
+      <span class="level">Advanced</span>
+      <button class="btn-primary"id="num14">Start Learning</button>
+    </div>
+    <div class="course-card" data-level="beginner">
+      <h3>Basics of Marketing</h3>
+      <p>Understanding target markets and simple marketing strategies.</p>
+      <span class="level">Beginner</span>
+      <button class="btn-primary"id="num15">Start Learning</button>
+    </div>
+  </section>
+  <script type="module" src="../JS/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Module 6: Accounting Fundamentals | Map My Biz</title>
+
+  <!-- Correct paths to CSS and JS -->
+  <link rel="stylesheet" href="../CSS/style.css">
+  <script src="../JS/script.js" defer></script>
+
+  <style>
+    .module-container {
+      max-width: 900px;
+      margin: 20px auto;
+      padding: 20px;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      line-height: 1.7;
+    }
+    .module-header {
+      text-align: center;
+      margin-bottom: 30px;
+      color: #2c3e50;
+    }
+    .module-header h1 {
+      font-size: 2rem;
+      margin-bottom: 10px;
+    }
+    .module-header p {
+      color: #7f8c8d;
+      font-size: 1.1rem;
+    }
+    .lesson-section {
+      margin-bottom: 30px;
+      padding: 20px;
+      background: #f9f9fb;
+      border-left: 5px solid #4a90e2;
+      border-radius: 8px;
+    }
+    .lesson-section h3 {
+      color: #2980b9;
+      margin-bottom: 10px;
+    }
+    .lesson-section ul, .lesson-section ol {
+      padding-left: 20px;
+    }
+    .action-buttons {
+      text-align: center;
+      margin-top: 30px;
+    }
+    .btn {
+      display: inline-block;
+      padding: 12px 24px;
+      margin: 0 10px;
+      font-size: 1rem;
+      color: white;
+      background-color: #4a90e2;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      text-decoration: none;
+    }
+    .btn-success {
+      background-color: #2ec4b6;
+    }
+    .btn:hover {
+      opacity: 0.9;
+    }
+    .completion-badge {
+      text-align: center;
+      margin-top: 20px;
+      padding: 15px;
+      background-color: #e8f5e9;
+      border-radius: 8px;
+      color: #2e7d32;
+      font-weight: bold;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <div class="logo-container">
+      <img src="../Assets/MMB.png" alt="Map My Biz Logo" />
+    </div>
+    <div class="nav-links">
+      <a href="../PAGES/dashboard.html">Home</a>
+      <a href="../course.html">Courses</a>
+      <a href="../map.html">
+        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#4a90e2" stroke-width="2">
+          <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+          <circle cx="12" cy="10" r="3"></circle>
+        </svg>Smart Map</a>
+      <a href="#">VR Training</a>
+      <a href="../business.html">Business</a>
+    </div>
+    <div class="language-selector">
+      <select>
+        <option value="en">English</option>
+        <option value="es">Afrikaans</option>
+      </select>
+    </div>
+    <div class="user-profile" id="userProfile">
+      <div class="user-icon">👤</div>
+      <span>Welcome, <span id="dashboardUsername">User</span>!</span>
+      <ul class="dropdown" id="dropdownMenu">
+        <li><a href="../updateinfo.html">Edit Personal Info</a></li>
+        <li><a href="../index.html" id="logoutBtn">Logout</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Main Module Content -->
+  <div class="module-container">
+    <div class="module-header">
+      <h1>📘 Module 6: Accounting Fundamentals</h1>
+      <p>Learn the basics of business accounting — no experience needed!</p>
+    </div>
+
+    <div class="lesson-section">
+      <h3>🎯 Learning Objectives</h3>
+      <ul>
+        <li>Understand what accounting is and why it matters</li>
+        <li>Learn key terms like income, expenses, profit, and assets</li>
+        <li>Know the difference between personal and business money</li>
+        <li>Keep simple, accurate financial records</li>
+        <li>Use basic accounting to make better business decisions</li>
+      </ul>
+    </div>
+
+    <div class="lesson-section">
+      <h3>🧾 1. What Is Accounting?</h3>
+      <p><strong>Accounting</strong> is the process of recording, organizing, and understanding your business money.</p>
+      <p>It’s not just for accountants — every business owner needs to know the basics.</p>
+      <ul>
+        <li><strong>Why it matters:</strong>
+          <ul>
+            <li>Know if you’re making a profit</li>
+            <li>Prepare for tax season</li>
+            <li>Apply for loans or grants</li>
+            <li>Spot problems early (e.g., rising costs)</li>
+          </ul>
+        </li>
+      </ul>
+      <p><strong>Good news:</strong> You don’t need a degree — just consistency and honesty.</p>
+    </div>
+
+    <div class="lesson-section">
+      <h3>💰 2. Key Accounting Terms Made Simple</h3>
+      <ul>
+        <li><strong>Income (Revenue):</strong> Money your business earns from sales.</li>
+        <li><strong>Expenses:</strong> Money you spend to run your business (e.g., stock, transport, rent).</li>
+        <li><strong>Profit:</strong> Income – Expenses = Profit (or loss if negative).</li>
+        <li><strong>Assets:</strong> Things your business owns (e.g., cash, equipment, inventory).</li>
+        <li><strong>Liabilities:</strong> What your business owes (e.g., loans, unpaid bills).</li>
+        <li><strong>Capital (Owner’s Equity):</strong> Your investment in the business.</li>
+      </ul>
+      <p><strong>Simple Example:</strong><br>
+        You sell vetkoek for R10 each. You sell 50 in a day → R500 income.<br>
+        You spent R200 on flour, oil, and packaging → R300 profit for the day.</p>
+    </div>
+
+    <div class="lesson-section">
+      <h3>📌 3. Keep Business & Personal Money Separate</h3>
+      <p>Mixing money is one of the biggest mistakes small business owners make.</p>
+      <ul>
+        <li><strong>Open a Business Bank Account:</strong> Even if it’s just a separate wallet or envelope at first.</li>
+        <li><strong>Track Every Transaction:</strong> Write down every sale and expense — daily!</li>
+        <li><strong>Save Receipts:</strong> Use a folder or take photos with your phone.</li>
+      </ul>
+      <p><strong>Tip:</strong> Use a simple notebook or free app like <strong>Wave</strong> or <strong>1Money</strong> to track your money.</p>
+    </div>
+
+    <div class="lesson-section">
+      <h3>📒 4. The Simple Record-Keeping System</h3>
+      <p>You don’t need complex software. Start with this basic table:</p>
+      <table border="1" cellpadding="8" cellspacing="0" style="width: 100%; border-collapse: collapse; margin: 15px 0;">
+        <tr style="background-color: #f0f8ff;">
+          <th>Date</th>
+          <th>Description</th>
+          <th>Income (R)</th>
+          <th>Expenses (R)</th>
+          <th>Balance (R)</th>
+        </tr>
+        <tr>
+          <td>01/04</td>
+          <td>Started Business</td>
+          <td>1,000</td>
+          <td>0</td>
+          <td>1,000</td>
+        </tr>
+        <tr>
+          <td>02/04</td>
+          <td>Bought Flour & Oil</td>
+          <td>0</td>
+          <td>300</td>
+          <td>700</td>
+        </tr>
+        <tr>
+          <td>02/04</td>
+          <td>Sales</td>
+          <td>500</td>
+          <td>0</td>
+          <td>1,200</td>
+        </tr>
+      </table>
+      <p>Update this daily. It helps you see your progress and prepare for tax time.</p>
+    </div>
+
+    <div class="lesson-section">
+      <h3>📊 5. Use Accounting to Make Smart Decisions</h3>
+      <p>Your records are not just for tax — they help you grow!</p>
+      <ul>
+        <li><strong>What’s Selling?</strong> Track which products make the most profit.</li>
+        <li><strong>Where Are You Spending Too Much?</strong> If expenses are rising, find ways to cut costs.</li>
+        <li><strong>When to Expand?</strong> If you’ve made consistent profit for 3+ months, you may be ready.</li>
+      </ul>
+      <p><strong>Ask Yourself Weekly:</strong><br>
+        • How much did I earn?<br>
+        • How much did I spend?<br>
+        • Did I make a profit?<br>
+        • What can I improve?</p>
+    </div>
+
+    <!-- Completion Feedback -->
+    <div id="completionBadge" class="completion-badge">
+      🎉 Congratulations! Module 6 has been marked as completed.
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="action-buttons">
+      <a href="../PAGES/dashboard.html" class="btn">Back to Dashboard</a>
+      <button id="markCompleteBtn" class="btn btn-success">Mark as Complete & Continue</button>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const markBtn = document.getElementById("markCompleteBtn");
+      const completionBadge = document.getElementById("completionBadge");
+  
+      // Define module name (you can set this per module)
+      const moduleName = "Module 1";  // Change this in each module: "Module 2", etc.
+  
+      // Fallback: If markModuleAsCompleted is not loaded from script.js
+      if (typeof markModuleAsCompleted === 'undefined') {
+        window.markModuleAsCompleted = async function (moduleId) {
+          // Fallback to localStorage if Supabase isn't ready
+          let completed = JSON.parse(localStorage.getItem("completedModules") || "[]");
+          if (!completed.includes(moduleId)) {
+            completed.push(moduleId);
+            localStorage.setItem("completedModules", JSON.stringify(completed));
+          }
+          // Simulate progress update
+          if (typeof updateProgressUI === 'function') {
+            await updateProgressUI();
+          }
+        };
+      }
+  
+      // Save last opened module
+      if (typeof saveLastModule === 'function') {
+        saveLastModule(moduleName);
+      } else {
+        localStorage.setItem("lastOpenedModule", moduleName);
+      }
+  
+      // Mark module as completed when button is clicked
+      markBtn.addEventListener("click", async function () {
+        // Mark in Supabase or fallback
+        if (typeof markModuleAsCompleted === 'function') {
+          await markModuleAsCompleted(moduleName);
+        }
+  
+        // Show completion message
+        completionBadge.style.display = "block";
+  
+        // Redirect after delay
+        setTimeout(() => {
+          window.location.href = "../PAGES/dashboard.html";
+        }, 1500);
+      });
+  
+      // Optional: Remove auto-completion on load
+      // ❌ Avoid this line if you don't want instant credit:
+      // markModuleAsCompleted("Module 1");
+    });
+  </script>
+
+</body>
+</html>

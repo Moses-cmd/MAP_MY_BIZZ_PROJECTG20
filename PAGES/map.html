@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>South Africa Business Map</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+  <style>
+    html, body { margin:0; height:100%; }
+    #map { height:100%; }
+    .panel {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      z-index: 1000;
+      background: rgba(211, 211, 211, 0.96);
+      backdrop-filter: blur(6px);
+      padding: 12px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 217, 255, 0.15);
+      width: 280px;
+    }
+    .panel label {
+      font-size: 0.9rem;
+      color: #333;
+      margin-bottom: 6px;
+      display: block;
+    }
+
+    .panel select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      background: white;
+    }
+
+    .sidebar {
+      position: absolute; top:0; right:-420px; width:380px; height:100%;
+      background:#fff;   box-shadow: 0 4px 12px rgba(0, 217, 255, 0.15);
+      transition:right 0.3s ease;
+      padding:15px; overflow-y:auto; font-family:sans-serif;
+      z-index:1200;
+    }
+    .sidebar.open { right:0; }
+    .sidebar h2 { margin:0 0 10px; }
+    .sidebar img.logo { width:60px; height:60px; border-radius:8px; object-fit:cover; }
+    .sidebar .cover { width:100%; max-height:180px; object-fit:cover; margin:10px 0; border-radius:8px; }
+    .sidebar .gallery img { width:100%; margin:8px 0; border-radius:8px; }
+    .sidebar iframe { width:100%; height:200px; margin:8px 0; border-radius:8px; }
+    .sidebar a { display:inline-block; margin:5px 5px 0 0; color:#2563eb; text-decoration:none; }
+    .sidebar .close-btn {
+      position:absolute; top:10px; right:10px;
+      background:#eee; border:none; font-size:18px; cursor:pointer;
+      border-radius:50%; width:30px; height:30px;
+    }
+
+    .back-btn {
+      position:absolute; top:12px; right:12px; z-index:1000;
+      background:#fff; border:1px solid #ddd; border-radius:8px;
+      padding:8px 12px; cursor:pointer;
+      box-shadow:0 2px 5px rgba(0,0,0,0.2);
+    }
+  </style>
+</head>
+<body>
+  <div id="map"></div>
+
+  <div class="panel">
+    <label>Explore by Category</label>
+    <select id="categoryFilter">
+      <option value="all">All Businesses</option>
+      <option value="food">🍽️ Food & Eats</option>
+      <option value="crafts">🎨 Crafts & Artisans</option>
+      <option value="shops">🛍️ Local Shops</option>
+      <option value="nature">🏞️ Nature & Tours</option>
+    </select>
+  </div>
+
+  <div class="sidebar" id="sidebar">
+    <button class="close-btn" onclick="closeSidebar()">×</button>
+    <div id="sidebar-content"></div>
+  </div>
+
+  <button class="back-btn" onclick="history.back()">← Back</button>
+
+  <script>
+    const map = L.map('map').setView([-30.5595, 22.9375], 6);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+
+    // Colored marker icons by category
+    const iconUrls = {
+      food: "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png",
+      shops: "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-blue.png",
+      crafts: "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-green.png",
+      nature: "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-orange.png"
+    };
+
+    function getIcon(category){
+      return new L.Icon({
+        iconUrl: iconUrls[category] || iconUrls.food,
+        shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
+        iconSize: [25, 41],
+        iconAnchor: [12, 41],
+        popupAnchor: [1, -34],
+        shadowSize: [41, 41]
+      });
+    }
+
+    // 20 sample businesses across SA
+    const businesses = [
+      {name:"Cape Town Restaurant",category:"food",coords:[-33.9249,18.4241],logo:"https://via.placeholder.com/60.png?text=CT",cover:"https://via.placeholder.com/300x150.png?text=Food",description:"Seafood & wine.",location:"Cape Town",pricing:"R150 avg",socials:{ig:"https://instagram.com"}},
+      {name:"Durban Craft Market",category:"crafts",coords:[-29.8587,31.0218],logo:"https://via.placeholder.com/60.png?text=DC",cover:"https://via.placeholder.com/300x150.png?text=Crafts",description:"Handmade souvenirs.",location:"Durban",pricing:"From R50"},
+      {name:"Johannesburg Mall",category:"shops",coords:[-26.2041,28.0473],logo:"https://via.placeholder.com/60.png?text=JHB",cover:"https://via.placeholder.com/300x150.png?text=Shops",description:"Luxury shopping.",location:"Sandton",pricing:"Varies"},
+      {name:"Kruger Safari Lodge",category:"nature",coords:[-24.0167,31.4858],logo:"https://via.placeholder.com/60.png?text=KNP",cover:"https://via.placeholder.com/300x150.png?text=Safari",description:"Big 5 safari tours.",location:"Kruger Park",pricing:"From R1200"},
+      {name:"Pretoria Steakhouse",category:"food",coords:[-25.7479,28.2293],logo:"https://via.placeholder.com/60.png?text=PTA",cover:"https://via.placeholder.com/300x150.png?text=Steak",description:"Best steaks in town.",location:"Pretoria",pricing:"R200 avg"},
+      {name:"Bloemfontein Art Fair",category:"crafts",coords:[-29.0852,26.1596],logo:"https://via.placeholder.com/60.png?text=BFN",cover:"https://via.placeholder.com/300x150.png?text=Art",description:"Local artists showcase.",location:"Bloemfontein",pricing:"R80 entry"},
+      {name:"Port Elizabeth Beach Bar",category:"food",coords:[-33.9608,25.6022],logo:"https://via.placeholder.com/60.png?text=PE",cover:"https://via.placeholder.com/300x150.png?text=Drinks",description:"Cocktails by the beach.",location:"Gqeberha",pricing:"R90 avg"},
+      {name:"Drakensberg Hikes",category:"nature",coords:[-29.4856,29.2335],logo:"https://via.placeholder.com/60.png?text=DB",cover:"https://via.placeholder.com/300x150.png?text=Mountains",description:"Guided hiking tours.",location:"Drakensberg",pricing:"R300"},
+      {name:"Stellenbosch Winery",category:"food",coords:[-33.9344,18.8602],logo:"https://via.placeholder.com/60.png?text=WINE",cover:"https://via.placeholder.com/300x150.png?text=Wine",description:"Wine tasting & tours.",location:"Stellenbosch",pricing:"R250"},
+      {name:"Kimberley Diamond Museum",category:"shops",coords:[-28.738,24.7636],logo:"https://via.placeholder.com/60.png?text=KIM",cover:"https://via.placeholder.com/300x150.png?text=Diamonds",description:"Jewelry & diamonds.",location:"Kimberley",pricing:"Entry R100"},
+      {name:"Mpumalanga Guesthouse",category:"nature",coords:[-25.5653,30.5277],logo:"https://via.placeholder.com/60.png?text=MP",cover:"https://via.placeholder.com/300x150.png?text=Nature",description:"Scenic mountain views.",location:"Mpumalanga",pricing:"From R700"},
+      {name:"Soweto Street Food",category:"food",coords:[-26.2678,27.8585],logo:"https://via.placeholder.com/60.png?text=SO",cover:"https://via.placeholder.com/300x150.png?text=Food",description:"Local street cuisine.",location:"Soweto",pricing:"R60 avg"},
+      {name:"Knysna Craft Market",category:"crafts",coords:[-34.0363,23.0471],logo:"https://via.placeholder.com/60.png?text=KNY",cover:"https://via.placeholder.com/300x150.png?text=Crafts",description:"Wood carvings & art.",location:"Knysna",pricing:"From R100"},
+      {name:"Hermanus Whale Tours",category:"nature",coords:[-34.409,19.2501],logo:"https://via.placeholder.com/60.png?text=HW",cover:"https://via.placeholder.com/300x150.png?text=Whales",description:"Boat-based whale watching.",location:"Hermanus",pricing:"R600"},
+      {name:"Sun City Resort",category:"shops",coords:[-25.347,27.098],logo:"https://via.placeholder.com/60.png?text=SUN",cover:"https://via.placeholder.com/300x150.png?text=Resort",description:"Entertainment & casinos.",location:"Sun City",pricing:"Varies"},
+      {name:"Addo Elephant Park",category:"nature",coords:[-33.445,25.75],logo:"https://via.placeholder.com/60.png?text=ADDO",cover:"https://via.placeholder.com/300x150.png?text=Elephants",description:"Elephant safaris.",location:"Eastern Cape",pricing:"R400"},
+      {name:"Jeffreys Bay Surf Shop",category:"shops",coords:[-34.05,24.9167],logo:"https://via.placeholder.com/60.png?text=JBay",cover:"https://via.placeholder.com/300x150.png?text=Surf",description:"Surfboards & gear.",location:"Jeffreys Bay",pricing:"Varies"},
+      {name:"Pietermaritzburg Café",category:"food",coords:[-29.6006,30.3794],logo:"https://via.placeholder.com/60.png?text=PMB",cover:"https://via.placeholder.com/300x150.png?text=Cafe",description:"Coffee & pastries.",location:"PMB",pricing:"R70"},
+      {name:"Polokwane Craft Hub",category:"crafts",coords:[-23.9045,29.4689],logo:"https://via.placeholder.com/60.png?text=PLK",cover:"https://via.placeholder.com/300x150.png?text=Crafts",description:"Traditional crafts.",location:"Polokwane",pricing:"From R80"},
+      {name:"Table Mountain Tours",category:"nature",coords:[-33.9628,18.4098],logo:"https://via.placeholder.com/60.png?text=TM",cover:"https://via.placeholder.com/300x150.png?text=Table+Mountain",description:"Cable car & hiking.",location:"Cape Town",pricing:"R350"},
+      {name:"Maboneng Precinct",category:"shops",coords:[-26.2055,28.059],logo:"https://via.placeholder.com/60.png?text=MAB",cover:"https://via.placeholder.com/300x150.png?text=Maboneng",description:"Trendy urban culture district.",location:"Johannesburg",pricing:"Varies"},
+      {name:"Victoria & Alfred Waterfront",category:"shops",coords:[-33.9075,18.4207],logo:"https://via.placeholder.com/60.png?text=V&A",cover:"https://via.placeholder.com/300x150.png?text=Waterfront",description:"Shopping & dining by the harbor.",location:"Cape Town",pricing:"Varies"},
+      {name:"Golden Gate Highlands Park",category:"nature",coords:[-28.5167,28.6167],logo:"https://via.placeholder.com/60.png?text=GG",cover:"https://via.placeholder.com/300x150.png?text=Golden+Gate",description:"Sandstone cliffs & wildlife.",location:"Free State",pricing:"R250 entry"},
+      {name:"uShaka Marine World",category:"nature",coords:[-29.8689,31.0456],logo:"https://via.placeholder.com/60.png?text=USH",cover:"https://via.placeholder.com/300x150.png?text=Marine",description:"Aquarium & water park.",location:"Durban",pricing:"From R200"},
+      {name:"Cango Caves",category:"nature",coords:[-33.3961,22.1944],logo:"https://via.placeholder.com/60.png?text=CAV",cover:"https://via.placeholder.com/300x150.png?text=Caves",description:"Famous limestone caves.",location:"Oudtshoorn",pricing:"R120"},
+      {name:"Nelson Mandela Square",category:"shops",coords:[-26.1076,28.0567],logo:"https://via.placeholder.com/60.png?text=NMS",cover:"https://via.placeholder.com/300x150.png?text=Mandela+Square",description:"Restaurants & luxury shops.",location:"Sandton",pricing:"Varies"},
+      {name:"Shaka Zulu Village",category:"crafts",coords:[-29.6111,31.0833],logo:"https://via.placeholder.com/60.png?text=ZULU",cover:"https://via.placeholder.com/300x150.png?text=Zulu",description:"Cultural dances & crafts.",location:"KwaZulu-Natal",pricing:"R150"},
+      {name:"Karoo National Park",category:"nature",coords:[-32.25,22.5],logo:"https://via.placeholder.com/60.png?text=KAR",cover:"https://via.placeholder.com/300x150.png?text=Karoo",description:"Semi-desert landscapes.",location:"Western Cape",pricing:"R200"},
+      {name:"Sodwana Bay",category:"nature",coords:[-27.5486,32.6664],logo:"https://via.placeholder.com/60.png?text=SOD",cover:"https://via.placeholder.com/300x150.png?text=Sodwana",description:"Diving & beaches.",location:"KwaZulu-Natal",pricing:"R300 tours"},
+      {name:"Clarens Art Village",category:"crafts",coords:[-28.5167,28.4167],logo:"https://via.placeholder.com/60.png?text=CLR",cover:"https://via.placeholder.com/300x150.png?text=Clarens",description:"Galleries & handmade crafts.",location:"Free State",pricing:"From R50"},
+      {name:"Pilgrim’s Rest",category:"shops",coords:[-24.8833,30.75],logo:"https://via.placeholder.com/60.png?text=PR",cover:"https://via.placeholder.com/300x150.png?text=Pilgrims+Rest",description:"Historic mining town.",location:"Mpumalanga",pricing:"Free entry"},
+      {name:"Valley of Desolation",category:"nature",coords:[-32.3,24.55],logo:"https://via.placeholder.com/60.png?text=VAL",cover:"https://via.placeholder.com/300x150.png?text=Desolation",description:"Rock formations & hiking.",location:"Graaff-Reinet",pricing:"R100"},
+      {name:"Victoria Street Market",category:"crafts",coords:[-29.8587,31.0218],logo:"https://via.placeholder.com/60.png?text=VSM",cover:"https://via.placeholder.com/300x150.png?text=Market",description:"Indian spices & crafts.",location:"Durban",pricing:"From R30"},
+      {name:"Hartbeespoort Dam",category:"nature",coords:[-25.7333,27.8833],logo:"https://via.placeholder.com/60.png?text=HRT",cover:"https://via.placeholder.com/300x150.png?text=Harties",description:"Water sports & restaurants.",location:"North West",pricing:"Varies"},
+      {name:"Franschhoek Wine Tram",category:"food",coords:[-33.909,19.1183],logo:"https://via.placeholder.com/60.png?text=FHK",cover:"https://via.placeholder.com/300x150.png?text=Wine+Tram",description:"Hop-on hop-off wine tasting.",location:"Franschhoek",pricing:"R350"},
+      {name:"Lesedi Cultural Village",category:"crafts",coords:[-25.85,27.9333],logo:"https://via.placeholder.com/60.png?text=LES",cover:"https://via.placeholder.com/300x150.png?text=Lesedi",description:"Traditional village experience.",location:"Gauteng",pricing:"R200"},
+      {name:"Augrabies Falls",category:"nature",coords:[-28.6,20.3333],logo:"https://via.placeholder.com/60.png?text=AUG",cover:"https://via.placeholder.com/300x150.png?text=Falls",description:"Powerful waterfalls.",location:"Northern Cape",pricing:"R120"},
+      {name:"Blyde River Canyon",category:"nature",coords:[-24.5922,30.8069],logo:"https://via.placeholder.com/60.png?text=BLY",cover:"https://via.placeholder.com/300x150.png?text=Canyon",description:"Third largest canyon in the world.",location:"Mpumalanga",pricing:"R150"},
+      {name:"District Six Museum",category:"shops",coords:[-33.9286,18.4231],logo:"https://via.placeholder.com/60.png?text=D6",cover:"https://via.placeholder.com/300x150.png?text=D6+Museum",description:"History & exhibitions.",location:"Cape Town",pricing:"R60"},
+      {name:"Cape Point",category:"nature",coords:[-34.3568,18.4974],logo:"https://via.placeholder.com/60.png?text=CPT",cover:"https://via.placeholder.com/300x150.png?text=Cape+Point",description:"Scenic tip of Africa.",location:"Cape Peninsula",pricing:"R360 entry"}
+
+    ];
+
+    const markers = [];
+
+    businesses.forEach(b => {
+      const marker = L.marker(b.coords, {icon: getIcon(b.category)}).addTo(map)
+        .on('click', () => openSidebar(b));
+      markers.push({ marker, data: b });
+    });
+
+    document.getElementById("categoryFilter").addEventListener("change", e => {
+      const val = e.target.value;
+      markers.forEach(obj => {
+        if(val==="all" || obj.data.category===val){
+          obj.marker.addTo(map);
+        } else {
+          map.removeLayer(obj.marker);
+        }
+      });
+    });
+
+    function openSidebar(biz){
+      const sidebar = document.getElementById("sidebar");
+      let content = `
+        <h2>${biz.name}</h2>
+        <img src="${biz.logo}" class="logo"/>
+        <img src="${biz.cover}" class="cover"/>
+        <p><strong>Location:</strong> ${biz.location || "N/A"}</p>
+        <p>${biz.description}</p>
+        <p><strong>Pricing:</strong> ${biz.pricing || "N/A"}</p>
+      `;
+      if(biz.socials){
+        content += `<div>`;
+        if(biz.socials.fb) content += `<a href="${biz.socials.fb}" target="_blank">Facebook</a>`;
+        if(biz.socials.ig) content += `<a href="${biz.socials.ig}" target="_blank">Instagram</a>`;
+        content += `</div>`;
+      }
+      document.getElementById("sidebar-content").innerHTML = content;
+      sidebar.classList.add("open");
+    }
+    function closeSidebar(){
+      document.getElementById("sidebar").classList.remove("open");
+    }
+  </script>
+</body>
+</html>

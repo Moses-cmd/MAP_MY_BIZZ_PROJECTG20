@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Map My Biz – Partner Dashboard</title>
+  <link rel="stylesheet" href="../CSS/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Merriweather:wght@400;700&display=swap" rel="stylesheet"/>
+  <style>
+    body {
+      font-family: 'Lato', sans-serif;
+      background-color: #f9f9fc;
+    }
+
+    .hero {
+        background: linear-gradient(135deg, #0A8791 0%, #2ec4b6 100%);
+      color: white;
+      padding: 80px 20px 40px;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-family: 'Merriweather', serif;
+      font-size: 2.4rem;
+      margin-bottom: 15px;
+    }
+
+    .hero p {
+      max-width: 700px;
+      margin: 0 auto 20px;
+      font-size: 1.1rem;
+      opacity: 0.9;
+    }
+
+    /* Stats Overview */
+    .stats-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+      padding: 30px 20px;
+    }
+
+    .stat-card {
+      background: #e8f5f5;
+      border-radius: 12px;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+      padding: 20px;
+      width: 100%;
+      max-width: 250px;
+      text-align: center;
+      border: 1px solid #b2dfdb;
+    }
+
+    .stat-card h3 {
+      font-size: 1.1rem;
+      color: #00897b;
+      margin-bottom: 10px;
+    }
+
+    .stat-card .value {
+      font-size: 2rem;
+      font-weight: bold;
+      color: #e91e63;
+    }
+
+    .stat-card .change {
+      font-size: 0.9rem;
+      color: #4caf50;
+      margin-top: 5px;
+    }
+
+    /* Charts Section */
+    .charts-section {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .chart-container {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+      padding: 25px;
+      margin-bottom: 30px;
+    }
+
+    .chart-container h2 {
+      font-family: 'Merriweather', serif;
+      color: #00897b;
+      margin-bottom: 15px;
+      font-size: 1.5rem;
+      border-bottom: 2px solid #e0e0e0;
+      padding-bottom: 10px;
+    }
+
+    .chart-placeholder {
+      width: 100%;
+      height: 300px;
+      background: url('../Assets/main.jpg') center/cover no-repeat;
+      border-radius: 8px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: bold;
+      font-size: 1.2rem;
+      text-shadow: 0 0 10px rgba(0,0,0,0.7);
+    }
+
+    /* Transactions Table */
+    .transactions {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+      overflow: hidden;
+      margin: 20px;
+    }
+
+    .transactions h2 {
+      font-family: 'Merriweather', serif;
+      color: #00897b;
+      margin: 0;
+      padding: 20px;
+      background: #e8f5f5;
+      font-size: 1.4rem;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    table th, table td {
+      padding: 14px 20px;
+      text-align: left;
+      border-bottom: 1px solid #eee;
+    }
+
+    table th {
+      background-color: #f1f8e9;
+      color: #33691e;
+      font-weight: bold;
+    }
+
+    table tr:hover {
+      background-color: #f9f9f9;
+    }
+
+    /* Impact Summary */
+    .impact-summary {
+      text-align: center;
+      padding: 60px 20px;
+      background-color: #f1f8e9;
+    }
+
+    .impact-summary h2 {
+      font-size: 1.8rem;
+      color: #33691e;
+      margin-bottom: 15px;
+    }
+
+    .impact-summary p {
+      max-width: 700px;
+      margin: 0 auto 20px;
+      font-size: 1.1rem;
+      color: #555;
+    }
+
+    .btn-primary {
+      background-color: #00897b;
+      color: white;
+      padding: 12px 24px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: bold;
+      display: inline-block;
+      transition: background 0.3s;
+    }
+
+    .btn-primary:hover {
+      background-color: #00796b;
+    }
+
+    /* Footer CTA */
+    .cta-footer {
+      text-align: center;
+      padding: 60px 20px;
+      background-color: #2c3e50;
+      color: white;
+    }
+
+    .cta-footer h2 {
+      font-size: 1.8rem;
+      margin-bottom: 15px;
+    }
+
+    .cta-footer p {
+      max-width: 700px;
+      margin: 0 auto 25px;
+      font-size: 1.1rem;
+      opacity: 0.9;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <nav class="navbar">
+      <div class="logo-container">
+        <img src="../Assets/Lg.png" alt="Map My Biz Logo" />
+      </div>
+      <div class="nav-links">
+        <a href="../dashboard.html">Home</a>
+        <a href="../PAGES/startupfound.html">Support</a>
+        <a href="#" class="active">Partner View</a>
+      </div>
+      <div class="user-profile">
+        <div class="user-icon">💼</div>
+        <span>Partner Mode</span>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <h1>📊 Business Performance Dashboard</h1>
+    <p>Transparent insights into operations, growth, and impact — for partners, sponsors, and investors.</p>
+  </section>
+
+  <!-- Stats Overview -->
+  <div class="stats-grid">
+    <div class="stat-card">
+      <h3>Total Revenue</h3>
+      <div class="value">R18,450</div>
+      <div class="change">↑ 24% from last month</div>
+    </div>
+    <div class="stat-card">
+      <h3>Net Profit</h3>
+      <div class="value">R6,210</div>
+      <div class="change">↑ 18% from last month</div>
+    </div>
+    <div class="stat-card">
+      <h3>Transactions</h3>
+      <div class="value">142</div>
+      <div class="change">↑ 30% increase</div>
+    </div>
+    <div class="stat-card">
+      <h3>Active Customers</h3>
+      <div class="value">89</div>
+      <div class="change">+12 new this month</div>
+    </div>
+  </div>
+
+  <!-- Charts Section -->
+  <div class="charts-section">
+    
+    <!-- Revenue Chart -->
+    <div class="chart-container">
+      <h2>Monthly Revenue & Profit (2025)</h2>
+      <div class="chart-placeholder">
+        📈 Revenue & Profit Growth Over Time
+      </div>
+    </div>
+
+    <!-- Sales by Category -->
+    <div class="chart-container">
+      <h2>Sales by Category</h2>
+      <div class="chart-placeholder">
+        🎨 Food: 45% | Crafts: 30% | Services: 25%
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Transactions Table -->
+  <div class="transactions">
+    <h2>Recent Transactions</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Customer</th>
+          <th>Product/Service</th>
+          <th>Amount (ZAR)</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>2025-08-25</td>
+          <td>Lerato M.</td>
+          <td>Traditional Meal Box</td>
+          <td>R120</td>
+          <td>Paid</td>
+        </tr>
+        <tr>
+          <td>2025-08-24</td>
+          <td>John D. (Tourist)</td>
+          <td>Handmade Beaded Necklace</td>
+          <td>R250</td>
+          <td>Paid</td>
+        </tr>
+        <tr>
+          <td>2025-08-23</td>
+          <td>Sipho K.</td>
+          <td>Phone Repair</td>
+          <td>R180</td>
+          <td>Paid</td>
+        </tr>
+        <tr>
+          <td>2025-08-22</td>
+          <td>Thandi's Kitchen</td>
+          <td>Wholesale Ingredients</td>
+          <td>R2,400</td>
+          <td>Expense</td>
+        </tr>
+        <tr>
+          <td>2025-08-21</td>
+          <td>Nkosi Clothing</td>
+          <td>Sewing Machine</td>
+          <td>R3,200</td>
+          <td>Investment</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Impact Summary -->
+  <section class="impact-summary">
+    <h2>Your Partnership Impact</h2>
+    <p>Thanks to your support, this business has grown sustainably and created real change:</p>
+    <ul style="max-width: 600px; margin: 20px auto; text-align: left; line-height: 1.8;">
+      <li>✅ Created 2 part-time jobs</li>
+      <li>✅ Trained 3 youth in skills</li>
+      <li>✅ Increased monthly income by 40%</li>
+      <li>✅ Served 142 customers this month</li>
+    </ul>
+    <a href="../PAGES/startupfound.html" class="btn-primary">Support Another Business</a>
+  </section>
+
+  <!-- Call to Action Footer -->
+  <section class="cta-footer">
+    <h2>Want Full Data Access?</h2>
+    <p>Become an official partner to access live reports, export data, and track impact across multiple businesses.</p>
+    <a href="mailto:partners@mapmybiz.org" class="btn-primary">Contact Us</a>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 Map My Biz. All rights reserved.</p>
+    <p>Data updated weekly. All information is verified and transparent.</p>
+    <p>Contact: <a href="mailto:info@mapmybiz.org">info@mapmybiz.org</a></p>
+  </footer>
+
+</body>
+</html>

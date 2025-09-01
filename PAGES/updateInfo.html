@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Edit Personal Info - Map My Biz</title>
+  <link rel="stylesheet" href="../CSS/style.css">
+  
+</head>
+<body>
+
+ <!-- Navigation Bar -->
+ <nav class="navbar">
+  <div class="logo-container">
+    <img src="../Assets/MMB.png" alt="Map My Biz Logo" />
+  </div>
+  <div class="nav-links">
+    <a href="../PAGES/dashboard.html" class="active">Home</a>
+    <a href="../PAGES/course.html">Courses</a>  <!-- same as above -->
+    <a href="../PAGES/map.html">
+      <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#4a90e2" stroke-width="2">
+        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+        <circle cx="12" cy="10" r="3"></circle>
+      </svg>Smart Map</a>
+    <a href="#">VR Training</a>
+    <a href="../PAGES/business.html">Business</a>
+  </div>
+  <div class="language-selector">
+    <select>
+      <option value="en">English</option>
+      <option value="es">Afrikaans</option>
+    </select>
+  </div>
+ <!-- User Profile Dropdown -->
+<div class="user-profile" id="userProfile">
+  <div class="user-icon">👤</div>
+  <span id="userNameDisplay">Loading...</span>
+  <ul class="dropdown" id="dropdownMenu">
+    <li><a href="./updateinfo.html">Edit Personal Info</a></li>
+    <li><a href="#" id="logoutBtn">Logout</a></li>
+  </ul>
+</div>
+</nav>
+
+  <div class="container">
+
+    <h2>Edit Personal Information</h2>
+
+    <form id="profileForm">
+      <!-- Full Name -->
+      <label for="fullName">Full Name</label>
+      <input type="text" id="fullName" value="John Doe" />
+
+      <!-- Phone Number -->
+      <label for="phoneNumber">Phone Number</label>
+      <input type="text" id="phoneNumber" value="+27 123 456 789" />
+
+      <!-- Email -->
+      <label for="email">Email Address</label>
+      <input type="email" id="email" value="john@example.com" />
+
+      <!-- Location -->
+      <label for="location">Location</label>
+      <input type="text" id="location" value="Johannesburg" />
+
+      <!-- Business Model -->
+      <label for="businessModel">Business Model</label>
+      <select id="businessModel">
+        <option value="retail">Retail</option>
+        <option value="service">Service</option>
+        <option value="manufacturing">Manufacturing</option>
+        <option value="freelance">Freelance</option>
+        <option value="nonprofit">Non-Profit</option>
+      </select>
+
+      <!-- Password -->
+      <label for="password">Password</label>
+      <input type="password" id="password" placeholder="Leave blank to keep current" />
+
+      <!-- Buttons -->
+      <div class="form-buttons">
+        <button type="button" id="saveBtn" class="btn-primary">SAVE CHANGES</button>
+        </div>  
+        <script type="module" src="../JS/script.js"></script>
+    </body>
+  </html>
+        
