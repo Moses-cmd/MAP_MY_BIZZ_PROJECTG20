@@ -23,27 +23,37 @@
     <button id="resend-btn">Resend Activation Email</button>
   </div>
 
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      // Option 1: Get email from localStorage
-      const userEmail = localStorage.getItem("userEmail");
-
-      // Option 2: Or from URL query string (?email=...)
-      const params = new URLSearchParams(window.location.search);
-      const emailFromUrl = params.get("email");
-
-      const emailToShow = emailFromUrl || userEmail || "your email";
-
-      // Update the message to include the email
-      document.getElementById("activation-message").textContent =
-        `We have sent an activation link to ${emailToShow}. Please check your inbox to activate your account.`;
-
-      // Resend button handler
-      document.getElementById("resend-btn").addEventListener("click", () => {
-        alert(`A new activation link has been sent to ${emailToShow}.`);
-      });
+  <script type="module">
+    import supabase from "../supabaseClient.js";
+  
+    document.addEventListener("DOMContentLoaded", async () => {
+      try {
+        const { data, error } = await supabase.auth.getUser();
+  
+        if (error) throw error;
+  
+        const user = data?.user;
+        let identifier = "your account";
+  
+        if (user?.email) {
+          identifier = user.email;
+        } else if (user?.phone) {
+          identifier = user.phone;
+        }
+  
+        document.getElementById("activation-message").textContent =
+          `We have sent an activation link to ${identifier}. Please check your inbox to activate your account.`;
+  
+        // Resend button handler (you can wire this to Supabase resend if needed)
+        document.getElementById("resend-btn").addEventListener("click", () => {
+          alert(`A new activation link has been sent to ${identifier}.`);
+        });
+  
+      } catch (err) {
+        console.error("Activation page error:", err.message);
+      }
     });
-  </script>
+  </script>  
 <script type="module" src="../JS/script.js"></script>
 </body>
 </html>

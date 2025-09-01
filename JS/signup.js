@@ -18,18 +18,20 @@ if (signupForm) {
       phone = emailOrPhone;
     }
 
-    try{
-      //Only create the auth user
+    try {
+      // Create Supabase auth user
       const { data: authData, error: authError } = await supabase.auth.signUp({
         email,
         phone,
         password,
       });
-      
+
       if (authError) throw authError;
 
-      alert("Signup successful! Please check your email for verification.");
       console.log("Auth user created:", authData.user);
+
+      // Redirect to activation page (no localStorage needed)
+      window.location.href = "../Pages/activation.html";
 
     } catch (err) {
       console.error("Signup error:", err.message);
@@ -37,6 +39,3 @@ if (signupForm) {
     }
   });
 }
-
-
-
