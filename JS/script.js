@@ -12,9 +12,8 @@ document.addEventListener("DOMContentLoaded", async () => {
   const { data: authData, error: authError } = await supabase.auth.getUser();
   if (authError || !authData.user) {
     // Redirect unauthenticated users
-    if (window.location.pathname.includes("dashboard.html") ||
-        window.location.pathname.includes("mybusiness.html") ||
-        window.location.pathname.includes("addBusiness.html")) {
+    const protectedPaths = ["dashboard.html", "mybusiness.html", "addBusiness.html"];
+    if (protectedPaths.some(path => window.location.pathname.includes(path))) {
       window.location.href = "../index.html";
     }
   }
@@ -53,31 +52,29 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   });
 
-// =============== 3. USER PROFILE & GREETING ===============
-if (user) {
-  const { data: profile } = await supabase
-    .from("user_profiles")
-    .select("full_name, phone, email")
-    .eq("id", user.id)
-    .single();
+  // =============== 3. USER PROFILE & GREETING ===============
+  if (user) {
+    const { data: profile } = await supabase
+      .from("user_profiles")
+      .select("full_name, phone, email")
+      .eq("id", user.id)
+      .single();
 
-  const displayName = profile?.full_name || user.email || user.phone || "User";
-  const firstName = displayName.split(" ")[0]; // Use first name only
+    const displayName = profile?.full_name || user.email || user.phone || "User";
+    const firstName = displayName.split(" ")[0];
 
-  // Update Dashboard Greeting (if on dashboard)
-  const greetingEl = document.querySelector(".greeting");
-  if (greetingEl) {
-    greetingEl.textContent = `WELCOME BACK, ${firstName.toUpperCase()}!`;
+    const greetingEl = document.querySelector(".greeting");
+    if (greetingEl) {
+      greetingEl.textContent = `WELCOME Back, ${firstName.toUpperCase()}!`;
+    }
+
+    const userNameDisplay = document.getElementById("userNameDisplay");
+    if (userNameDisplay) {
+      userNameDisplay.textContent = firstName;
+    } else {
+      console.warn("Element #userNameDisplay not found");
+    }
   }
-
-  // Update Name Next to Icon
-  const userNameDisplay = document.getElementById("userNameDisplay");
-  if (userNameDisplay) {
-    userNameDisplay.textContent = firstName;
-  } else {
-    console.warn("Element #userNameDisplay not found");
-  }
-}
 
   // =============== 4. EDIT PROFILE ===============
   document.getElementById("saveBtn")?.addEventListener("click", async () => {
@@ -90,7 +87,6 @@ if (user) {
       return;
     }
 
-    // Update Auth metadata
     const { error: authError } = await supabase.auth.updateUser({
       email,
       phone,
@@ -101,7 +97,6 @@ if (user) {
       return;
     }
 
-    // Insert or update profile in user_profiles table
     const { error: dbError } = await supabase
       .from("user_profiles")
       .upsert({
@@ -144,11 +139,12 @@ if (user) {
     e.preventDefault();
     alert("Loading next lesson...");
   });
+
   document.getElementById("nu1m")?.addEventListener("click", (e) => {
     e.preventDefault();
-    window.location.href = "../PAGES/course.html"; // ✅ root → PAGES/
+    window.location.href = "../PAGES/course.html";
   });
-  // Dynamic module navigation
+
   document.querySelectorAll("[id^='num']").forEach((btn) => {
     btn.addEventListener("click", (e) => {
       e.preventDefault();
@@ -157,7 +153,6 @@ if (user) {
     });
   });
 
-  // Business navigation
   document.querySelector(".btn-bussiness")?.addEventListener("click", (e) => {
     e.preventDefault();
     window.location.href = "../PAGES/addBusiness.html";
@@ -224,20 +219,17 @@ if (user) {
 
   filterCourses("all");
 
-  // =============== 9. PROGRESS TRACKER (Supabase Only) ===============
+  // =============== 9. PROGRESS TRACKER ===============
   async function loadProgress() {
     if (!user) return [];
-
     const { data, error } = await supabase
       .from("user_progress")
       .select("module_id")
       .eq("user_id", user.id);
-
     if (error) {
       console.error("Error loading progress:", error.message);
       return [];
     }
-
     return data.map(row => row.module_id);
   }
 
@@ -258,7 +250,6 @@ if (user) {
       continueLearning.textContent = `${completedCount}/${TOTAL_MODULES}`;
     }
 
-    // Update checklist
     const list = document.querySelector(".metric-card ul");
     if (list) {
       list.innerHTML = "";
@@ -276,7 +267,6 @@ if (user) {
     await updateProgressUI();
   }
 
-  // Mark module as completed
   window.markModuleAsCompleted = async function (moduleId) {
     const { error } = await supabase
       .from("user_progress")
@@ -284,7 +274,6 @@ if (user) {
         { user_id: user.id, module_id: moduleId },
         { onConflict: "user_id, module_id" }
       );
-
     if (error) {
       console.error("Failed to save progress:", error.message);
     } else {
@@ -292,12 +281,11 @@ if (user) {
     }
   };
 
-  // Save last opened module (optional: store in DB or skip)
   window.saveLastModule = async function (moduleId) {
-    localStorage.setItem("lastOpenedModule", moduleId); // still OK for temporary UI
+    localStorage.setItem("lastOpenedModule", moduleId);
   };
 
-  // =============== 10. BUSINESS MANAGEMENT (Supabase Only) ===============
+  // =============== 10. BUSINESS MANAGEMENT ===============
   function escapeHtml(text) {
     const div = document.createElement("div");
     div.textContent = text;
@@ -315,19 +303,17 @@ if (user) {
   // Load businesses
   async function loadBusinesses() {
     if (!user) return;
-
     const { data: businesses, error } = await supabase
       .from("user_businesses")
       .select("*")
       .eq("user_id", user.id);
-
-    const container = document.getElementById("businessList");
-    const emptyState = document.getElementById("emptyState");
-
     if (error) {
       console.error("Error loading businesses:", error.message);
       return;
     }
+
+    const container = document.getElementById("businessList");
+    const emptyState = document.getElementById("emptyState");
 
     if (businesses.length === 0) {
       if (emptyState) emptyState.style.display = "block";
@@ -364,7 +350,6 @@ if (user) {
           .delete()
           .eq("id", id)
           .eq("user_id", user.id);
-
         if (error) {
           alert("Delete failed: " + error.message);
         } else {
@@ -379,9 +364,9 @@ if (user) {
   }
 
   // Add new business
-  const businessForm = document.getElementById("businessForm");
-  if (businessForm) {
-    businessForm.addEventListener("submit", async (e) => {
+  const addBusinessForm = document.getElementById("businessForm");
+  if (addBusinessForm) {
+    addBusinessForm.addEventListener("submit", async (e) => {
       e.preventDefault();
 
       const name = document.getElementById("name").value.trim();
@@ -417,11 +402,7 @@ if (user) {
   const manageButton = document.querySelector(".btn-list");
 
   if (planCards.length > 0 && user) {
-    // You can store selected plan in a table like `user_plans` if needed
-    // For now, just simulate selection
-
     let selectedPlan = null;
-
     planCards.forEach(card => {
       const button = card.querySelector(".select-plan-btn");
       button?.addEventListener("click", function (e) {
@@ -430,7 +411,6 @@ if (user) {
         card.classList.add("selected");
         selectedPlan = card.dataset.plan;
       });
-
       card.addEventListener("click", () => {
         card.querySelector(".select-plan-btn")?.click();
       });
@@ -442,7 +422,6 @@ if (user) {
         return;
       }
       alert(`You selected the ${selectedPlan} plan. Redirecting to setup...`);
-      // Redirect or open form
     });
   }
 });
