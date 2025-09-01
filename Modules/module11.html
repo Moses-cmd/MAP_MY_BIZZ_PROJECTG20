@@ -7,7 +7,7 @@
 
   <!-- Correct paths to CSS and JS -->
   <link rel="stylesheet" href="../CSS/style.css">
-  <script src="../JS/script.js" defer></script>
+  <script type="module" src="../JS/script.js"></script>
 
   <style>
     .module-container {
@@ -267,7 +267,7 @@
       const completionBadge = document.getElementById("completionBadge");
   
       // Define module name (you can set this per module)
-      const moduleName = "Module 1";  // Change this in each module: "Module 2", etc.
+      const moduleName = "Module 11";  // Change this in each module: "Module 2", etc.
   
       // Fallback: If markModuleAsCompleted is not loaded from script.js
       if (typeof markModuleAsCompleted === 'undefined') {
@@ -313,5 +313,6 @@
       // markModuleAsCompleted("Module 1");
     });
   </script>
+  <script type="module" src="../JS/script.js"></script>
 </body>
 </html>
