@@ -42,6 +42,95 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
   }
 
+  // =============== FORGOT PASSWORD HANDLER ===============
+
+const forgotPasswordForm = document.querySelector("#forgotPasswordForm");
+const message = document.getElementById("message");
+
+if (forgotPasswordForm) {
+  forgotPasswordForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const email = document.getElementById("email").value.trim();
+
+    const { data, error } = await supabase.auth.resetPasswordForEmail(email, {
+    redirectTo: "http://127.0.0.1:5501/reset.html" || "https://mapbiz.netlify.app/reset.html",
+    });
+
+    if (error) {
+      message.textContent = "Error: " + error.message;
+      message.style.color = "red";
+    } else {
+      message.textContent = "Password reset link sent! Check your email.";
+      message.style.color = "green";
+    }
+  });
+}
+
+
+// =============== RESET PASSWORD HANDLER ===============
+
+const formEl = document.getElementById("resetPasswordForm");
+const statusEl = document.getElementById("message");
+
+(async () => {
+  const hash = new URLSearchParams(window.location.hash.slice(1));
+  const query = new URLSearchParams(window.location.search);
+  const accessToken = hash.get("access_token") || query.get("access_token");
+  const refreshToken = hash.get("refresh_token") || query.get("refresh_token");
+
+  if (accessToken && refreshToken) {
+    const { error } = await supabase.auth.setSession({
+      access_token: accessToken,
+      refresh_token: refreshToken,
+    });
+
+    if (error) {
+      statusEl.textContent = `${error.message}`;
+      statusEl.style.color = "red";
+      return;
+    }
+  }
+
+  const { data: { session } } = await supabase.auth.getSession();
+
+  if (!session) {
+    statusEl.textContent = "Invalid or expired reset link.";
+    statusEl.style.color = "red";
+    return;
+  }
+
+  statusEl.textContent = "Token verified - set a new password.";
+  statusEl.style.color = "green";
+
+  // Listen for form submit
+  formEl.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const pwd = document.getElementById("newPassword").value.trim();
+    if (pwd.length < 6) {
+      statusEl.textContent = "Password must be at least 6 characters.";
+      statusEl.style.color = "red";
+      return;
+    }
+
+    const { error } = await supabase.auth.updateUser({ password: pwd });
+
+    if (error) {
+      statusEl.textContent = `${error.message}`;
+      statusEl.style.color = "red";
+    } else {
+      statusEl.textContent = "Password updated! Redirecting to login…";
+      statusEl.style.color = "green";
+
+      setTimeout(() => {
+        window.location.href = "/login/index.html"; 
+      }, 1000);
+    }
+  });
+})();
+
+
   // =============== 2. LOGOUT HANDLER ===============
   document.getElementById("logoutBtn")?.addEventListener("click", async (e) => {
     e.preventDefault();
