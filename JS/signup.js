@@ -36,20 +36,21 @@ if (signupForm) {
 
     try {
       // ✅ Include full_name in user metadata so trigger can access it
-      const {  authData, error: authError } = await supabase.auth.signUp({
-        email,
-        phone,
-        password,
-        options: {
-          data: {
-            full_name: fullName  // ← This goes into raw_user_meta_data
-          }
-        }
-      });
+      const { data, error } = await supabase.auth.signUp({
+      email,
+      phone,
+      password,
+      options: {
+        data: {
+          full_name: fullName
+     } 
+    }
+    });
 
-      if (authError) throw authError;
+if (error) throw error;
 
-      console.log("✅ Auth user created:", authData.user);
+console.log("✅ Auth user created:", data.user);
+      alert("Signup successful! Please check your email or phone for verification.");
 
       // Redirect to activation or welcome page
       window.location.href = "../PAGES/activation.html";
