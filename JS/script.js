@@ -42,10 +42,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
   }
 
-  // =============== FORGOT PASSWORD HANDLER ===============
-
+// =============== FORGOT PASSWORD HANDLER ===============
 const forgotPasswordForm = document.querySelector("#forgotPasswordForm");
-const message = document.getElementById("message");
+const messageEl = document.getElementById("message");
 
 if (forgotPasswordForm) {
   forgotPasswordForm.addEventListener("submit", async (e) => {
@@ -53,61 +52,66 @@ if (forgotPasswordForm) {
 
     const email = document.getElementById("email").value.trim();
 
-    const { data, error } = await supabase.auth.resetPasswordForEmail(email, {
-    redirectTo: "http://127.0.0.1:5501/reset.html" || "https://mapbiz.netlify.app/reset.html",
-    });
+    // Set correct redirect URL
+    const redirectTo = window.location.hostname === "localhost"
+      ? "http://127.0.0.1:5501/reset.html"
+      : "https://mapbiz.netlify.app/reset.html";  // Remove spaces
 
-    if (error) {
-      message.textContent = "Error: " + error.message;
-      message.style.color = "red";
-    } else {
-      message.textContent = "Password reset link sent! Check your email.";
-      message.style.color = "green";
+    try {
+      const { data, error } = await supabase.auth.resetPasswordForEmail(email, {
+        redirectTo,
+      });
+
+      if (error) {
+        messageEl.textContent = "Error: " + error.message;
+        messageEl.style.color = "red";
+      } else {
+        messageEl.textContent = "Password reset link sent! Check your email.";
+        messageEl.style.color = "green";
+      }
+    } catch (err) {
+      messageEl.textContent = "An unexpected error occurred.";
+      messageEl.style.color = "red";
     }
   });
 }
 
-
 // =============== RESET PASSWORD HANDLER ===============
-
 const formEl = document.getElementById("resetPasswordForm");
 const statusEl = document.getElementById("message");
 
-(async () => {
-  const hash = new URLSearchParams(window.location.hash.slice(1));
-  const query = new URLSearchParams(window.location.search);
-  const accessToken = hash.get("access_token") || query.get("access_token");
-  const refreshToken = hash.get("refresh_token") || query.get("refresh_token");
+// Only run on reset page
+if (formEl && window.location.pathname.includes("reset.html")) {
+  const params = new URLSearchParams(window.location.search);
+  const token = params.get("token");
 
-  if (accessToken && refreshToken) {
-    const { error } = await supabase.auth.setSession({
-      access_token: accessToken,
-      refresh_token: refreshToken,
-    });
-
-    if (error) {
-      statusEl.textContent = `${error.message}`;
-      statusEl.style.color = "red";
-      return;
-    }
-  }
-
-  const { data: { session } } = await supabase.auth.getSession();
-
-  if (!session) {
+  if (!token) {
     statusEl.textContent = "Invalid or expired reset link.";
     statusEl.style.color = "red";
+    formEl.style.display = "none";
     return;
   }
 
-  statusEl.textContent = "Token verified - set a new password.";
+  // Verify recovery token
+  const { error: verifyError } = await supabase.auth.verifyOtp({
+    token_hash: token,
+    type: "recovery"
+  });
+
+  if (verifyError) {
+    statusEl.textContent = "Invalid or expired link: " + verifyError.message;
+    statusEl.style.color = "red";
+    formEl.style.display = "none";
+    return;
+  }
+
+  statusEl.textContent = "Token verified — set a new password.";
   statusEl.style.color = "green";
 
-  // Listen for form submit
   formEl.addEventListener("submit", async (e) => {
     e.preventDefault();
-
     const pwd = document.getElementById("newPassword").value.trim();
+
     if (pwd.length < 6) {
       statusEl.textContent = "Password must be at least 6 characters.";
       statusEl.style.color = "red";
@@ -117,19 +121,17 @@ const statusEl = document.getElementById("message");
     const { error } = await supabase.auth.updateUser({ password: pwd });
 
     if (error) {
-      statusEl.textContent = `${error.message}`;
+      statusEl.textContent = "Error: " + error.message;
       statusEl.style.color = "red";
     } else {
       statusEl.textContent = "Password updated! Redirecting to login…";
       statusEl.style.color = "green";
-
       setTimeout(() => {
-        window.location.href = "/login/index.html"; 
+        window.location.href = "../index.html";
       }, 1000);
     }
   });
-})();
-
+}
 
   // =============== 2. LOGOUT HANDLER ===============
   document.getElementById("logoutBtn")?.addEventListener("click", async (e) => {
