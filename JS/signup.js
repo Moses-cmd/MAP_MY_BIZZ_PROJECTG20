@@ -53,7 +53,7 @@ console.log("✅ Auth user created:", data.user);
       alert("Signup successful! Please check your email or phone for verification.");
 
       // Redirect to activation or welcome page
-      window.location.href = "../PAGES/activation.html";
+      window.location.href = "../index.html";
 
     } catch (err) {
       console.error("🚫 Signup error:", err);
