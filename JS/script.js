@@ -516,3 +516,90 @@ if (formEl && window.location.pathname.includes("reset.html")) {
     });
   }
 });
+document.addEventListener("DOMContentLoaded", function () {
+  const modal = document.getElementById("legalModal");
+  const closeBtn = modal.querySelector(".close");
+  const agreeCheckbox = document.getElementById("agreeCheckbox");
+  const acceptBtn = document.getElementById("acceptLegalBtn");
+  const tabButtons = document.querySelectorAll(".tab-btn");
+  const tabContents = document.querySelectorAll(".tab-content");
+  const modalBody = document.querySelector(".modal-body");
+
+  const openTerms = document.getElementById("openTerms");
+  const openPrivacy = document.getElementById("openPrivacy");
+  const openPopia = document.getElementById("openPopia");
+
+  // Optional: enforce on signup pages that have #signupForm
+  const signupForm = document.getElementById("signupForm");
+  let pendingSubmit = false;
+
+  /* ---------- Footer links open modal ---------- */
+  if (openTerms) openTerms.addEventListener("click", e => { e.preventDefault(); openModal("terms"); });
+  if (openPrivacy) openPrivacy.addEventListener("click", e => { e.preventDefault(); openModal("privacy"); });
+  if (openPopia) openPopia.addEventListener("click", e => { e.preventDefault(); openModal("popia"); });
+
+  /* ---------- Intercept signup submit (if present) ---------- */
+  if (signupForm) {
+    signupForm.addEventListener("submit", function (e) {
+      // Only gate if not already accepted this submit
+      if (!pendingSubmit) {
+        e.preventDefault();
+        pendingSubmit = true; // mark intent; we'll actually submit after Accept
+        openModal("terms");
+      }
+    });
+  }
+
+  /* ---------- Modal controls ---------- */
+  function openModal(tabName) {
+    modal.style.display = "flex";
+    acceptBtn.disabled = true;
+    agreeCheckbox.checked = false;
+    showTab(tabName || "terms");
+    // If content doesn't scroll (short text), treat as already at bottom
+    enableIfEligible();
+  }
+
+  function closeModal() {
+    modal.style.display = "none";
+  }
+
+  function showTab(tabName) {
+    tabButtons.forEach(btn => btn.classList.toggle("active", btn.dataset.tab === tabName));
+    tabContents.forEach(content => {
+      content.style.display = (content.id === `tab-${tabName}`) ? "block" : "none";
+    });
+    modalBody.scrollTop = 0;
+    enableIfEligible();
+  }
+
+  tabButtons.forEach(btn => btn.addEventListener("click", () => showTab(btn.dataset.tab)));
+
+  closeBtn.addEventListener("click", closeModal);
+  window.addEventListener("click", (e) => { if (e.target === modal) closeModal(); });
+
+  /* ---------- Enable Accept: must be scrolled + checked ---------- */
+  function atBottom(el) {
+    // also returns true if content doesn't need scrolling
+    return (el.scrollHeight <= el.clientHeight) ||
+           (el.scrollHeight - el.scrollTop <= el.clientHeight + 5);
+  }
+
+  function enableIfEligible() {
+    acceptBtn.disabled = !(agreeCheckbox.checked && atBottom(modalBody));
+  }
+
+  modalBody.addEventListener("scroll", enableIfEligible);
+  agreeCheckbox.addEventListener("change", enableIfEligible);
+
+  /* ---------- Accept behavior ---------- */
+  acceptBtn.addEventListener("click", () => {
+    if (acceptBtn.disabled) return;
+    closeModal();
+    // If we intercepted a signup submit, submit it now
+    if (signupForm && pendingSubmit) {
+      // slight delay to ensure modal closes smoothly
+      setTimeout(() => { signupForm.submit(); pendingSubmit = false; }, 50);
+    }
+  });
+});
