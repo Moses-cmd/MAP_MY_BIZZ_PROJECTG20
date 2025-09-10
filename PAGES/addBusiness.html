@@ -47,10 +47,10 @@
         <label for="category">Category</label>
         <select id="category" name="category" required>
           <option value="">-- Select Category --</option>
-          <option value="Restaurant">Restaurant</option>
-          <option value="Salon & Beauty">Salon & Beauty</option>
-          <option value="Retail Shop">Retail Shop</option>
           <option value="Consulting">Consulting</option>
+          <option value="Restaurant">Restaurant</option>
+          <option value="Retail Shop">Retail Shop</option>
+          <option value="Salon & Beauty">Salon & Beauty</option>
           <option value="Tech Services">Tech Services</option>
           <option value="Other">Other</option>
         </select>
@@ -63,12 +63,14 @@
 
       <div class="form-group">
         <label for="phone">Phone Number</label>
-        <input type="tel" id="phone" name="phone" />
+        <input type="tel" id="phone" name="phone" placeholder="061 855 7707" required />
+       
+
       </div>
 
       <div class="form-group">
         <label for="email">Email</label>
-        <input type="email" id="email" name="email" />
+        <input type="email" id="email" name="email" placeholder="Zimela@gmail.com" required />
       </div>
 
       <div class="form-group">
@@ -90,11 +92,12 @@
       </div>
       <div class="footer-section">
         <h4>Legal</h4>
-        <ul>
-          <li><a id="openTerms" href="#">Terms & Conditions</a></li>
-          <li><a id="openPrivacy" href="#">Privacy Policy</a></li>
-          <li><a id="openPopia" href="#">POPIA Compliance</a></li>
-        </ul>
+       
+          <a id="openTerms">Terms & Conditions</a>
+          <br>
+          <a id="openPrivacy">Privacy Policy</a>
+          <br>
+          <a id="openPopia">POPIA Compliance</a>
       </div>
       <div class="footer-section">
         <h4>Contact</h4>
