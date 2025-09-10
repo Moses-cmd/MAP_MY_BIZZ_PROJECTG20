@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Add Your CIPC Business to Map - Map My Biz</title>
+  <link rel="stylesheet" href="../CSS/style.css">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <div class="logo-container">
+      <img src="../Assets/MMB.png" alt="Map My Biz Logo" />
+    </div>
+    <div class="nav-links">
+      <a href="../PAGES/dashboard.html">Home</a>
+      <a href="../PAGES/course.html">Courses</a>
+      <a href="../PAGES/internalMap.html">Register with CIPC</a>
+      <a href="#">VR Training</a>
+      <a href="../PAGES/business.html" class="active">Business</a>
+    </div>
+    <!-- User Profile Dropdown -->
+    <div class="user-profile" id="userProfile">
+      <div class="user-icon">👤</div>
+      <span id="userNameDisplay">Loading...</span>
+      <ul class="dropdown" id="dropdownMenu">
+        <li><a href="./updateinfo.html">Edit Personal Info</a></li>
+        <li><a href="#" id="logoutBtn">Logout</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div class="header-section">
+      <h1>📍 Add Your CIPC-Registered Business to the Map</h1>
+      <p class="subtitle">
+        Only businesses registered with CIPC may be listed. Please enter your official registration details below.
+      </p>
+      <div class="cipc-verified-badge">
+        <img src="https://www.cipc.co.za/wp-content/uploads/2020/07/cipc-logo.png" alt="CIPC Logo" width="80" />
+        <span>CIPC-Verified Business Registration Required</span>
+      </div>
+    </div>
+
+    <form id="addBusinessForm">
+      <!-- CIPC Registration Number -->
+      <div class="form-group">
+        <label for="cipcRegNumber">Company Registration Number *</label>
+        <input type="text" id="cipcRegNumber" name="cipcRegNumber" placeholder="e.g. 2020/123456/07" required />
+        <small class="hint">Found on your CoR14.1 Certificate from CIPC.</small>
+      </div>
+
+      <!-- Business Name (as registered) -->
+      <div class="form-group">
+        <label for="businessName">Business Name (as registered with CIPC) *</label>
+        <input type="text" id="businessName" name="businessName" required />
+        <small class="hint">Must exactly match CIPC records.</small>
+      </div>
+
+      <!-- Director/Owner ID or Passport -->
+      <div class="form-group">
+        <label for="directorId">Director/Owner ID or Passport Number *</label>
+        <input type="text" id="directorId" name="directorId" placeholder="SA ID (13 digits) or Passport" required />
+        <small class="hint">Used to verify your authority to manage this business.</small>
+      </div>
+
+      <!-- CIPC Customer Code (optional) -->
+      <div class="form-group">
+        <label for="cipcCustomerCode">CIPC Customer Code (if any)</label>
+        <input type="text" id="cipcCustomerCode" name="cipcCustomerCode" placeholder="e.g. CUST-9A3B2C" />
+        <small class="hint">Optional — if you’ve registered on CIPC BizPortal before.</small>
+      </div>
+
+      <!-- Contact Info -->
+      <div class="form-group">
+        <label for="contactEmail">Business Email *</label>
+        <input type="email" id="contactEmail" name="contactEmail" required placeholder="business@domain.co.za" />
+      </div>
+
+      <div class="form-group">
+        <label for="contactPhone">Business Phone *</label>
+        <input type="tel" id="contactPhone" name="contactPhone" required placeholder="+27 61 855 7707" />
+        <small class="hint">Used for OTP verification and notifications.</small>
+      </div>
+
+      <!-- Category (optional but recommended) -->
+      <div class="form-group">
+        <label for="category">Business Category</label>
+        <select id="category" name="category">
+          <option value="">-- Select Category --</option>
+          <option value="Consulting">Consulting</option>
+          <option value="Restaurant">Restaurant</option>
+          <option value="Retail Shop">Retail Shop</option>
+          <option value="Salon & Beauty">Salon & Beauty</option>
+          <option value="Tech Services">Tech Services</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+
+      <!-- Description -->
+      <div class="form-group">
+        <label for="description">Business Description (Optional)</label>
+        <textarea id="description" name="description" rows="3" maxlength="500" placeholder="Tell tourists what makes your business special..."></textarea>
+      </div>
+
+      <!-- Legal Consent -->
+      <div class="legal-consent">
+        <label>
+          <input type="checkbox" id="agreeTerms" required />
+          I confirm that this business is registered with CIPC and that I am authorized to represent it. I agree to keep all information accurate and up to date.
+        </label>
+        <label>
+          <input type="checkbox" id="agreePopia" required />
+          I consent to the processing of my personal and business information in accordance with POPIA (Act 4 of 2013).
+        </label>
+      </div>
+
+      <button type="submit" class="btn-primary">✅ Add Business to Map</button>
+    </form>
+
+    <div id="resultMessage" class="message" style="margin-top: 1.5rem;"></div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-container">
+      <div class="footer-section">
+        <h4>About Map My Biz</h4>
+        <p>Map My Biz connects communities, entrepreneurs, and tourists by showcasing local businesses and providing accredited learning opportunities.</p>
+      </div>
+      <div class="footer-section">
+        <h4>Legal</h4>
+        <a id="openTerms">Terms & Conditions</a><br>
+        <a id="openPrivacy">Privacy Policy</a><br>
+        <a id="openPopia">POPIA Compliance</a>
+      </div>
+      <div class="footer-section">
+        <h4>Contact</h4>
+        <p>Email: support@mapmybiz.co.za</p>
+        <p>Phone: +27 11 123 4567</p>
+      </div>
+    </div>
+    <div class="bottom-bar">
+      &copy; 2025 Map My Biz. All rights reserved.
+    </div>
+  </footer>
+
+  <!-- Legal Modal (optional, if not already loaded) -->
+  <!-- ... your existing modal code ... -->
+
+  <style>
+    .header-section { text-align: center; margin-bottom: 2rem; }
+    .subtitle { font-size: 1.1rem; color: #444; max-width: 800px; margin: 0 auto 1rem; }
+    .cipc-verified-badge { margin-top: 1rem; display: flex; align-items: center; justify-content: center; gap: 10px; color: #2e7d32; font-weight: 500; }
+    .cipc-verified-badge img { margin-bottom: 0; }
+
+    .form-group { margin-bottom: 1.5rem; }
+    .form-group label { display: block; margin-bottom: 0.5rem; font-weight: 500; }
+    .form-group input, .form-group select, .form-group textarea {
+      width: 100%;
+      padding: 0.75rem;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      font-size: 1rem;
+    }
+    .hint {
+      display: block;
+      font-size: 0.85rem;
+      color: #666;
+      margin-top: 0.25rem;
+    }
+
+    .legal-consent {
+      background: #f9f9f9;
+      padding: 1.5rem;
+      border-radius: 8px;
+      margin: 1.5rem 0;
+    }
+    .legal-consent label {
+      display: block;
+      margin: 0.75rem 0;
+      font-size: 0.95rem;
+      line-height: 1.4;
+    }
+
+    .message {
+      padding: 1rem;
+      border-radius: 6px;
+      font-weight: 500;
+    }
+    .message.success {
+      background: #e8f5e9;
+      color: #2e7d32;
+    }
+    .message.error {
+      background: #ffebee;
+      color: #c62828;
+    }
+  </style>
+
+  <script type="module">
+    import supabase from "../supabaseClient.js";
+
+    document.addEventListener("DOMContentLoaded", async function() {
+      const form = document.getElementById("addBusinessForm");
+
+      // Get user
+      const {  { user } } = await supabase.auth.getUser();
+      if (!user) {
+        alert(" You must be logged in to add a business.");
+        window.location.href = "../PAGES/login.html";
+        return;
+      }
+
+      // Optional: Prefill user's name/email if available
+      const {  profile } = await supabase
+        .from('profiles')
+        .select('full_name, email')
+        .eq('id', user.id)
+        .single();
+
+      if (profile) {
+        document.getElementById("contactEmail").value = profile.email || "";
+      }
+
+      form?.addEventListener("submit", async function(e) {
+        e.preventDefault();
+
+        // Get values
+        const cipcRegNumber = document.getElementById("cipcRegNumber").value.trim();
+        const businessName = document.getElementById("businessName").value.trim();
+        const directorId = document.getElementById("directorId").value.trim();
+        const cipcCustomerCode = document.getElementById("cipcCustomerCode").value.trim() || null;
+        const contactEmail = document.getElementById("contactEmail").value.trim();
+        const contactPhone = document.getElementById("contactPhone").value.trim();
+        const category = document.getElementById("category").value || "Other";
+        const description = document.getElementById("description").value.trim() || "";
+
+        // Validate checkboxes
+        const agreeTerms = document.getElementById("agreeTerms").checked;
+        const agreePopia = document.getElementById("agreePopia").checked;
+
+        if (!agreeTerms || !agreePopia) {
+          showResult(" You must agree to the terms and POPIA consent.", "error");
+          return;
+        }
+
+        // Validate CIPC format (basic)
+        const cipcRegex = /^\d{4}\/\d{6}\/\d{2}$/;
+        if (!cipcRegex.test(cipcRegNumber)) {
+          showResult(" Invalid CIPC Registration Number format. Example: 2020/123456/07", "error");
+          return;
+        }
+
+        // Validate SA ID if numeric (optional: enhance for passport)
+        if (/^\d+$/.test(directorId) && !/^\d{13}$/.test(directorId)) {
+          showResult(" SA ID must be exactly 13 digits.", "error");
+          return;
+        }
+
+        // Validate email & phone
+        if (!contactEmail.includes("@")) {
+          showResult(" Please enter a valid email address.", "error");
+          return;
+        }
+
+        if (!contactPhone.startsWith("+27") || contactPhone.replace(/\D/g, "").length !== 12) {
+          showResult(" Please enter a valid South African phone number starting with +27.", "error");
+          return;
+        }
+
+        // Prepare data for Supabase
+        const businessData = {
+          user_id: user.id,
+          cipc_registration_number: cipcRegNumber,
+          business_name: businessName,
+          director_id_passport: directorId,
+          cipc_customer_code: cipcCustomerCode,
+          contact_email: contactEmail,
+          contact_phone: contactPhone,
+          category: category,
+          description: description,
+          status: "pending_verification", // or "active" if no admin review needed
+          created_at: new Date().toISOString()
+        };
+
+        try {
+          const { data, error } = await supabase
+            .from('businesses')
+            .insert([businessData])
+            .select();
+
+          if (error) throw error;
+
+          showResult(`
+            ✅ Success! Your business "${businessName}" has been submitted.<br>
+            <strong>CIPC Reg:</strong> ${cipcRegNumber}<br>
+            It will appear on the map after final verification (usually within 24 hours).
+          `, "success");
+
+          // Optional: redirect after 3 seconds
+          setTimeout(() => {
+            window.location.href = "../PAGES/business.html";
+          }, 3000);
+
+        } catch (err) {
+          console.error("Error saving business:", err);
+          showResult("❌ Failed to save business: " + (err.message || "Unknown error"), "error");
+        }
+      });
+    });
+
+    function showResult(message, type) {
+      const div = document.getElementById("resultMessage");
+      div.innerHTML = message;
+      div.className = "message " + type;
+      div.style.display = "block";
+    }
+  </script>
+
+  <script type="module" src="../JS/script.js"></script>
+</body>
+</html>
