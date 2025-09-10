@@ -21,39 +21,35 @@ if (signupForm) {
       return;
     }
 
-    let email = null;
-    let phone = null;
+    let signUpPayload = {
+      password,
+      options: {
+        data: {
+          full_name: fullName,
+        },
+      },
+    };
 
-    // Detect email or phone
+    // Detect email or phone and build correct payload
     if (emailOrPhone.includes("@gmail.com")) {
-      email = emailOrPhone;
+      signUpPayload.email = emailOrPhone;
     } else if (emailOrPhone.startsWith("+27") && /^\+27\d{9}$/.test(emailOrPhone)) {
-      phone = emailOrPhone;
+      signUpPayload.phone = emailOrPhone;
     } else {
       alert("Please enter a valid Gmail address or +27 phone number.");
       return;
     }
 
     try {
-      // ✅ Include full_name in user metadata so trigger can access it
-      const { data, error } = await supabase.auth.signUp({
-      email,
-      phone,
-      password,
-      options: {
-        data: {
-          full_name: fullName
-     } 
-    }
-    });
+      const { data, error } = await supabase.auth.signUp(signUpPayload);
 
-if (error) throw error;
+      if (error) throw error;
 
-console.log("✅ Auth user created:", data.user);
+      console.log("✅ Auth user created:", data.user);
       alert("Signup successful! Please check your email or phone for verification.");
 
-      // Redirect to activation or welcome page
-      window.location.href = "../PAGES/signup.html";
+      // Redirect to a welcome/dashboard page
+      window.location.href = "../PAGES/welcome.html";
 
     } catch (err) {
       console.error("🚫 Signup error:", err);
