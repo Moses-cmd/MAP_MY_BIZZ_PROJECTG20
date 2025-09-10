@@ -1012,7 +1012,7 @@ body {
   margin: 0 auto;
   max-width: 1200px;
   color: #1a3b5d;
-  background-color: rgb(133, 142, 142);
+  background-color: #F0F6F6;
   border-bottom: 1px solid #b8d8d8;
   border-radius:2%;
 }
@@ -1182,7 +1182,7 @@ body {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
-.btn-addt:
+
 .btn-primary:hover {
   background-color: #09676c;
 }
