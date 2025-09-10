@@ -1177,7 +1177,7 @@ footer .bottom-bar {
   width: 100%;
 }
 .action-buttons{
-  background-color: #0A8791;
+background-color: #0A8791;
   color: white;
   border: none;
   padding: 12px 24px;
@@ -1204,17 +1204,7 @@ footer .bottom-bar {
   align-items: center;
   justify-content: space-between;
 }
-.btn-addt{
-  background-color: #0A8791;
-  color: white;
-  border: none;
-  padding: 12px 24px;
-  border-radius: 6px;
-  font-size: 16px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
+
 .welcome-back h2 {
   margin: 0 0 0.5rem 0;
   font-size: 1.75rem;
