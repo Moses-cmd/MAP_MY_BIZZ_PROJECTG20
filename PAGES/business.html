@@ -60,59 +60,44 @@
     <h2>Choose Your Plan</h2>
     <!-- Plan Selection Section -->
     <!-- Replace your plan-selection section with this updated version -->
-<!-- Plan Selection Section -->
 <aside class="plan-selection" id="planSelection">
-  <!-- Step 1: CIPC Verification -->
-  <div class="cipc-verification-section" id="cipcStep">
-    <h3>Step 1: Verify Your Business</h3>
-    <p>Enter your CIPC Registration Number to proceed. Only registered South African businesses may be listed.</p>
-    <input type="text" id="cipcNumber" placeholder="e.g. 2020/123456/07" required />
-    <button class="btn-primary" id="verifyCipcBtn">Verify CIPC Number</button>
-    <div id="cipcError" class="error" style="color: #b00020; margin-top: 0.5rem; font-size: 0.9rem;"></div>
+  <div class="plan-card" data-plan="free">
+    <h3>Free</h3>
+    <p>R 0 /month</p>
+    <ul>
+      <li><span class="checkmark">&#10004;</span> Basic listing</li>
+      <li><span class="checkmark">&#10004;</span> 1 photo</li>
+      <li><span class="checkmark">&#10004;</span> Contact info</li>
+      <li><span class="crossmark">&#10006;</span> No analytics</li>
+      <li><span class="crossmark">&#10006;</span> Standard placement</li>
+    </ul>
+    <button class="btn-primary select-plan-btn">Select</button>
   </div>
 
-  <!-- Step 2: Plan Selection (Hidden until verified) -->
-  <div class="plan-cards" id="planCards" style="display: none; margin-top: 2rem;">
-    <h3>Step 2: Choose Your Plan</h3>
+  <div class="plan-card" data-plan="premium">
+    <h3>PREMIUM</h3>
+    <p>R 100 /month</p>
+    <ul>
+      <li><span class="checkmark">&#10004;</span> Standard Business Info</li>
+      <li><span class="checkmark">&#10004;</span> 5 photos</li>
+      <li><span class="checkmark">&#10004;</span> Contact info</li>
+      <li><span class="checkmark">&#10004;</span> Entry-level analytics</li>
+      <li><span class="crossmark">&#10006;</span> Standard placement</li>
+    </ul>
+    <button class="btn-primary select-plan-btn">Select</button>
+  </div>
 
-    <div class="plan-card" data-plan="free">
-      <h3>Free</h3>
-      <p>R 0 /month</p>
-      <ul>
-        <li><span class="checkmark">&#10004;</span> Basic listing</li>
-        <li><span class="checkmark">&#10004;</span> 1 photo</li>
-        <li><span class="checkmark">&#10004;</span> Contact info</li>
-        <li><span class="crossmark">&#10006;</span> No analytics</li>
-        <li><span class="crossmark">&#10006;</span> Standard placement</li>
-      </ul>
-      <button class="btn-primary select-plan-btn">Select</button>
-    </div>
-
-    <div class="plan-card" data-plan="premium">
-      <h3>PREMIUM</h3>
-      <p>R 100 /month</p>
-      <ul>
-        <li><span class="checkmark">&#10004;</span> Standard Business Info</li>
-        <li><span class="checkmark">&#10004;</span> 5 photos</li>
-        <li><span class="checkmark">&#10004;</span> Contact info</li>
-        <li><span class="checkmark">&#10004;</span> Entry-level analytics</li>
-        <li><span class="crossmark">&#10006;</span> Standard placement</li>
-      </ul>
-      <button class="btn-primary select-plan-btn">Select</button>
-    </div>
-
-    <div class="plan-card" data-plan="gold">
-      <h3>GOLD</h3>
-      <p>R 250 /month</p>
-      <ul>
-        <li><span class="checkmark">&#10004;</span> Full Business Info</li>
-        <li><span class="checkmark">&#10004;</span> 10 photos</li>
-        <li><span class="checkmark">&#10004;</span> Contact info</li>
-        <li><span class="checkmark">&#10004;</span> Extreme analytics</li>
-        <li><span class="checkmark">&#10004;</span> Priority placement</li>
-      </ul>
-      <button class="btn-primary select-plan-btn">Select</button>
-    </div>
+  <div class="plan-card" data-plan="gold">
+    <h3>GOLD</h3>
+    <p>R 250 /month</p>
+    <ul>
+      <li><span class="checkmark">&#10004;</span> Full Business Info</li>
+      <li><span class="checkmark">&#10004;</span> 10 photos</li>
+      <li><span class="checkmark">&#10004;</span> Contact info</li>
+      <li><span class="checkmark">&#10004;</span> Extreme analytics</li>
+      <li><span class="checkmark">&#10004;</span> Priority placement</li>
+    </ul>
+    <button class="btn-primary select-plan-btn">Select</button>
   </div>
 </aside>
 
