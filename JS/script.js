@@ -249,7 +249,7 @@ if (formEl && window.location.pathname.includes("reset.html")) {
     window.location.href = "../PAGES/addBusiness.html";
   });
 
-  document.querySelector(".btn-add")?.addEventListener("click", (e) => {
+  document.querySelector(".btn-addt")?.addEventListener("click", (e) => {
     e.preventDefault();
     window.location.href = "../PAGES/registerBusiness.html";
   });
