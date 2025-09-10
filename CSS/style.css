@@ -1012,9 +1012,9 @@ body {
   margin: 0 auto;
   max-width: 1200px;
   color: #1a3b5d;
-  background-color: #F0F6F6;
-  border-bottom: 1px solid #B8D8D8;
-  border-radius: 10%;
+  background-color: rgb(133, 142, 142);
+  border-bottom: 1px solid #b8d8d8;
+  border-radius:2%;
 }
 
 .page-header h1 {
