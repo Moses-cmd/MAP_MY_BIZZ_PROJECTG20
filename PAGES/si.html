@@ -123,107 +123,79 @@
 
   <!-- 🔹 Scripts -->
   <script type="module">
-    import supabase from "../supabaseClient.js";
+import supabase from "../supabaseClient.js";
 
-    const signupForm = document.getElementById("signupForm");
-    const signupBtn = document.getElementById("signupBtn");
-    const passwordInput = document.getElementById("signupPassword");
-    const confirmInput = document.getElementById("confirmPassword");
-    const errorDiv = document.getElementById("formError");
+const signupForm = document.querySelector("#signupForm");
 
-    let pendingFormData = null; // store form data until legal accepted
+if (signupForm) {
+  signupForm.addEventListener("submit", async function (e) {
+    e.preventDefault();
 
-    if (signupForm) {
-      signupForm.addEventListener("submit", function (e) {
-        e.preventDefault();
+    const fullName = document.getElementById("fullName").value.trim();
+    const emailOrPhone = document.getElementById("email").value.trim();
+    const password = document.getElementById("signupPassword").value.trim();
+    const confirmPassword = document.getElementById("confirmPassword").value.trim();
+    const saId = document.getElementById("saId").value.trim(); // <-- new field for ID
 
-        // collect values
-        const fullName = document.getElementById("fullName").value.trim();
-        const emailOrPhone = document.getElementById("email").value.trim();
-        const idNumber = document.getElementById("IdNumber").value.trim();
-        const password = passwordInput.value;
-        const confirmPassword = confirmInput.value;
-
-        errorDiv.textContent = "";
-        passwordInput.classList.remove("input-error");
-        confirmInput.classList.remove("input-error");
-
-        // validation
-        if (!fullName || !emailOrPhone || !idNumber || !password || !confirmPassword) {
-          errorDiv.textContent = "Please fill in all fields.";
-          return;
-        }
-        if (password.length < 6) {
-          errorDiv.textContent = "Password must be at least 6 characters.";
-          passwordInput.classList.add("input-error");
-          return;
-        }
-        if (password !== confirmPassword) {
-          errorDiv.textContent = "Passwords do not match.";
-          passwordInput.classList.add("input-error");
-          confirmInput.classList.add("input-error");
-          return;
-        }
-
-        // store data until legal modal accepted
-        pendingFormData = { fullName, emailOrPhone, idNumber, password };
-
-        // open legal modal
-        document.getElementById("legalModal").style.display = "flex";
-      });
+    // Validate inputs
+    if (!fullName || !emailOrPhone || !password || !confirmPassword || !saId) {
+      alert("Please fill in all fields.");
+      return;
     }
 
-    // Handle Accept & Continue
-    document.getElementById("acceptLegalBtn").addEventListener("click", async () => {
-      if (!pendingFormData) return;
+    if (password.length < 6) {
+      alert("Password must be at least 6 characters.");
+      return;
+    }
 
-      const { fullName, emailOrPhone, idNumber, password } = pendingFormData;
+    if (password !== confirmPassword) {
+      alert("Passwords do not match.");
+      return;
+    }
 
-      let signUpPayload = {
-        password,
-        options: {
-          data: { full_name: fullName, id_number: idNumber }
-        }
-      };
+    // ✅ Validate SA ID (must be exactly 13 digits)
+    if (!/^\d{13}$/.test(saId)) {
+      alert("South African ID must be exactly 13 digits.");
+      return;
+    }
 
-      if (emailOrPhone.includes("@")) {
-        signUpPayload.email = emailOrPhone;
-      } else if (emailOrPhone.startsWith("+27") && /^\+27\d{9}$/.test(emailOrPhone)) {
-        signUpPayload.phone = emailOrPhone;
-      } else {
-        errorDiv.textContent = "Please enter a valid email or +27 phone number.";
-        return;
-      }
+    let signUpPayload = {
+      password,
+      options: {
+        data: {
+          full_name: fullName,
+          sa_id: saId, // save SA ID in metadata
+        },
+      },
+    };
 
-      try {
-        signupBtn.disabled = true;
-        signupBtn.textContent = "Signing up...";
+    // Detect email or phone
+    if (emailOrPhone.includes("@gmail.com")) {
+      signUpPayload.email = emailOrPhone;
+    } else if (emailOrPhone.startsWith("+27") && /^\+27\d{9}$/.test(emailOrPhone)) {
+      signUpPayload.phone = emailOrPhone;
+    } else {
+      alert("Please enter a valid Gmail address or +27 phone number.");
+      return;
+    }
 
-        const { data, error } = await supabase.auth.signUp(signUpPayload);
-        if (error) throw error;
+    try {
+      const { data, error } = await supabase.auth.signUp(signUpPayload);
 
-        errorDiv.style.color = "green";
-        errorDiv.textContent = "Signup successful! Please check your email/phone for verification.";
-        window.location.href = "../PAGES/welcome.html";
-      } catch (err) {
-        errorDiv.style.color = "#b00020";
-        errorDiv.textContent = err.message || "Something went wrong.";
-      } finally {
-        signupBtn.disabled = false;
-        signupBtn.textContent = "SIGN UP";
-        document.getElementById("legalModal").style.display = "none";
-        pendingFormData = null;
-      }
-    });
+      if (error) throw error;
 
-    // Password toggle
-    const toggleBtn = document.getElementById('togglePasswords');
-    let isPasswordVisible = false;
-    toggleBtn.addEventListener('click', function () {
-      isPasswordVisible = !isPasswordVisible;
-      passwordInput.type = confirmInput.type = isPasswordVisible ? 'text' : 'password';
-      toggleBtn.textContent = isPasswordVisible ? '🙈' : '👁️';
-    });
+      console.log("✅ Auth user created:", data.user);
+      alert("Signup successful! Please check your email or phone for verification.");
+
+      window.location.href = "../PAGES/signup.html";
+
+    } catch (err) {
+      console.error("🚫 Signup error:", err);
+      alert("Error: " + (err.message || "Something went wrong."));
+    }
+  });
+}
+
   </script>
 
   <script src="../JS/legal-modal.js"></script> <!-- keep your tab switching etc -->
