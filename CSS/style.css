@@ -501,7 +501,7 @@ body {
   transition: background 0.2s;
 }
 
-.btn-primary[type="button"] {
+.btn-primary {
   background-color: #4a90e2;
   color: white;
 }
