@@ -1764,3 +1764,28 @@ border: 1px solid #B8D8D8;
   min-width: 300px; /* Enforce minimum width */
   flex: 1;          /* Still grow equally */
 }
+
+/* Style Google Translate Dropdown */
+.goog-logo-link {
+  display: none !important;
+}
+
+.goog-te-gadget {
+  color: transparent !important;
+}
+
+.goog-te-gadget .goog-te-combo {
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #0A8791;
+  border-radius: 6px;
+  background: white;
+  color: #1D3557;
+  font-size: 0.875rem;
+  cursor: pointer;
+}
+
+.language-selector {
+  margin-left: 1rem;
+  display: flex;
+  align-items: center;
+}
