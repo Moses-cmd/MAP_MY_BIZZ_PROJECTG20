@@ -446,9 +446,9 @@ body {
   cursor: pointer;
 }
 .profile-container {
-  max-width: 1200px;
-  margin: 60px auto;
-  padding: 40px;
+  max-width: 600px;
+  margin: 30px auto;
+  padding: 20px;
   background-color: #f5f7f9;
   border-radius: 20px;
   box-shadow: 0 8px 32px rgba(0,0,0,0.1);
