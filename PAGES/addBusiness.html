@@ -208,12 +208,7 @@
         const description = document.getElementById("description")?.value.trim();
 
         // Validate CIPC format: YYYY/NNNNNN/NN
-        const cipcRegex = /^\d{4}\/\d{6}\/\d{2}$/;
-        if (!cipcRegex.test(cipcNumber)) {
-          alert("❌ Invalid CIPC format. Example: 2020/123456/07");
-          return;
-        }
-
+      
         // Validate checkboxes
         const agreeCipc = document.getElementById("agreeCipc")?.checked;
         const agreePopia = document.getElementById("agreePopia")?.checked;
