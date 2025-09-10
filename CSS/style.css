@@ -1014,6 +1014,7 @@ body {
   color: #1a3b5d;
   background-color: #F0F6F6;
   border-bottom: 1px solid #B8D8D8;
+  border-radius: 30%;
 }
 
 .page-header h1 {
