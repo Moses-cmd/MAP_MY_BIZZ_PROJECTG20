@@ -41,10 +41,13 @@
 
 <div class="container">
   <div class="profile-container">
-    <h2>Edit Personal Information</h2>
-      <br>
-      <input type="file" placeholder="profile Updates ">
-      <br>
+    <div class="form-group">
+      <label for="profileImage">Profile Picture</label>
+      <input type="file" id="profileImage" accept="image/*" />
+      <div id="imagePreview" style="margin-top: 10px;">
+        <!-- Preview will appear here -->
+      </div>
+    </div>
     <form id="profileForm" class="profile-form">
       <div class="form-group">
         <label for="fullName">Full Name</label>

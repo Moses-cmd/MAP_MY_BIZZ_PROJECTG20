@@ -505,7 +505,19 @@ body {
   background-color: #4a90e2;
   color: white;
 }
+#imagePreview {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px;
+}
 
+#imagePreview img {
+  max-width: 150px;
+  max-height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+}
 
 h2 {
   margin: 0;
