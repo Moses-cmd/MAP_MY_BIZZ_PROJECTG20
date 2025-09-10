@@ -9,9 +9,11 @@ if (signupForm) {
     const fullName = document.getElementById("fullName").value.trim();
     const emailOrPhone = document.getElementById("email").value.trim();
     const password = document.getElementById("signupPassword").value.trim();
+    const confirmPassword = document.getElementById("confirmPassword").value.trim();
+    const saId = document.getElementById("saId").value.trim(); // <-- new field for ID
 
     // Validate inputs
-    if (!fullName || !emailOrPhone || !password) {
+    if (!fullName || !emailOrPhone || !password || !confirmPassword || !saId) {
       alert("Please fill in all fields.");
       return;
     }
@@ -21,16 +23,28 @@ if (signupForm) {
       return;
     }
 
+    if (password !== confirmPassword) {
+      alert("Passwords do not match.");
+      return;
+    }
+
+    // ✅ Validate SA ID (must be exactly 13 digits)
+    if (!/^\d{13}$/.test(saId)) {
+      alert("South African ID must be exactly 13 digits.");
+      return;
+    }
+
     let signUpPayload = {
       password,
       options: {
         data: {
           full_name: fullName,
+          sa_id: saId, // save SA ID in metadata
         },
       },
     };
 
-    // Detect email or phone and build correct payload
+    // Detect email or phone
     if (emailOrPhone.includes("@gmail.com")) {
       signUpPayload.email = emailOrPhone;
     } else if (emailOrPhone.startsWith("+27") && /^\+27\d{9}$/.test(emailOrPhone)) {
@@ -48,8 +62,7 @@ if (signupForm) {
       console.log("✅ Auth user created:", data.user);
       alert("Signup successful! Please check your email or phone for verification.");
 
-      // Redirect to a welcome/dashboard page
-      window.location.href = "../PAGES/welcome.html";
+      window.location.href = "../PAGES/signup.html";
 
     } catch (err) {
       console.error("🚫 Signup error:", err);
