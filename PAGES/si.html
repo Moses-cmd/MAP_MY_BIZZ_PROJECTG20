@@ -35,12 +35,12 @@
           <input type="text" id="email" placeholder="Email Address" required />
           <input type="" id="IdNumber" placeholder="Enter South African ID Number" required />
 
-          <!-- Password fields with toggle -->
-          <div class="password-wrapper">
-            <input type="password" id="signupPassword" placeholder="Password" required />
-            <input type="password" id="confirmPassword" placeholder="Confirm Password" required />
-            <span class="toggle-password" data-target="signupPassword">&#128065;</span>
-          </div>
+         <!-- Password fields with toggle -->
+<div class="password-wrapper">
+  <input type="password" id="signupPassword" placeholder="Password" required />
+  <input type="password" id="confirmPassword" placeholder="Confirm Password" required />
+  <span class="toggle-password" id="togglePasswords">&#128065;</span>
+</div>
 
           <button type="submit" class="btn-secondary">SIGN UP</button>
         </form>
@@ -314,6 +314,26 @@ document.getElementById("acceptLegalBtn").addEventListener("click", () => {
       acceptBtn.disabled = !agreeCheckbox.checked || !atBottom;
     });
   });
+  // Toggle both password fields together
+const toggleBtn = document.getElementById('togglePasswords');
+const passwordField = document.getElementById('signupPassword');
+const confirmPasswordField = document.getElementById('confirmPassword');
+
+let isPasswordVisible = false;
+
+toggleBtn.addEventListener('click', function () {
+  isPasswordVisible = !isPasswordVisible;
+
+  if (isPasswordVisible) {
+    passwordField.type = 'text';
+    confirmPasswordField.type = 'text';
+    toggleBtn.textContent = '🙈'; // Change to "hide" icon
+  } else {
+    passwordField.type = 'password';
+    confirmPasswordField.type = 'password';
+    toggleBtn.textContent = '👁️'; // Change back to "show" icon
+  }
+});
 </script>
   <script type="module" src="../JS/signup.js"></script>
 </body>
