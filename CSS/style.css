@@ -1871,7 +1871,7 @@ border: 1px solid #B8D8D8;
       display: flex;
       align-items: center;
       justify-content: center;
-      background-color: #0A8791;
+      background-color: #589094;
       padding: 20px 0;
       position: relative;
       overflow: hidden;
@@ -1925,7 +1925,7 @@ border: 1px solid #B8D8D8;
     .circle {
       width: 50px;
       height: 50px;
-      background-color: rgba(255, 255, 255, 0.2);
+      background-color: #ffb300;
       border-radius: 50%;
       position: absolute;
       left: 20px;
