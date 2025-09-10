@@ -252,7 +252,7 @@ body {
 }
 
 /* Buttons */
-.btn-primary.btn-addt {
+.btn-primary {
   background-color: #2ec4b6;
   color: white;
   border: none;
@@ -1146,6 +1146,7 @@ body {
   justify-content: center;
   gap: 20px;
   margin-bottom: 30px;
+  background-color: #0A8791;
 }
 
 .btn-primary {
@@ -1347,138 +1348,7 @@ border: 1px solid #B8D8D8;
   max-width: 400px;
   width: 100%;
 }
-/* ==================== BUTTON STYLES ==================== */
 
-/* Primary Button (used for "Select Plan", "Register Business", etc.) */
-.btn-primary,
-.btn-bussiness {
-  background-color: #4a90e2; /* Vibrant blue */
-  color: white;
-  border: none;
-  padding: 0.75rem 1.5rem;
-  border-radius: 6px;
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  text-decoration: none;
-  display: inline-block;
-}
-
-.btn-primary:hover,
-.btn-bussiness:hover {
-  background-color: #3a7bc8;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-}
-
-.btn-primary:active,
-.btn-bussiness:active {
-  transform: translateY(0);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-/* Secondary Button (used for "Add Existing Business") */
-.btn-addt,
-.btn-add {
-  background-color: #27ae60; /* Fresh green — implies "add/positive action" */
-  color: white;
-  border: none;
-  padding: 0.75rem 1.5rem;
-  border-radius: 6px;
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  text-decoration: none;
-  display: inline-block;
-}
-
-.btn-addt:hover,
-.btn-add:hover {
-  background-color: #229954;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-}
-
-.btn-addt:active,
-.btn-add:active {
-  transform: translateY(0);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-/* Tertiary / Outline Button (used for "Manage") */
-.btn-list {
-  background-color: transparent;
-  color: #555;
-  border: 2px solid #ddd;
-  padding: 0.75rem 1.5rem;
-  border-radius: 6px;
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  text-decoration: none;
-  display: inline-block;
-}
-
-.btn-list:hover {
-  background-color: #f9f9f9;
-  border-color: #aaa;
-  color: #333;
-  transform: translateY(-1px);
-}
-
-.btn-list:active {
-  transform: translateY(0);
-}
-
-/* Small tweak for "Manage (0)" to look more like a badge */
-.btn-list {
-  position: relative;
-}
-
-.btn-list:after {
-  content: attr(data-count);
-  display: inline-block;
-  background: #e74c3c;
-  color: white;
-  border-radius: 50%;
-  width: 1.2rem;
-  height: 1.2rem;
-  line-height: 1.2rem;
-  text-align: center;
-  font-size: 0.75rem;
-  margin-left: 0.5rem;
-  vertical-align: middle;
-}
-
-/* If you want to show "0" as a badge */
-/* <button class="btn-list" data-count="0">Manage</button> */
-/* Then hide the "(0)" in HTML */
-
-/* ==================== ACTION BUTTONS CONTAINER ==================== */
-.action-buttons {
-  display: flex;
-  gap: 1rem;
-  margin: 1.5rem 0 2rem;
-  flex-wrap: wrap;
-  align-items: center;
-}
-
-/* Responsive: Stack buttons on small screens */
-@media (max-width: 768px) {
-  .action-buttons {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .action-buttons button {
-    width: 100%;
-  }
-}
 .metric-card.progress-bar h3 {
   font-size: 18px;
   color: #1a3b5d;
