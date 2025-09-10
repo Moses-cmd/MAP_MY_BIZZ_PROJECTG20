@@ -446,26 +446,27 @@ body {
   cursor: pointer;
 }
 .profile-container {
-  max-width: 600px;
-  margin: 30px auto;
-  padding: 20px;
+  max-width: 1200px;
+  margin: 60px auto;
+  padding: 40px;
   background-color: #f5f7f9;
   border-radius: 20px;
   box-shadow: 0 8px 32px rgba(0,0,0,0.1);
   border: 2px solid #ffcc00;
   display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 40px;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
 }
 
 .profile-form {
-  flex: 1;
-  min-width: 300px;
+  width: 100%;
+  max-width: 500px;
+  text-align: left;
 }
 
 .form-group {
-  margin-bottom: 16px;
+  margin-bottom: 20px;
   display: flex;
   flex-direction: column;
 }
@@ -474,6 +475,7 @@ body {
   font-weight: 500;
   margin-bottom: 6px;
   color: #1a365d;
+  text-align: left;
 }
 
 .form-group input {
@@ -487,6 +489,7 @@ body {
   display: flex;
   gap: 12px;
   margin-top: 20px;
+  justify-content: flex-start;
 }
 
 .btn-primary {
