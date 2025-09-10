@@ -607,3 +607,30 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 });
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({
+    pageLanguage: 'en',
+    includedLanguages: 'af,zu,xh,st,tn,ss,ve,ts,en',
+    layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+    autoDisplay: false
+  }, 'google_translate_element');
+
+  // Restore saved language
+  const savedLang = localStorage.getItem('preferredLanguage');
+  if (savedLang && savedLang !== 'en') {
+    setTimeout(() => {
+      const select = document.querySelector('.goog-te-combo');
+      if (select) {
+        select.value = savedLang;
+        select.dispatchEvent(new Event('change'));
+      }
+    }, 1000);
+  }
+
+  // Save on change
+  document.addEventListener('change', function(e) {
+    if (e.target.classList.contains('goog-te-combo')) {
+      localStorage.setItem('preferredLanguage', e.target.value);
+    }
+  });
+}
