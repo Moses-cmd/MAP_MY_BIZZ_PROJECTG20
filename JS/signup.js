@@ -10,7 +10,7 @@ if (signupForm) {
     const emailOrPhone = document.getElementById("email").value.trim();
     const password = document.getElementById("signupPassword").value.trim();
     const confirmPassword = document.getElementById("confirmPassword").value.trim();
-    const saId = document.getElementById("saId").value.trim(); // <-- new field for ID
+    const saId = document.getElementById("saId").value.trim();
 
     // Validate inputs
     if (!fullName || !emailOrPhone || !password || !confirmPassword || !saId) {
@@ -22,7 +22,7 @@ if (signupForm) {
       alert("Password must be at least 6 characters.");
       return;
     }
-
+    
     if (password !== confirmPassword) {
       alert("Passwords do not match.");
       return;
@@ -39,30 +39,61 @@ if (signupForm) {
       options: {
         data: {
           full_name: fullName,
-          sa_id: saId, // save SA ID in metadata
+          sa_id: saId,
         },
       },
     };
 
     // Detect email or phone
+    let email = null;
+    let phone = null;
+
     if (emailOrPhone.includes("@gmail.com")) {
-      signUpPayload.email = emailOrPhone;
+      email = emailOrPhone;
+      signUpPayload.email = email;
     } else if (emailOrPhone.startsWith("+27") && /^\+27\d{9}$/.test(emailOrPhone)) {
-      signUpPayload.phone = emailOrPhone;
+      phone = emailOrPhone;
+      signUpPayload.phone = phone;
     } else {
       alert("Please enter a valid Gmail address or +27 phone number.");
       return;
     }
 
     try {
-      const { data, error } = await supabase.auth.signUp(signUpPayload);
+      // ✅ Step 1: Sign up auth user
+      const { data: authData, error: authError } = await supabase.auth.signUp(signUpPayload);
 
-      if (error) throw error;
+      if (authError) throw authError;
 
-      console.log("✅ Auth user created:", data.user);
+      if (!authData.user) {
+        throw new Error("User creation failed.");
+      }
+
+      console.log("✅ Auth user created:", authData.user);
+
+      // ✅ Step 2: Insert into user_profile table
+      const userProfileData = {
+        id: authData.user.id, // UUID from auth
+        full_name: fullName,
+        sa_id: saId,
+        email: email,
+        phone: phone,
+        // Add other fields if needed, e.g.:
+        // created_at: new Date().toISOString(),
+      };
+
+      const { error: insertError } = await supabase
+        .from("user_profile")
+        .insert([userProfileData]);
+
+      if (insertError) throw insertError;
+
+      console.log("✅ User profile inserted into DB");
+
       alert("Signup successful! Please check your email or phone for verification.");
 
-      window.location.href = "../PAGES/signup.html";
+      // Redirect after success
+      window.location.href = "../PAGES/dashboard.html"; // or wherever you want
 
     } catch (err) {
       console.error("🚫 Signup error:", err);

@@ -151,7 +151,7 @@ if (formEl && window.location.pathname.includes("reset.html")) {
       .eq("id", user.id)
       .single();
 
-    const displayName = profile?.full_name || user.email || user.phone || "User";
+    const displayName = profile?.full_name || user.email || user.phone || "users";
     const firstName = displayName.split(" ")[0];
 
     const greetingEl = document.querySelector(".greeting");
@@ -172,8 +172,9 @@ if (formEl && window.location.pathname.includes("reset.html")) {
     const name = document.getElementById("fullName").value.trim();
     const phone = document.getElementById("phoneNumber").value.trim();
     const email = document.getElementById("email").value.trim();
+    const ID = document.getElementById("saId").value.trim();
 
-    if (!name || !phone || !email) {
+    if (!name || !phone || !email ) {
       alert("Please fill in all required fields.");
       return;
     }
@@ -190,9 +191,10 @@ if (formEl && window.location.pathname.includes("reset.html")) {
 
     const { error: dbError } = await supabase
       .from("user_profiles")
-      .upsert({
+      .update({
         id: user.id,
         full_name: name,
+        
         phone,
         email,
       }, { onConflict: "id" });
@@ -365,7 +367,7 @@ if (formEl && window.location.pathname.includes("reset.html")) {
   window.markModuleAsCompleted = async function (moduleId) {
     const { error } = await supabase
       .from("user_progress")
-      .upsert(
+      .insert(
         { user_id: user.id, module_id: moduleId },
         { onConflict: "user_id, module_id" }
       );
