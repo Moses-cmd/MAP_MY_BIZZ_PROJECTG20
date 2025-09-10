@@ -506,7 +506,7 @@ body {
   color: white;
 }
 
-.btn-danger {
+.btn-primary btn-danger {
   background-color: #d32f2f;
   color: white;
 }
