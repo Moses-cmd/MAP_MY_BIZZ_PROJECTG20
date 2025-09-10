@@ -44,6 +44,18 @@
         <label for="name"> Enterprice Name </label>
         <input type="text" id="name" name="name" required />
       </div>
+      <!-- Add these inside your form, after the "Enterprice Name" field -->
+<div class="form-group">
+  <label for="cipcNumber">CIPC Registration Number *</label>
+  <input type="text" id="cipcNumber" name="cipcNumber" placeholder="YYYY/NNNNNN/NN" required />
+  <small class="hint">Format: 2024/123456/07 (Year/Unique Number/Type)</small>
+</div>
+
+<div class="form-group">
+  <label for="vatNumber">VAT Number (if applicable)</label>
+  <input type="text" id="vatNumber" name="vatNumber" placeholder="4870123456" />
+  <small class="hint">Optional. Only if registered for VAT.</small>
+</div>
       <div class="form-group">
         <label for="category">Category *</label>
         <select id="category" name="category" required>
