@@ -179,22 +179,33 @@
           alert("Please enter a valid Gmail address or +27 phone number.");
           return;
         }
-
         try {
-          const { data, error } = await supabase.auth.signUp(signUpPayload);
+  const { data, error } = await supabase.auth.signUp(signUpPayload);
 
-          if (error) throw error;
+  if (error) throw error;
 
-          console.log("✅ Auth user created:", data.user);
-          alert("Signup successful! Please check your email or phone for verification.");
+  // ✅ Insert into profiles table
+  const { error: profileError } = await supabase
+    .from('profiles')
+    .insert([
+      {
+        id: data.user.id,
+        full_name: fullName,
+        sa_id: saId,
+      }
+    ]);
 
-          // ✅ Redirect away from signup
-          window.location.href = "../PAGES/signup.html";
+  if (profileError) throw profileError;
 
-        } catch (err) {
-          console.error("🚫 Signup error:", err);
-          alert("Error: " + (err.message || "Something went wrong."));
-        }
+  console.log("✅ Profile created:", data.user);
+  alert("Signup successful! Please check your email or phone for verification.");
+  window.location.href = "../PAGES/signup.html";
+
+} catch (err) {
+  console.error("🚫 Signup error:", err);
+  alert("Error: " + (err.message || "Something went wrong."));
+}
+       
       });
     }
   </script>
