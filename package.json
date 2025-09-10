@@ -1,0 +1,20 @@
+{
+  "name": "map_my_bizz_projectg20-1",
+  "version": "1.0.0",
+  "description": "--Sho Kabza use the Table_schema.sql to cerate tables and \r the CRUDE.sql is for queries i'll be manupulating as time goes --",
+  "main": "supabaseClient.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Moses-cmd/MAP_MY_BIZZ_PROJECTG20.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Moses-cmd/MAP_MY_BIZZ_PROJECTG20/issues"
+  },
+  "homepage": "https://github.com/Moses-cmd/MAP_MY_BIZZ_PROJECTG20#readme"
+}
