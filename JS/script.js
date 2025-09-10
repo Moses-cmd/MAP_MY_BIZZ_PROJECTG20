@@ -253,7 +253,6 @@ if (formEl && window.location.pathname.includes("reset.html")) {
     e.preventDefault();
     window.location.href = "../PAGES/registerBusiness.html";
   });
-
   document.querySelector(".btn-list")?.addEventListener("click", (e) => {
     e.preventDefault();
     window.location.href = "../PAGES/mybusiness.html";
