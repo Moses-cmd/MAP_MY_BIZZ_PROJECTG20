@@ -1146,10 +1146,10 @@ body {
   justify-content: center;
   gap: 20px;
   margin-bottom: 30px;
-  background-color: #0A8791;
+    
 }
 
-.btn-primary {
+.btn-primary .btn-addt{
   background-color: #0A8791;
   color: white;
   border: none;
