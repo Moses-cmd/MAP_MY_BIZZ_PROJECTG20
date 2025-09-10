@@ -24,10 +24,7 @@
       </svg>Add business on the Map</a>
   </div>
   <div class="language-selector">
-    <select>
-      <option value="en">English</option>
-      <option value="es">Afrikaans</option>
-    </select>
+    <div id="google_translate_element"></div>
   </div>
  <!-- User Profile Dropdown -->
 <div class="user-profile" id="userProfile">
@@ -237,7 +234,37 @@
     </div>
   </div>
 </div>
+  <!-- ✅ GOOGLE TRANSLATE — MUST BE LAST BEFORE </body> -->
+  <script>
+    function googleTranslateElementInit() {
+      new google.translate.TranslateElement({
+        pageLanguage: 'en',
+        includedLanguages: 'af,zu,xh,st,tn,ss,ve,ts,en',
+        layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+        autoDisplay: false
+      }, 'google_translate_element');
 
+      // Restore saved language
+      const savedLang = localStorage.getItem('preferredLanguage');
+      if (savedLang && savedLang !== 'en') {
+        setTimeout(() => {
+          const select = document.querySelector('.goog-te-combo');
+          if (select) {
+            select.value = savedLang;
+            select.dispatchEvent(new Event('change'));
+          }
+        }, 1000);
+      }
+
+      // Save on change
+      document.addEventListener('change', function(e) {
+        if (e.target.classList.contains('goog-te-combo')) {
+          localStorage.setItem('preferredLanguage', e.target.value);
+        }
+      });
+    }
+  </script>
+  <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
   <script type="module" src="../JS/script.js"></script>
 </body>
 </html>
