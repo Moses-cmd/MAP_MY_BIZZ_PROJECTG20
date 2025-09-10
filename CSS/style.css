@@ -1176,7 +1176,17 @@ footer .bottom-bar {
   max-width: 25rem;
   width: 100%;
 }
-
+.action-buttons{
+  background-color: #0A8791;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
 /* ===================
    Welcome Back Section
 =================== */
