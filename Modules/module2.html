@@ -211,57 +211,61 @@
   </div>
 </div>
 <script type="module" src="../JS/script.js"></script>
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      const markBtn = document.getElementById("markCompleteBtn");
-      const completionBadge = document.getElementById("completionBadge");
-  
-      // Define module name (you can set this per module)
-      const moduleName = "Module 2";  // Change this in each module: "Module 2", etc.
-  
-      // Fallback: If markModuleAsCompleted is not loaded from script.js
-      if (typeof markModuleAsCompleted === 'undefined') {
-        window.markModuleAsCompleted = async function (moduleId) {
-          // Fallback to localStorage if Supabase isn't ready
-          let completed = JSON.parse(localStorage.getItem("completedModules") || "[]");
-          if (!completed.includes(moduleId)) {
-            completed.push(moduleId);
-            localStorage.setItem("completedModules", JSON.stringify(completed));
-          }
-          // Simulate progress update
-          if (typeof updateProgressUI === 'function') {
-            await updateProgressUI();
-          }
-        };
-      }
-  
-      // Save last opened module
-      if (typeof saveLastModule === 'function') {
-        saveLastModule(moduleName);
-      } else {
-        localStorage.setItem("lastOpenedModule", moduleName);
-      }
-  
-      // Mark module as completed when button is clicked
-      markBtn.addEventListener("click", async function () {
-        // Mark in Supabase or fallback
-        if (typeof markModuleAsCompleted === 'function') {
-          await markModuleAsCompleted(moduleName);
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const markBtn = document.getElementById("markCompleteBtn");
+    const completionBadge = document.getElementById("completionBadge");
+
+    // Define module name (you can set this per module)
+    const moduleName = "Module 1";  // Change this in each module: "Module 2", etc.
+
+    // Fallback: If markModuleAsCompleted is not loaded from script.js
+    if (typeof markModuleAsCompleted === 'undefined') {
+      window.markModuleAsCompleted = async function (moduleId) {
+        // Fallback to localStorage if Supabase isn't ready
+        let completed = JSON.parse(localStorage.getItem("completedModules") || "[]");
+        if (!completed.includes(moduleId)) {
+          completed.push(moduleId);
+          localStorage.setItem("completedModules", JSON.stringify(completed));
         }
-  
-        // Show completion message
-        completionBadge.style.display = "block";
-  
-        // Redirect after delay
-        setTimeout(() => {
-          window.location.href = "../PAGES/dashboard.html";
-        }, 1500);
-      });
-  
-      // Optional: Remove auto-completion on load
-      // ❌ Avoid this line if you don't want instant credit:
-      // markModuleAsCompleted("Module 1");
+        // Simulate progress update
+        if (typeof updateProgressUI === 'function') {
+          await updateProgressUI();
+        }
+      };
+    }
+
+    // Save last opened module
+    if (typeof saveLastModule === 'function') {
+      saveLastModule(moduleName);
+    } else {
+      localStorage.setItem("lastOpenedModule", moduleName);
+    }
+
+    // Mark module as completed when button is clicked
+    markBtn.addEventListener("click", async function () {
+      // Mark in Supabase or fallback
+      if (typeof markModuleAsCompleted === 'function') {
+        await markModuleAsCompleted(moduleName);
+      }
+
+      // Show completion message
+      completionBadge.style.display = "block";
+
+      // Redirect after delay
+      setTimeout(() => {
+        window.location.href = "../PAGES/dashboard.html";
+      }, 1500);
     });
-  </script>
+
+    // Optional: Remove auto-completion on load
+    // ❌ Avoid this line if you don't want instant credit:
+    // markModuleAsCompleted("Module 1");
+    // Update progress on any page that has progress elements
+if (document.getElementById("progressBar") || document.getElementById("progressText")) {
+updateProgressUI(); // Run it if progress elements exist
+}
+  });
+</script>
 </body>
 </html>

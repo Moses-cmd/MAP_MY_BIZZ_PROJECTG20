@@ -191,67 +191,61 @@
 <script type="module" src="../JS/script.js"></script>
 
 <!-- Module completion logic -->
-<script type="module">
-  document.addEventListener("DOMContentLoaded", async function () {
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
     const markBtn = document.getElementById("markCompleteBtn");
     const completionBadge = document.getElementById("completionBadge");
-    const moduleName = "Module 1"; // Update per module
-  
-    // ►►► Attach click handler IMMEDIATELY so button is always responsive
-    markBtn.addEventListener("click", async function () {
-      // Disable button to prevent double-click
-      markBtn.disabled = true;
-      markBtn.textContent = "Saving...";
-  
-      // Wait for Supabase functions to be ready
-      await new Promise(resolve => {
-        if (window.markModuleAsCompleted && window.updateProgressUI) {
-          return resolve();
+
+    // Define module name (you can set this per module)
+    const moduleName = "Module 1";  // Change this in each module: "Module 2", etc.
+
+    // Fallback: If markModuleAsCompleted is not loaded from script.js
+    if (typeof markModuleAsCompleted === 'undefined') {
+      window.markModuleAsCompleted = async function (moduleId) {
+        // Fallback to localStorage if Supabase isn't ready
+        let completed = JSON.parse(localStorage.getItem("completedModules") || "[]");
+        if (!completed.includes(moduleId)) {
+          completed.push(moduleId);
+          localStorage.setItem("completedModules", JSON.stringify(completed));
         }
-        const check = setInterval(() => {
-          if (window.markModuleAsCompleted && window.updateProgressUI) {
-            clearInterval(check);
-            resolve();
-          }
-        }, 50);
-      });
-  
-      // ►►► Now run the real completion logic
-      try {
-        await window.markModuleAsCompleted(moduleName);
-        completionBadge.style.display = "block";
-  
-        setTimeout(() => {
-          window.location.href = "../PAGES/dashboard.html";
-        }, 1500);
-      } catch (err) {
-        alert("Error saving progress: " + err.message);
-        markBtn.disabled = false;
-        markBtn.textContent = "Mark as Complete & Continue";
-      }
-    });
-  
+        // Simulate progress update
+        if (typeof updateProgressUI === 'function') {
+          await updateProgressUI();
+        }
+      };
+    }
+
     // Save last opened module
-    if (typeof window.saveLastModule === 'function') {
-      window.saveLastModule(moduleName);
+    if (typeof saveLastModule === 'function') {
+      saveLastModule(moduleName);
     } else {
       localStorage.setItem("lastOpenedModule", moduleName);
     }
-  
-    // Optional: Update progress bar if elements exist (e.g., if embedded in dashboard)
-    if (document.getElementById("progressBar") || document.getElementById("progressText")) {
-      // Wait for function, then update
-      await new Promise(resolve => {
-        const check = setInterval(() => {
-          if (window.updateProgressUI) {
-            clearInterval(check);
-            resolve();
-          }
-        }, 50);
-      });
-      await window.updateProgressUI();
-    }
+
+    // Mark module as completed when button is clicked
+    markBtn.addEventListener("click", async function () {
+      // Mark in Supabase or fallback
+      if (typeof markModuleAsCompleted === 'function') {
+        await markModuleAsCompleted(moduleName);
+      }
+
+      // Show completion message
+      completionBadge.style.display = "block";
+
+      // Redirect after delay
+      setTimeout(() => {
+        window.location.href = "../PAGES/dashboard.html";
+      }, 1500);
+    });
+
+    // Optional: Remove auto-completion on load
+    // ❌ Avoid this line if you don't want instant credit:
+    // markModuleAsCompleted("Module 1");
+    // Update progress on any page that has progress elements
+if (document.getElementById("progressBar") || document.getElementById("progressText")) {
+updateProgressUI(); // Run it if progress elements exist
+}
   });
-  </script>
+</script>
 </body>
 </html>
