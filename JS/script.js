@@ -522,10 +522,9 @@ window.saveLastModule = saveLastModule;
         card.querySelector(".select-plan-btn")?.click();
       });
     });
-
     createButton?.addEventListener("click", () => {
       if (!selectedPlan) {
-        alert("Please select a plan first!");
+        alert("Default plan selected");
         return;
       }
       alert(`You selected the ${selectedPlan} plan. Redirecting to setup...`);
@@ -568,11 +567,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
   /* ---------- Modal controls ---------- */
   function openModal(tabName) {
+    if (!modal) return;
     modal.style.display = "flex";
-    acceptBtn.disabled = true;
-    agreeCheckbox.checked = false;
+    if (acceptBtn) acceptBtn.disabled = true;
+    if (agreeCheckbox) agreeCheckbox.checked = false;
     showTab(tabName || "terms");
-    // If content doesn't scroll (short text), treat as already at bottom
     enableIfEligible();
   }
 
