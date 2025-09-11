@@ -1688,13 +1688,15 @@ border: 1px solid #B8D8D8;
   border-radius: 5%;
   overflow:hidden;
   margin: 0 auto 1.5rem;
-  border: 3px solid white;
+  background-color: #F0F6F6;
+  border: 3px solid #F0F6F6;
 }
 
 
 .profile-image-container img {
   width: 100%;
   height: 100%;
+  border-radius: 15%;
   object-fit: cover;
   display: block;
 }
