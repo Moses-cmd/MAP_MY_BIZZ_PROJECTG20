@@ -3,9 +3,6 @@ import supabase from "../supabaseClient.js";
 import fs from "fs";
 import { createObjectCsvWriter } from "csv-writer";
 
-
-const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_KEY);
-
 // 🔹 Get all tables
 async function getAllTableNames() {
   const { data, error } = await supabase.rpc("get_tables_in_schema", {
