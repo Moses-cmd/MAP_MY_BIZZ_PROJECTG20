@@ -322,6 +322,9 @@ if (formEl && window.location.pathname.includes("reset.html")) {
 
   // =============== 9. PROGRESS TRACKER ===============
   async function loadProgress() {
+    window.markModuleAsCompleted = markModuleAsCompleted;
+window.updateProgressUI = updateProgressUI;
+window.saveLastModule = saveLastModule;
     if (!user) return [];
     const { data, error } = await supabase
       .from("user_progress")
@@ -335,6 +338,9 @@ if (formEl && window.location.pathname.includes("reset.html")) {
   }
 
   async function updateProgressUI() {
+    window.markModuleAsCompleted = markModuleAsCompleted;
+window.updateProgressUI = updateProgressUI;
+window.saveLastModule = saveLastModule;
     const completed = await loadProgress();
     const completedCount = completed.length;
     const percentage = ((completedCount / TOTAL_MODULES) * 100).toFixed(2);
