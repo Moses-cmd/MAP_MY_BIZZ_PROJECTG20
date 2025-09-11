@@ -501,14 +501,22 @@ body {
   transition: background 0.2s;
 }
 
-.btn-primary[type="button"] {
+.btn-primary {
   background-color: #4a90e2;
   color: white;
 }
+#imagePreview {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px;
+}
 
-.btn-danger {
-  background-color: #d32f2f;
-  color: white;
+#imagePreview img {
+  max-width: 150px;
+  max-height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
 }
 
 h2 {
@@ -1859,3 +1867,69 @@ border: 1px solid #B8D8D8;
   display: flex;
   align-items: center;
 }
+ .banner {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #589094;
+      padding: 20px 0;
+      position: relative;
+      overflow: hidden;
+      width: 100%;
+      height: 200px;
+    }
+
+    .left-image {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 250px;
+      height: 100%;
+      object-fit: cover;
+      clip-path: polygon(0 0, 100% 0, 70% 100%, 0 100%);
+      z-index: 1;
+    }
+
+    .right-image {
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: 250px;
+      height: 100%;
+      object-fit: cover;
+      clip-path: polygon(40% 0, 100% 0, 100% 100%, 0 100%);
+      z-index: 1;
+    }
+
+    .content {
+      text-align: center;
+      color: white;
+      z-index: 2;
+      padding: 0 20px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .content h1 {
+      font-size: 2.5rem;
+      margin: 0;
+      font-weight: bold;
+    }
+
+    .content p {
+      font-size: 1.2rem;
+      margin-top: 10px;
+      opacity: 0.9;
+    }
+
+    .circle {
+      width: 50px;
+      height: 50px;
+      background-color: rgba(120, 179, 183, 0.9);
+      border-radius: 50%;
+      position: absolute;
+      left: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 1;
+    }
