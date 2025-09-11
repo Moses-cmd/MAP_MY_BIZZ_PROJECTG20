@@ -192,44 +192,66 @@
 
 <!-- Module completion logic -->
 <script type="module">
-document.addEventListener("DOMContentLoaded", async function () {
-  const markBtn = document.getElementById("markCompleteBtn");
-  const completionBadge = document.getElementById("completionBadge");
-  const moduleName = "Module 1"; // Update per module: "Module 2", "Module 3", etc.
-
-  // Wait until script.js is fully loaded and functions are available
-  await new Promise(resolve => {
-    const check = setInterval(() => {
-      if (window.markModuleAsCompleted && window.updateProgressUI) {
-        clearInterval(check);
-        resolve();
+  document.addEventListener("DOMContentLoaded", async function () {
+    const markBtn = document.getElementById("markCompleteBtn");
+    const completionBadge = document.getElementById("completionBadge");
+    const moduleName = "Module 1"; // Update per module
+  
+    // ►►► Attach click handler IMMEDIATELY so button is always responsive
+    markBtn.addEventListener("click", async function () {
+      // Disable button to prevent double-click
+      markBtn.disabled = true;
+      markBtn.textContent = "Saving...";
+  
+      // Wait for Supabase functions to be ready
+      await new Promise(resolve => {
+        if (window.markModuleAsCompleted && window.updateProgressUI) {
+          return resolve();
+        }
+        const check = setInterval(() => {
+          if (window.markModuleAsCompleted && window.updateProgressUI) {
+            clearInterval(check);
+            resolve();
+          }
+        }, 50);
+      });
+  
+      // ►►► Now run the real completion logic
+      try {
+        await window.markModuleAsCompleted(moduleName);
+        completionBadge.style.display = "block";
+  
+        setTimeout(() => {
+          window.location.href = "../PAGES/dashboard.html";
+        }, 1500);
+      } catch (err) {
+        alert("Error saving progress: " + err.message);
+        markBtn.disabled = false;
+        markBtn.textContent = "Mark as Complete & Continue";
       }
-    }, 50); // Check every 50ms
+    });
+  
+    // Save last opened module
+    if (typeof window.saveLastModule === 'function') {
+      window.saveLastModule(moduleName);
+    } else {
+      localStorage.setItem("lastOpenedModule", moduleName);
+    }
+  
+    // Optional: Update progress bar if elements exist (e.g., if embedded in dashboard)
+    if (document.getElementById("progressBar") || document.getElementById("progressText")) {
+      // Wait for function, then update
+      await new Promise(resolve => {
+        const check = setInterval(() => {
+          if (window.updateProgressUI) {
+            clearInterval(check);
+            resolve();
+          }
+        }, 50);
+      });
+      await window.updateProgressUI();
+    }
   });
-
-  // Save last opened module
-  if (typeof window.saveLastModule === 'function') {
-    window.saveLastModule(moduleName);
-  } else {
-    localStorage.setItem("lastOpenedModule", moduleName);
-  }
-
-  // Handle mark as complete
-  markBtn.addEventListener("click", async function () {
-    await window.markModuleAsCompleted(moduleName); // Uses REAL Supabase version
-    completionBadge.style.display = "block";
-
-    // Redirect after 1.5 seconds
-    setTimeout(() => {
-      window.location.href = "../PAGES/dashboard.html";
-    }, 1500);
-  });
-
-  // Update progress bar if elements exist on this page (optional, for testing)
-  if (document.getElementById("progressBar") || document.getElementById("progressText")) {
-    await window.updateProgressUI();
-  }
-});
-</script>
+  </script>
 </body>
 </html>
