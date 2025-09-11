@@ -83,7 +83,7 @@ if (signupForm) {
       };
 
       const { error: insertError } = await supabase
-        .from("user_profile")
+        .from("user_profiles")
         .insert([userProfileData]);
 
       if (insertError) throw insertError;
