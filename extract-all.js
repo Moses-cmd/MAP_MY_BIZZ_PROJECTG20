@@ -1,8 +1,9 @@
 import { createClient } from '@supabase/supabase-js'
 import fs from 'fs'
+import { createObjectCsvWriter } from 'csv-writer'
 
-const SUPABASE_URL = 'https://your-project-id.supabase.co';
-const SUPABASE_SERVICE_KEY ="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJhb2pyYnZyY2lhd3dxa3lmbHhwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTYyMDc4NjEsImV4cCI6MjA3MTc4Mzg2MX0.h7a0fechNuunOyJH4tckcA6Dc47yoFvAFaS18LvQCiQ";
+const SUPABASE_URL = 'https://your-project-id.supabase.co'
+const supabaseKey="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJhb2pyYnZyY2lhd3dxa3lmbHhwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTYyMDc4NjEsImV4cCI6MjA3MTc4Mzg2MX0.h7a0fechNuunOyJH4tckcA6Dc47yoFvAFaS18LvQCiQ"
 
 const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_KEY)
 
@@ -17,42 +18,57 @@ async function getAllTableNames() {
 
 // Fetch all data from a table
 async function extractTableData(tableName) {
-  console.log(`Extracting data from: ${tableName}...`)
+  console.log(`📥 Extracting data from: ${tableName}...`)
   const { data, error } = await supabase
     .from(tableName)
     .select('*')
 
   if (error) {
-    console.error(`Error extracting ${tableName}:`, error.message)
-    return null
+    console.error(`❌ Error extracting ${tableName}:`, error.message)
+    return []
   }
 
-  return data
+  // Add table_name column to each row
+  return data.map(row => ({ table_name: tableName, ...row }))
 }
 
-// Save data to JSON file
-function saveToFile(tableName, data) {
-  const filename = `${tableName}.json`
-  fs.writeFileSync(filename, JSON.stringify(data, null, 2))
-  console.log(`✅ Saved ${data.length} records to ${filename}`)
+// Save all tables into one CSV
+async function saveAllToCSV(allData) {
+  if (allData.length === 0) {
+    console.log(`⚠️ No data found in any table.`)
+    return
+  }
+
+  // Collect all unique headers
+  const headers = [...new Set(allData.flatMap(row => Object.keys(row)))]
+
+  const csvWriter = createObjectCsvWriter({
+    path: `all_tables.csv`,
+    header: headers.map(key => ({ id: key, title: key })),
+  })
+
+  await csvWriter.writeRecords(allData)
+  console.log(`✅ Saved ${allData.length} records into all_tables.csv`)
 }
 
 // Main function
 async function extractAllTables() {
   try {
     const tables = await getAllTableNames()
-    console.log(`Found ${tables.length} tables:`, tables)
+    console.log(`📋 Found ${tables.length} tables:`, tables)
+
+    let allData = []
 
     for (const table of tables) {
       const data = await extractTableData(table)
-      if (data) {
-        saveToFile(table, data)
-      }
+      allData = allData.concat(data)
     }
 
-    console.log('🎉 All tables extracted successfully!')
+    await saveAllToCSV(allData)
+
+    console.log('🎉 All tables exported into one CSV successfully!')
   } catch (error) {
-    console.error(' Extraction failed:', error.message)
+    console.error('❌ Extraction failed:', error.message)
   }
 }
 
