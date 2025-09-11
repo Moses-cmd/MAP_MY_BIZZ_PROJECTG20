@@ -3,6 +3,18 @@ import supabase from "../supabaseClient.js";
 import fs from "fs";
 import { createObjectCsvWriter } from "csv-writer";
 
+async function testConnection() {
+  const { data, error } = await supabase.from("user_progress").select("*");
+  if (error) {
+    console.error("Error:", error.message);
+  } else {
+    console.log("Data:", data);
+  }
+}
+
+testConnection();
+
+
 // 🔹 Get all tables
 async function getAllTableNames() {
   const { data, error } = await supabase.rpc("get_tables_in_schema", {
