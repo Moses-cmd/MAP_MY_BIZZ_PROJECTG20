@@ -608,7 +608,7 @@ document.addEventListener("DOMContentLoaded", function () {
   modalBody.addEventListener("scroll", enableIfEligible);
   agreeCheckbox.addEventListener("change", enableIfEligible);
 
-  /* ---------- Accept behavior ---------- */
+  /* ---------- Accept behavior ---------- 
   acceptBtn.addEventListener("click", () => {
     if (acceptBtn.disabled) return;
     closeModal();
@@ -618,7 +618,7 @@ document.addEventListener("DOMContentLoaded", function () {
       setTimeout(() => { signupForm.submit(); pendingSubmit = false; }, 50);
     }
   });
-
+*/
 });
 document.getElementById("profileImage").addEventListener("change", function(e) {
   const file = e.target.files[0];
