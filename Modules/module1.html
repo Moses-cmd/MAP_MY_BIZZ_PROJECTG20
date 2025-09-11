@@ -187,63 +187,49 @@
     <button id="markCompleteBtn" class="btn btn-success">Mark as Complete & Continue</button>
   </div>
 </div>
-
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      const markBtn = document.getElementById("markCompleteBtn");
-      const completionBadge = document.getElementById("completionBadge");
-  
-      // Define module name (you can set this per module)
-      const moduleName = "Module 1";  // Change this in each module: "Module 2", etc.
-  
-      // Fallback: If markModuleAsCompleted is not loaded from script.js
-      if (typeof markModuleAsCompleted === 'undefined') {
-        window.markModuleAsCompleted = async function (moduleId) {
-          // Fallback to localStorage if Supabase isn't ready
-          let completed = JSON.parse(localStorage.getItem("completedModules") || "[]");
-          if (!completed.includes(moduleId)) {
-            completed.push(moduleId);
-            localStorage.setItem("completedModules", JSON.stringify(completed));
-          }
-          // Simulate progress update
-          if (typeof updateProgressUI === 'function') {
-            await updateProgressUI();
-          }
-        };
-      }
-  
-      // Save last opened module
-      if (typeof saveLastModule === 'function') {
-        saveLastModule(moduleName);
-      } else {
-        localStorage.setItem("lastOpenedModule", moduleName);
-      }
-  
-      // Mark module as completed when button is clicked
-      markBtn.addEventListener("click", async function () {
-        // Mark in Supabase or fallback
-        if (typeof markModuleAsCompleted === 'function') {
-          await markModuleAsCompleted(moduleName);
-        }
-  
-        // Show completion message
-        completionBadge.style.display = "block";
-  
-        // Redirect after delay
-        setTimeout(() => {
-          window.location.href = "../PAGES/dashboard.html";
-        }, 1500);
-      });
-  
-      // Optional: Remove auto-completion on load
-      // ❌ Avoid this line if you don't want instant credit:
-      // markModuleAsCompleted("Module 1");
-      // Update progress on any page that has progress elements
-if (document.getElementById("progressBar") || document.getElementById("progressText")) {
-  updateProgressUI(); // Run it if progress elements exist
-}
-    });
-  </script>
+<!-- Load main script FIRST -->
 <script type="module" src="../JS/script.js"></script>
+
+<!-- Module completion logic -->
+<script type="module">
+document.addEventListener("DOMContentLoaded", async function () {
+  const markBtn = document.getElementById("markCompleteBtn");
+  const completionBadge = document.getElementById("completionBadge");
+  const moduleName = "Module 1"; // Update per module: "Module 2", "Module 3", etc.
+
+  // Wait until script.js is fully loaded and functions are available
+  await new Promise(resolve => {
+    const check = setInterval(() => {
+      if (window.markModuleAsCompleted && window.updateProgressUI) {
+        clearInterval(check);
+        resolve();
+      }
+    }, 50); // Check every 50ms
+  });
+
+  // Save last opened module
+  if (typeof window.saveLastModule === 'function') {
+    window.saveLastModule(moduleName);
+  } else {
+    localStorage.setItem("lastOpenedModule", moduleName);
+  }
+
+  // Handle mark as complete
+  markBtn.addEventListener("click", async function () {
+    await window.markModuleAsCompleted(moduleName); // Uses REAL Supabase version
+    completionBadge.style.display = "block";
+
+    // Redirect after 1.5 seconds
+    setTimeout(() => {
+      window.location.href = "../PAGES/dashboard.html";
+    }, 1500);
+  });
+
+  // Update progress bar if elements exist on this page (optional, for testing)
+  if (document.getElementById("progressBar") || document.getElementById("progressText")) {
+    await window.updateProgressUI();
+  }
+});
+</script>
 </body>
 </html>

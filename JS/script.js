@@ -38,6 +38,10 @@ document.addEventListener("DOMContentLoaded", async () => {
         alert("Login failed: " + error.message);
       } else {
         window.location.href = "../PAGES/dashboard.html";
+        // Expose to window for module pages to use
+window.markModuleAsCompleted = markModuleAsCompleted;
+window.updateProgressUI = updateProgressUI;
+window.saveLastModule = saveLastModule;
       }
     });
   }
