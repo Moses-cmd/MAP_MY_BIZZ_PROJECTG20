@@ -618,7 +618,7 @@ document.addEventListener("DOMContentLoaded", function () {
       setTimeout(() => { signupForm.submit(); pendingSubmit = false; }, 50);
     }
   });
-*/
+
 });
 document.getElementById("profileImage").addEventListener("change", function(e) {
   const file = e.target.files[0];
@@ -634,4 +634,5 @@ document.getElementById("profileImage").addEventListener("change", function(e) {
     preview.innerHTML = `<img src="${event.target.result}" alt="Profile Preview">`;
   };
   reader.readAsDataURL(file);
+  */
 });
