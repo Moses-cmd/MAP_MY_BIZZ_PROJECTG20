@@ -55,7 +55,7 @@ if (forgotPasswordForm) {
     // Set correct redirect URL
     const redirectTo = window.location.hostname === "localhost"
       ? "http://127.0.0.1:5501/reset.html"
-      : "https://mapbiz.netlify.app/reset.html";  // Remove spaces
+      : "https://mapbiz.netlify.app/reset.html  ";  // Remove spaces
 
     try {
       const { data, error } = await supabase.auth.resetPasswordForEmail(email, {
@@ -168,46 +168,148 @@ if (formEl && window.location.pathname.includes("reset.html")) {
   }
 
   // =============== 4. EDIT PROFILE ===============
-  document.getElementById("saveBtn")?.addEventListener("click", async () => {
-    const name = document.getElementById("fullName").value.trim();
-    const phone = document.getElementById("phoneNumber").value.trim();
-    const email = document.getElementById("email").value.trim();
-    const ID = document.getElementById("saId").value.trim();
-
-    if (!name || !phone || !email ) {
-      alert("Please fill in all required fields.");
+document.addEventListener("DOMContentLoaded", async () => {
+  try {
+    // Get current user
+    const { data: { user }, error: authError } = await supabase.auth.getUser();
+    if (authError || !user) {
+      alert("Please log in to edit your profile.");
+      window.location.href = "../index.html";
       return;
     }
 
+    // Fetch user profile from DB
+    const { data: profile, error: dbError } = await supabase
+      .from("user_profiles")
+      .select("*")
+      .eq("id", user.id)
+      .single();
+
+    if (dbError) throw dbError;
+
+    // Populate form fields
+    if (profile) {
+      document.getElementById("fullName").value = profile.full_name || "";
+      document.getElementById("phoneNumber").value = profile.phone || "";
+      document.getElementById("email").value = profile.email || "";
+      document.getElementById("location").value = profile.location || ""; // optional field
+      document.getElementById("saId").value = profile.sa_id || "";
+    }
+
+    // Optional: Set username in navbar
+    document.getElementById("userNameDisplay").textContent = profile.full_name || "User";
+
+  } catch (err) {
+    console.error("Load error:", err);
+    alert("Failed to load profile: " + err.message);
+  }
+});
+
+// =============== 2. SAVE PROFILE ===============
+document.getElementById("saveBtn")?.addEventListener("click", async () => {
+  const name = document.getElementById("fullName").value.trim();
+  const phone = document.getElementById("phoneNumber").value.trim();
+  const email = document.getElementById("email").value.trim();
+  const location = document.getElementById("location").value.trim();
+  const saId = document.getElementById("saId").value.trim();
+
+  if (!name || !phone || !email || !saId) {
+    alert("Please fill in all required fields.");
+    return;
+  }
+
+  // Validate SA ID (13 digits)
+  if (!/^\d{13}$/.test(saId)) {
+    alert("South African ID must be exactly 13 digits.");
+    return;
+  }
+
+  try {
+    // Get current user
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) {
+      alert("You must be logged in to update your profile.");
+      return;
+    }
+
+    // ✅ Step 1: Update Auth User
     const { error: authError } = await supabase.auth.updateUser({
       email,
       phone,
-      data: { full_name: name },
+      data: {
+        full_name: name,
+        sa_id: saId,
+      },
     });
+
     if (authError) {
-      alert("Failed to update auth: " + authError.message);
-      return;
+      throw new Error("Auth update failed: " + authError.message);
     }
 
+    // ✅ Step 2: Update user_profile table
     const { error: dbError } = await supabase
-      .from("user_profiles")
+      .from("user_profile") // ✅ Correct table name
       .update({
-        id: user.id,
         full_name: name,
-        
-        phone,
-        email,
-      }, { onConflict: "id" });
+        sa_id: saId,
+        phone: phone,
+        email: email,
+        location: location, // ✅ Added location
+        updated_at: new Date().toISOString(),
+      })
+      .eq("id", user.id);
 
     if (dbError) {
-      alert("Failed to save profile: " + dbError.message);
+      throw new Error("Profile update failed: " + dbError.message);
+    }
+
+    alert("✅ Your information has been updated!");
+    window.location.href = "../PAGES/dashboard.html";
+
+  } catch (err) {
+    console.error("Update error:", err);
+    alert("Error: " + err.message);
+  }
+});
+
+// =============== 3. DELETE PROFILE ===============
+document.getElementById("deleteBtn")?.addEventListener("click", async () => {
+  if (!confirm("⚠️ Are you sure? This will PERMANENTLY delete your account and all data.")) {
+    return;
+  }
+
+  try {
+    // Get current user
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) {
+      alert("No user logged in.");
       return;
     }
 
-    alert("Your information has been updated!");
-    window.location.href = "../PAGES/dashboard.html";
-  });
+    // ✅ Step 1: Delete from user_profile
+    const { error: deleteProfileError } = await supabase
+      .from("user_profile")
+      .delete()
+      .eq("id", user.id);
 
+    if (deleteProfileError) {
+      throw new Error("Failed to delete profile: " + deleteProfileError.message);
+    }
+
+    // ✅ Step 2: Sign out (client-safe — doesn't delete auth user)
+    const { error: signOutError } = await supabase.auth.signOut();
+    if (signOutError) {
+      throw new Error("Failed to sign out: " + signOutError.message);
+    }
+
+    alert("✅ Your profile has been deleted. You have been logged out.");
+    window.location.href = "../index.html";
+
+  } catch (err) {
+    console.error("Delete error:", err);
+    alert("Error: " + err.message);
+  }
+});
   // =============== 5. USER PROFILE DROPDOWN ===============
   const userProfile = document.getElementById("userProfile");
   const dropdownMenu = document.getElementById("dropdownMenu");
