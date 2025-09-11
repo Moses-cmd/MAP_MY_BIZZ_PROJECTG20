@@ -594,45 +594,5 @@ document.addEventListener("DOMContentLoaded", function () {
   closeBtn.addEventListener("click", closeModal);
   window.addEventListener("click", (e) => { if (e.target === modal) closeModal(); });
 
-  /* ---------- Enable Accept: must be scrolled + checked ---------- */
-  function atBottom(el) {
-    // also returns true if content doesn't need scrolling
-    return (el.scrollHeight <= el.clientHeight) ||
-           (el.scrollHeight - el.scrollTop <= el.clientHeight + 5);
-  }
-
-  function enableIfEligible() {
-    acceptBtn.disabled = !(agreeCheckbox.checked && atBottom(modalBody));
-  }
-
-  modalBody.addEventListener("scroll", enableIfEligible);
-  agreeCheckbox.addEventListener("change", enableIfEligible);
-
-  /* ---------- Accept behavior ---------- 
-  acceptBtn.addEventListener("click", () => {
-    if (acceptBtn.disabled) return;
-    closeModal();
-    // If we intercepted a signup submit, submit it now
-    if (signupForm && pendingSubmit) {
-      // slight delay to ensure modal closes smoothly
-      setTimeout(() => { signupForm.submit(); pendingSubmit = false; }, 50);
-    }
-  });
-
-});
-document.getElementById("profileImage").addEventListener("change", function(e) {
-  const file = e.target.files[0];
-  const preview = document.getElementById("imagePreview");
-
-  if (!file) {
-    preview.innerHTML = "";
-    return;
-  }
-
-  const reader = new FileReader();
-  reader.onload = function(event) {
-    preview.innerHTML = `<img src="${event.target.result}" alt="Profile Preview">`;
-  };
-  reader.readAsDataURL(file);
-  */
+  
 });
