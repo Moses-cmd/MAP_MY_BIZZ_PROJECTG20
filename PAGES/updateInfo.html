@@ -116,6 +116,7 @@
         autoDisplay: false
       }, 'google_translate_element');
 
+<<<<<<< HEAD
       const savedLang = localStorage.getItem('preferredLanguage');
       if (savedLang && savedLang !== 'en') {
         setTimeout(() => {
@@ -123,6 +124,83 @@
           if (select) {
             select.value = savedLang;
             select.dispatchEvent(new Event('change'));
+=======
+      <div class="form-group">
+        <label for="email">Email Address</label>
+        <input type="email" id="email" placeholder="john@example.com" />
+      </div>
+
+      <div class="form-group">
+        <label for="location">Location</label>
+        <input type="text" id="location" placeholder="Johannesburg" />
+      </div>
+
+      <div class="form-group">
+        <label for="IDNumber">User ID Number</label>
+        <input type="number" id="IDNumber" placeholder="Valid SA ID Number" />
+      </div>
+
+      <div class="form-buttons">
+        <button type="button" id="saveBtn" class="btn-primary">Save Changes</button>
+        <button type="button" id="deleteBtn" class="btn-primary" style="background-color: #d32f2f; color: white;">
+          Delete Profile
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+        <footer>
+          <div class="footer-container">
+            <div class="footer-section">
+              <h4>About Map My Biz</h4>
+              <p>Map My Biz connects communities, entrepreneurs, and tourists by showcasing local businesses and providing accredited learning opportunities.</p>
+            </div>
+            <div class="footer-section">
+              <h4>Legal</h4>  
+                <a id="openTerms">Terms & Conditions</a>
+                <br>
+                <a id="openPrivacy">Privacy Policy</a>
+                <br>
+                <a id="openPopia">POPIA Compliance</a>
+            </div>
+            <div class="footer-section">
+              <h4>Contact</h4>
+              <p>Email: support@mapmybiz.co.za</p>
+              <p>Phone: +27 11 123 4567</p>
+            </div>
+          </div>
+          <div class="bottom-bar">
+            &copy; 2025 Map My Biz. All rights reserved.
+          </div>
+        </footer>
+        <script>
+          function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+              pageLanguage: 'en',
+              includedLanguages: 'af,zu,xh,st,tn,ss,ve,ts,en',
+              layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+              autoDisplay: false
+            }, 'google_translate_element');
+      
+            // Restore saved language
+            const savedLang = localStorage.getItem('preferredLanguage');
+            if (savedLang && savedLang !== 'en') {
+              setTimeout(() => {
+                const select = document.querySelector('.goog-te-combo');
+                if (select) {
+                  select.value = savedLang;
+                  select.dispatchEvent(new Event('change'));
+                }
+              }, 1000);
+            }
+      
+            // Save on change
+            document.addEventListener('change', function(e) {
+              if (e.target.classList.contains('goog-te-combo')) {
+                localStorage.setItem('preferredLanguage', e.target.value);
+              }
+            });
+>>>>>>> 47eb33fa1edf5fab1b717aeea8d022a36462c9e5
           }
         }, 1000);
       }
